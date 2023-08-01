@@ -1,0 +1,7 @@
+{    
+    "chatNow":"discuter maintenant",
+    "helloWorld": "Hello World!",
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    }
+  }
