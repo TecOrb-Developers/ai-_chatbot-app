@@ -13,6 +13,8 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+String title = '';
+
 class ChatHistoryScreen extends StatefulWidget {
   const ChatHistoryScreen({Key? key}) : super(key: key);
 
@@ -54,6 +56,7 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
             sessionItemId: item['_id'],
             date: item['date']);
       }).toList();
+      print('chatHistory-$chatHistory');
       return chatHistory;
     } catch (e) {
       print(e);
@@ -101,6 +104,7 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
                     child: ListView.builder(
                       itemCount: chatHistory.length,
                       itemBuilder: (context, index) {
+                        title = chatHistory[index].text;
                         return ChatHistoryBox(
                             onpress: () {
                               Navigator.push(context, MaterialPageRoute(

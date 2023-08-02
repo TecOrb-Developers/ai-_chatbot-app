@@ -16,7 +16,7 @@ class NetworkApi {
         Uri.parse(staticUrl! + url),
         headers: headers,
       );
-
+      print(response.statusCode);
       return jsonDecode(response.body);
       // if (response.statusCode == 200) {
       //   return jsonDecode(response.body);
@@ -211,6 +211,7 @@ class NetworkApi {
           Uri.parse(baseUrl + url).replace(queryParameters: queryParams);
       print('uri+++++++++++$uri');
       final response = await http.get(uri, headers: headers);
+      print(response.statusCode);
       return jsonDecode(response.body);
     } on SocketException {
       return "No Internet Found";

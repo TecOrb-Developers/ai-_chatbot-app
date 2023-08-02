@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const ChatScreen()),
+                  MaterialPageRoute(builder: (_) => ChatScreen()),
                 );
               },
               child: GradientBackWidget(
@@ -128,4 +128,3 @@ class SquareBtnIconBadge extends StatelessWidget {
     );
   }
 }
-

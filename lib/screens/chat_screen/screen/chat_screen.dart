@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/chat_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
@@ -9,11 +10,16 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_text.dart';
 import '../../../widgets/loading_indicator.dart';
+import '../../chat_history_screen/chat_history.dart';
 import '../widget/chat_widget.dart';
 import '../widget/docbox_widget.dart';
 import '../widget/send_message_widget.dart';
@@ -33,30 +39,47 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String msg = '';
+  bool loading = false;
+
   final TextEditingController textController = TextEditingController();
   late ScrollController _listScrollController;
-  String session_Id = '';
 
+  late dynamic pdf;
   late final ChatController chatController;
 
   bool circularIndicatorShow = false;
   @override
   void initState() {
     super.initState();
-    _listScrollController = ScrollController();
-    chatController = Get.put(ChatController());
-    chatNow();
-    if (widget.session_id != null) {
-      chatController.getSessionHistory(widget.session_id!);
-      setState(() {
-        chatController.getsession_id = true;
-      });
-    } else {
-      print('not get session_id');
+    try {
+      print('1');
+      _listScrollController = ScrollController();
+      print('2');
+      chatController = Get.put(ChatController());
+      print('3');
+      if (widget.session_id == null) {
+        print('4');
+        chatNow();
+        print('5');
+      } else {
+        print('6');
+        chatController.getSessionHistory(widget.session_id!);
+        print('7');
+        setState(() {
+          chatController.getsession_id = true;
+          sessionId = widget.session_id!;
+          print('8');
+        });
+      }
+    } catch (e) {
+      print("8");
+      print(e);
     }
   }
 
   Future<void> chatNow() async {
+    print('chat Now');
     setState(() {
       circularIndicatorShow = true;
     });
@@ -72,6 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (response['message'] == "Success") {
         sessionId = response['data']['sessionId'];
       }
+      print('sessionId-----------------------$sessionId');
     } catch (e) {
       print(e);
     }
@@ -174,7 +198,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     try {
-      String msg = textController.text.trim();
+      msg = textController.text.trim();
       textController.clear();
       controller.addUserMessage(msg: msg);
 
@@ -439,29 +463,84 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<void> getPdf() async {
+  Future<void> getPdf(String msg, String type) async {
     try {
-      final headers = {
-        "Authorization": authorizationValue,
-      };
-      if (sessionId != '') {
-        session_Id = sessionId;
-      } else {
-        session_Id = widget.session_id!;
-      }
-      final queryParams = {
-        "sessionId": session_Id,
-      };
+      setState(() {
+        loading = true;
+      });
 
-      var response = await NetworkApi.getResponseWithParams(
-          url: getPdfUrl, headers: headers, queryParams: queryParams);
-      print(response);
+      if (Platform.isAndroid) {
+        if (await requestPermission(Permission.storage)) {
+          print('get pdf1');
+          final headers = {"Authorization": authorizationValue};
+
+          final response = await Dio().get(
+            "$baseUrl$getPdfUrl$sessionId",
+            options: Options(
+              headers: headers,
+              responseType: ResponseType.bytes,
+            ),
+          );
+          print('get pdf2');
+          Directory? appDocumentsDirectory =
+              await getExternalStorageDirectory();
+          String filePath = '${appDocumentsDirectory!.path}/chatbot.docx';
+          String newPath = '';
+          List<String> folders = appDocumentsDirectory.path.split('/');
+          for (int x = 1; x < folders.length; x++) {
+            String folder = folders[x];
+            if (folder != 'Android') {
+              newPath += "/$folder"; // /storage/emulated/0
+            } else {
+              break;
+            }
+          }
+          newPath = "$newPath/Download/${msg.trim()}.$type";
+
+          print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
+          File file = File(newPath);
+          print('get pdf3-$newPath');
+
+          await file.writeAsBytes(response.data);
+          print('get pdf5');
+
+          showSnackbar(
+            context: context,
+            title: " ${type.toUpperCase()} download successfully",
+          );
+        }
+      } else {
+        print('not android');
+      }
     } catch (e) {
-      print('error$e');
+      print('get pdf4');
+      showSnackbar(
+        context: context,
+        title: "Error downloading ${type.toUpperCase()}",
+      );
+      print('error====$e');
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<bool> requestPermission(Permission permission) async {
+    if (await permission.isGranted) {
+      return true;
+    } else {
+      var result = await permission.request();
+      if (result == PermissionStatus.granted) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
-  Future<dynamic> showExportBottomSheet(BuildContext context) {
+  Future<dynamic> showExportBottomSheet(
+    BuildContext context,
+  ) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -509,14 +588,30 @@ class _ChatScreenState extends State<ChatScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DocBoxWidget(text: "TXT"),
-                      SizedBox(width: 30),
-                      DocBoxWidget(text: "PDF", onpress: getPdf),
-                      SizedBox(width: 30),
-                      DocBoxWidget(text: "DOC"),
+                      DocBoxWidget(
+                          text: "PDF",
+                          onpress: () {
+                            if (msg == '') {
+                              msg = title;
+                            }
+                            getPdf(msg, 'pdf');
+                            Navigator.pop(context);
+                          }),
+                      SizedBox(width: 10),
+                      DocBoxWidget(
+                          text: "DOC",
+                          onpress: () {
+                            if (msg == '') {
+                              msg = title;
+                            }
+                            getPdf(msg, 'docx');
+                            Navigator.pop(context);
+                          }),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(
+                    height: 20,
+                  )
                 ],
               ),
             ),
@@ -545,3 +640,23 @@ class BottomSheetHeadDivider extends StatelessWidget {
     );
   }
 }
+//  Directory appDocumentsDirectory =
+//           await getApplicationDocumentsDirectory();
+//       String newPath = '';
+//       List<String> folders = appDocumentsDirectory.path.split('/');
+//       for (int x = 1; x < folders.length; x++) {
+//         String folder = folders[x];
+//         if (folder != 'Android') {
+//           newPath += "/" + folder;
+//         } else {
+//           break;
+//         }
+//       }
+//       newPath = newPath + "/downloads";
+//       appDocumentsDirectory = Directory(newPath);
+//       String filePath = '${appDocumentsDirectory.path}/chatbot.pdf';
+
+//       File file = File(filePath);
+
+
+// get pdf3-/data/user/0/com.example.ai_chatbot_flutter/app_flutter/chatbot.pdf

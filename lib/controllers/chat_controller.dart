@@ -110,7 +110,7 @@ class ChatController extends GetxController {
       createdAt = response['data']['createdAt'];
 
       print("----$response");
-      print(messageId);
+      print("messageId====$messageId");
       print(createdAt);
     } catch (e) {
       print(e);

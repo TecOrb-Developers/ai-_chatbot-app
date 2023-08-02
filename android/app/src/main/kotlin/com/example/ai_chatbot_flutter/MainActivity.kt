@@ -31,7 +31,7 @@ class MainActivity : FlutterActivity() {
                 val saveCardBoolean = call.argument<String>("saveCardBoolean")
                 val cardName = call.argument<String>("cardName")
                 val client_secret_id = call.argument<String>("client_secret_id")
-                paymentIntent(cardId, client_secret_id)
+//                paymentIntent(cardId, client_secret_id)
                 Log.d("TAG", "configureFlutterEngine: $cardId")
                 // result.success("Card details saved successfully.")
                 result.success("$cardId$cardName$cardNumber$expiryMonth$expiryYear")
@@ -40,31 +40,31 @@ class MainActivity : FlutterActivity() {
             }
         }
     }
-    override fun onStart() {
-        super.onStart()
-        context = this
-       stripe = Stripe(this, secretPublicKey)
-    }
-    private fun paymentIntent(cardId: String?, client_secret_id: String?) {
-        val paymentMethodId = cardId.orEmpty()
-        val confirmPaymentParams = client_secret_id?.let { clientSecret ->
-            ConfirmPaymentIntentParams.createWithPaymentMethodId(
-                paymentMethodId,
-                clientSecret
-            )
-        }
-        if (confirmPaymentParams != null) {
-            stripe.confirmPayment(this, confirmPaymentParams,
-                object : ApiResultCallback<PaymentIntentResult> {
-                    override fun onError(@NotNull e: Exception) {
-                        // Handle error during payment confirmation
-                        e.printStackTrace()
-                    }
-                    override fun onSuccess(result: PaymentIntentResult) {
-                        // Handle payment confirmed successfully
-                    }
-                })
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        context = this
+//       stripe = Stripe(this, secretPublicKey)
+//    }
+//    private fun paymentIntent(cardId: String?, client_secret_id: String?) {
+//        val paymentMethodId = cardId.orEmpty()
+//        val confirmPaymentParams = client_secret_id?.let { clientSecret ->
+//            ConfirmPaymentIntentParams.createWithPaymentMethodId(
+//                paymentMethodId,
+//                clientSecret
+//            )
+//        }
+//        if (confirmPaymentParams != null) {
+//            stripe.confirmPayment(this, confirmPaymentParams,
+//                object : ApiResultCallback<PaymentIntentResult> {
+//                    override fun onError(@NotNull e: Exception) {
+//                        // Handle error during payment confirmation
+//                        e.printStackTrace()
+//                    }
+//                    override fun onSuccess(result: PaymentIntentResult) {
+//                        // Handle payment confirmed successfully
+//                    }
+//                })
+//        }
+//    }
 }
 
