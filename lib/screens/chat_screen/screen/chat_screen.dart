@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/chat_controller.dart';
@@ -11,6 +12,7 @@ import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -525,6 +527,71 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  //   Future<void> getPdf(String msg, String type) async {
+  //   try {
+  //     setState(() {
+  //       loading = true;
+  //     });
+
+  //     if (Platform.isAndroid) {
+  //       if (await requestPermission(Permission.storage)) {
+  //         print('get pdf1');
+  //         final headers = {"Authorization": authorizationValue};
+
+  //         final response = await Dio().get(
+  //           "$baseUrl$getPdfUrl$sessionId",
+  //           options: Options(
+  //             headers: headers,
+  //             responseType: ResponseType.bytes,
+  //           ),
+  //         );
+  //         Uint8List responseData = response.data;
+  //         print(response);
+  //         print('get pdf2');
+  //         Directory? appDocumentsDirectory =
+  //             await getExternalStorageDirectory();
+  //         String filePath = '${appDocumentsDirectory!.path}/chatbot.docx';
+  //         String newPath = '';
+  //         List<String> folders = appDocumentsDirectory.path.split('/');
+  //         for (int x = 1; x < folders.length; x++) {
+  //           String folder = folders[x];
+  //           if (folder != 'Android') {
+  //             newPath += "/$folder"; // /storage/emulated/0
+  //           } else {
+  //             break;
+  //           }
+  //         }
+  //         newPath = "$newPath/Download/${msg.trim()}.$type";
+
+  //         // print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
+  //         File file = File(newPath);
+  //         print('get pdf3-$newPath');
+  //         const utf8Decoder = Utf8Decoder(allowMalformed: true);
+  //         // await file.writeAsBytes(response.data);
+  //         await file.writeAsString(utf8Decoder.convert(responseData));
+  //         print('get pdf5');
+
+  //         showSnackbar(
+  //           context: context,
+  //           title: " ${type.toUpperCase()} download successfully",
+  //         );
+  //       }
+  //     } else {
+  //       print('not android');
+  //     }
+  //   } catch (e) {
+  //     print('get pdf4');
+  //     showSnackbar(
+  //       context: context,
+  //       title: "Error downloading ${type.toUpperCase()}",
+  //     );
+  //     print('error====$e');
+  //   }
+  //   setState(() {
+  //     loading = false;
+  //   });
+  // }
+
   Future<bool> requestPermission(Permission permission) async {
     if (await permission.isGranted) {
       return true;
@@ -640,23 +707,3 @@ class BottomSheetHeadDivider extends StatelessWidget {
     );
   }
 }
-//  Directory appDocumentsDirectory =
-//           await getApplicationDocumentsDirectory();
-//       String newPath = '';
-//       List<String> folders = appDocumentsDirectory.path.split('/');
-//       for (int x = 1; x < folders.length; x++) {
-//         String folder = folders[x];
-//         if (folder != 'Android') {
-//           newPath += "/" + folder;
-//         } else {
-//           break;
-//         }
-//       }
-//       newPath = newPath + "/downloads";
-//       appDocumentsDirectory = Directory(newPath);
-//       String filePath = '${appDocumentsDirectory.path}/chatbot.pdf';
-
-//       File file = File(filePath);
-
-
-// get pdf3-/data/user/0/com.example.ai_chatbot_flutter/app_flutter/chatbot.pdf

@@ -214,9 +214,23 @@ const selectedWeeklyIcon = Image(
   image: AssetImage("assets/images/selectweekly.png"),
 );
 
-const monthlyIcon = Image(
-  image: AssetImage("assets/images/monthly.png"),
+const squareIcon = Image(
+  image: AssetImage("assets/images/unselectmonthly.png"),
 );
-const selectedmonthlyIcon = Image(
+const selectedsquareIcon = Image(
   image: AssetImage("assets/images/selectmonthly.png"),
+);
+
+const flatIcon = Image(
+  image: AssetImage("assets/images/onedaybtn.png"),
+);
+const selectedflatIcon = Image(
+  image: AssetImage("assets/images/onedaybtnselect.png"),
+);
+
+const yearlyIcon = Image(
+  image: AssetImage("assets/images/yealrybtn.png"),
+);
+const selectedyearlyIcon = Image(
+  image: AssetImage("assets/images/selectyearlybtn.png"),
 );

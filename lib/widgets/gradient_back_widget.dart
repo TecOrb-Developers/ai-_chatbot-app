@@ -14,7 +14,7 @@ class GradientBackWidget extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        gradientImageIcon,
+        // gradientImageIcon,
         const Image(
           image: AssetImage("assets/images/3.0x/yeartextbox.png"),
         ),
