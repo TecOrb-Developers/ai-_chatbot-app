@@ -59,6 +59,7 @@ dependencies:
   dio: ^5.3.1
   open_file: ^3.3.2
   permission_handler: ^10.4.3
+  docx_template: ^0.3.4
 
 
 

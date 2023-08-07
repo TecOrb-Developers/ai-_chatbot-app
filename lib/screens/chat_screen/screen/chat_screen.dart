@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/chat_controller.dart';
@@ -10,6 +11,7 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
+import 'package:docx_template/docx_template.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -454,7 +456,8 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<void> getTextFile(String title, RxList<ChatModel> answer) async {
+  Future<void> getTextFile(
+      String title, RxList<ChatModel> answer, String type) async {
     try {
       setState(() {
         loading = true;
@@ -479,12 +482,67 @@ class _ChatScreenState extends State<ChatScreen> {
               break;
             }
           }
-          newPath = "$newPath/Download/${title.trim()}.txt";
+          newPath = "$newPath/Download/${title.trim()}.$type";
           print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
           File file = File(newPath);
           print('get pdf3-$newPath');
           final content = answer.join('\n');
           var res = await file.writeAsString(chatContent);
+          print('response=$res');
+          showSnackbar(
+            context: context,
+            title: " TXT download successfully",
+          );
+        }
+      } else {
+        print('not android');
+      }
+    } catch (e) {
+      print('get pdf4');
+      showSnackbar(
+        context: context,
+        title: "Error downloading TXT",
+      );
+      print('error====$e');
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<void> getDocxFile(String title, RxList<ChatModel> answer) async {
+    try {
+      setState(() {
+        loading = true;
+      });
+      String chatContent = '';
+      for (var chat in answer) {
+        chatContent += '${chat.isUser! ? 'You: ' : 'Bot: '}${chat.msg}\n';
+      }
+
+      if (Platform.isAndroid) {
+        if (await requestPermission(Permission.storage)) {
+          print('get pdf1');
+          Directory? appDocumentsDirectory =
+              await getExternalStorageDirectory();
+          String newPath = '';
+          List<String> folders = appDocumentsDirectory!.path.split('/');
+          for (int x = 1; x < folders.length; x++) {
+            String folder = folders[x];
+            if (folder != 'Android') {
+              newPath += "/$folder"; // /storage/emulated/0
+            } else {
+              break;
+            }
+          }
+          newPath = "$newPath/Download/${title.trim()}.docx";
+          print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
+          File file = File(newPath);
+          print('get pdf3-$newPath');
+          // final content = answer.join('\n');
+          var chat = utf8.encode(chatContent);
+
+          var res = await file.writeAsBytes(chat);
           print('response=$res');
           showSnackbar(
             context: context,
@@ -640,7 +698,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             if (msg == '') {
                               msg = title;
                             }
-                            getTextFile(msg, chatController.getChatList);
+                            getTextFile(msg, chatController.getChatList, "txt");
                             Navigator.pop(context);
                           }),
                       const SizedBox(
@@ -662,7 +720,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             if (msg == '') {
                               msg = title;
                             }
-                            getPdf(msg, 'docx');
+                            getDocxFile(msg, chatController.getChatList);
                             Navigator.pop(context);
                           }),
                     ],
