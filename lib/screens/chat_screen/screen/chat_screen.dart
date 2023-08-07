@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/chat_controller.dart';
@@ -12,12 +11,11 @@ import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../../models/chat_model.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_text.dart';
 import '../../../widgets/loading_indicator.dart';
@@ -43,6 +41,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String msg = '';
   bool loading = false;
+  String ans = '';
 
   final TextEditingController textController = TextEditingController();
   late ScrollController _listScrollController;
@@ -55,27 +54,18 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     try {
-      print('1');
       _listScrollController = ScrollController();
-      print('2');
       chatController = Get.put(ChatController());
-      print('3');
       if (widget.session_id == null) {
-        print('4');
         chatNow();
-        print('5');
       } else {
-        print('6');
         chatController.getSessionHistory(widget.session_id!);
-        print('7');
         setState(() {
           chatController.getsession_id = true;
           sessionId = widget.session_id!;
-          print('8');
         });
       }
     } catch (e) {
-      print("8");
       print(e);
     }
   }
@@ -217,8 +207,8 @@ class _ChatScreenState extends State<ChatScreen> {
         chosenModelId: "gpt-3.5-turbo",
       );
       // List<String> answers = controller.getAnswers();
-      String? ans = controller.getCurrentAnswer();
-      controller.replyMessage(ans!);
+      ans = controller.getCurrentAnswer();
+      controller.replyMessage(ans);
       // print('Answers: $answers');
       print('ans--$ans');
       setState(() {
@@ -301,7 +291,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           const SizedBox(height: 35),
                           Text(
                             AppLocalizations.of(context)!.buySubscripstion,
-                            // "Buy the subscription and get all\nyour issues resolved",
                             textAlign: TextAlign.center,
                             style: poppinsMedTextStyle.copyWith(
                               fontSize: 20,
@@ -465,6 +454,59 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Future<void> getTextFile(String title, RxList<ChatModel> answer) async {
+    try {
+      setState(() {
+        loading = true;
+      });
+      String chatContent = '';
+      for (var chat in answer) {
+        chatContent += '${chat.isUser! ? 'You: ' : 'Bot: '}${chat.msg}\n';
+      }
+
+      if (Platform.isAndroid) {
+        if (await requestPermission(Permission.storage)) {
+          print('get pdf1');
+          Directory? appDocumentsDirectory =
+              await getExternalStorageDirectory();
+          String newPath = '';
+          List<String> folders = appDocumentsDirectory!.path.split('/');
+          for (int x = 1; x < folders.length; x++) {
+            String folder = folders[x];
+            if (folder != 'Android') {
+              newPath += "/$folder"; // /storage/emulated/0
+            } else {
+              break;
+            }
+          }
+          newPath = "$newPath/Download/${title.trim()}.txt";
+          print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
+          File file = File(newPath);
+          print('get pdf3-$newPath');
+          final content = answer.join('\n');
+          var res = await file.writeAsString(chatContent);
+          print('response=$res');
+          showSnackbar(
+            context: context,
+            title: " TXT download successfully",
+          );
+        }
+      } else {
+        print('not android');
+      }
+    } catch (e) {
+      print('get pdf4');
+      showSnackbar(
+        context: context,
+        title: "Error downloading TXT",
+      );
+      print('error====$e');
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
   Future<void> getPdf(String msg, String type) async {
     try {
       setState(() {
@@ -474,21 +516,12 @@ class _ChatScreenState extends State<ChatScreen> {
       if (Platform.isAndroid) {
         if (await requestPermission(Permission.storage)) {
           print('get pdf1');
-          final headers = {"Authorization": authorizationValue};
 
-          final response = await Dio().get(
-            "$baseUrl$getPdfUrl$sessionId",
-            options: Options(
-              headers: headers,
-              responseType: ResponseType.bytes,
-            ),
-          );
           print('get pdf2');
           Directory? appDocumentsDirectory =
               await getExternalStorageDirectory();
-          String filePath = '${appDocumentsDirectory!.path}/chatbot.docx';
           String newPath = '';
-          List<String> folders = appDocumentsDirectory.path.split('/');
+          List<String> folders = appDocumentsDirectory!.path.split('/');
           for (int x = 1; x < folders.length; x++) {
             String folder = folders[x];
             if (folder != 'Android') {
@@ -502,9 +535,20 @@ class _ChatScreenState extends State<ChatScreen> {
           print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
           File file = File(newPath);
           print('get pdf3-$newPath');
+          if (type == "pdf" || type == 'docx') {
+            final headers = {"Authorization": authorizationValue};
 
-          await file.writeAsBytes(response.data);
-          print('get pdf5');
+            final response = await Dio().get(
+              "$baseUrl$getPdfUrl$sessionId",
+              options: Options(
+                headers: headers,
+                responseType: ResponseType.bytes,
+              ),
+            );
+            List<int> responseData = response.data;
+            await file.writeAsBytes(response.data);
+            print('get pdf5');
+          } else {}
 
           showSnackbar(
             context: context,
@@ -526,71 +570,6 @@ class _ChatScreenState extends State<ChatScreen> {
       loading = false;
     });
   }
-
-  //   Future<void> getPdf(String msg, String type) async {
-  //   try {
-  //     setState(() {
-  //       loading = true;
-  //     });
-
-  //     if (Platform.isAndroid) {
-  //       if (await requestPermission(Permission.storage)) {
-  //         print('get pdf1');
-  //         final headers = {"Authorization": authorizationValue};
-
-  //         final response = await Dio().get(
-  //           "$baseUrl$getPdfUrl$sessionId",
-  //           options: Options(
-  //             headers: headers,
-  //             responseType: ResponseType.bytes,
-  //           ),
-  //         );
-  //         Uint8List responseData = response.data;
-  //         print(response);
-  //         print('get pdf2');
-  //         Directory? appDocumentsDirectory =
-  //             await getExternalStorageDirectory();
-  //         String filePath = '${appDocumentsDirectory!.path}/chatbot.docx';
-  //         String newPath = '';
-  //         List<String> folders = appDocumentsDirectory.path.split('/');
-  //         for (int x = 1; x < folders.length; x++) {
-  //           String folder = folders[x];
-  //           if (folder != 'Android') {
-  //             newPath += "/$folder"; // /storage/emulated/0
-  //           } else {
-  //             break;
-  //           }
-  //         }
-  //         newPath = "$newPath/Download/${msg.trim()}.$type";
-
-  //         // print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
-  //         File file = File(newPath);
-  //         print('get pdf3-$newPath');
-  //         const utf8Decoder = Utf8Decoder(allowMalformed: true);
-  //         // await file.writeAsBytes(response.data);
-  //         await file.writeAsString(utf8Decoder.convert(responseData));
-  //         print('get pdf5');
-
-  //         showSnackbar(
-  //           context: context,
-  //           title: " ${type.toUpperCase()} download successfully",
-  //         );
-  //       }
-  //     } else {
-  //       print('not android');
-  //     }
-  //   } catch (e) {
-  //     print('get pdf4');
-  //     showSnackbar(
-  //       context: context,
-  //       title: "Error downloading ${type.toUpperCase()}",
-  //     );
-  //     print('error====$e');
-  //   }
-  //   setState(() {
-  //     loading = false;
-  //   });
-  // }
 
   Future<bool> requestPermission(Permission permission) async {
     if (await permission.isGranted) {
@@ -656,6 +635,18 @@ class _ChatScreenState extends State<ChatScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       DocBoxWidget(
+                          text: "TXT",
+                          onpress: () {
+                            if (msg == '') {
+                              msg = title;
+                            }
+                            getTextFile(msg, chatController.getChatList);
+                            Navigator.pop(context);
+                          }),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      DocBoxWidget(
                           text: "PDF",
                           onpress: () {
                             if (msg == '') {
@@ -664,7 +655,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             getPdf(msg, 'pdf');
                             Navigator.pop(context);
                           }),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       DocBoxWidget(
                           text: "DOC",
                           onpress: () {

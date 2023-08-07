@@ -128,13 +128,14 @@ class ChatController extends GetxController {
       };
       var response = await NetworkApi.getResponseWithParams(
           url: chatSessionUrl, headers: headers, queryParams: queryParams);
-
+      var message = '';
+      var reply = '';
       print('chat Session History-$response');
       if (response['message'] == 'Success') {
         List<dynamic> data = response['data'];
         for (var item in data) {
-          final message = item['message'];
-          final reply = item['reply'];
+          message = item['message'];
+          reply = item['reply'];
           addMessageAndReply(message, reply);
         }
       }
