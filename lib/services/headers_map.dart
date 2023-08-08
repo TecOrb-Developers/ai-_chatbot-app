@@ -9,3 +9,7 @@ String get localizationValue => _localeValue;
 String _selectlanguage = '';
 set selectLanguage(String value) => _selectlanguage = value;
 String get selectLanguage => _selectlanguage;
+
+String _subcription_type = "";
+set subcription_type(String value) => _subcription_type = value;
+String get subcription_type => _subcription_type;

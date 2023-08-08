@@ -21,8 +21,10 @@ import '../../widgets/text_white_btn_widget.dart';
 enum SelectCardName { Visa, Axis }
 
 class ChoosePaymentMethodScreen extends StatefulWidget {
-  const ChoosePaymentMethodScreen({super.key, this.amount});
+  const ChoosePaymentMethodScreen(
+      {super.key, this.amount, this.subcriptionType});
   final String? amount;
+  final String? subcriptionType;
 
   @override
   State<ChoosePaymentMethodScreen> createState() =>
@@ -316,6 +318,7 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
                                 amount: widget.amount,
                                 cardNo: cardId,
                                 saveCardBool: true,
+                                subcriptionType: widget.subcriptionType,
                               );
                             },
                           ));

@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/screens/choose_paymont_method/choose_payment_method.dart';
+import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/widgets/grad_horizontal_divider.dart';
@@ -16,7 +17,7 @@ class SubscrptionScreen extends StatefulWidget {
 
 class _SubscrptionScreenState extends State<SubscrptionScreen> {
   bool isSubcribtion = false;
-  String subscriptionType = 'weekly';
+
   void initState() {
     print('subscription');
     super.initState();
@@ -57,13 +58,14 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                             builder: (context) {
                               return ChoosePaymentMethodScreen(
                                 amount: amount,
+                                subcriptionType: "Weekly",
                               );
                             },
                           ));
                         },
                         child: Stack(
                           children: [
-                            if (subscriptionType == 'weekly')
+                            if (subcription_type == 'Weekly')
                               selectedsquareIcon,
                             squareIcon,
                             Positioned(
@@ -78,7 +80,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                     Text(
                                       AppLocalizations.of(context)!.weekly,
                                       style: poppinsRegTextStyle.copyWith(
-                                        color: subscriptionType == 'weekly'
+                                        color: subcription_type == 'Weekly'
                                             ? Colors.black
                                             : Colors.white,
                                         fontSize: 15,
@@ -87,7 +89,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                     Text(
                                       "₹ 500.00",
                                       style: poppinsMedTextStyle.copyWith(
-                                        color: subscriptionType == 'weekly'
+                                        color: subcription_type == 'Weekly'
                                             ? Colors.black
                                             : Colors.white,
                                         fontSize: 20,
@@ -109,13 +111,14 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                             builder: (context) {
                               return ChoosePaymentMethodScreen(
                                 amount: amount,
+                                subcriptionType: 'Monthly',
                               );
                             },
                           ));
                         },
                         child: Stack(
                           children: [
-                            if (subscriptionType == 'monthly')
+                            if (subcription_type == 'Monthly')
                               selectedsquareIcon,
                             squareIcon,
                             Positioned(
@@ -130,7 +133,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                     Text(
                                       AppLocalizations.of(context)!.monthly,
                                       style: poppinsRegTextStyle.copyWith(
-                                        color: subscriptionType == 'monthly'
+                                        color: subcription_type == 'Monthly'
                                             ? Colors.black
                                             : Colors.white,
                                         fontSize: 15,
@@ -139,7 +142,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                     Text(
                                       "₹ 1500.00",
                                       style: poppinsMedTextStyle.copyWith(
-                                        color: subscriptionType == 'monthly'
+                                        color: subcription_type == 'Monthly'
                                             ? Colors.black
                                             : Colors.white,
                                         fontSize: 20,
@@ -162,13 +165,14 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                       builder: (context) {
                         return ChoosePaymentMethodScreen(
                           amount: amount,
+                          subcriptionType: 'OneDay',
                         );
                       },
                     ));
                   },
                   child: Stack(
                     children: [
-                      if (subscriptionType == 'oneday') selectedflatIcon,
+                      if (subcription_type == 'OneDay') selectedflatIcon,
                       flatIcon,
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -179,7 +183,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                             Text(
                               AppLocalizations.of(context)!.day,
                               style: poppinsRegTextStyle.copyWith(
-                                color: subscriptionType == 'oneday'
+                                color: subcription_type == 'OneDay'
                                     ? Colors.black
                                     : Colors.white,
                                 fontSize: 15,
@@ -190,7 +194,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                 Text(
                                   "₹ 80.00",
                                   style: poppinsMedTextStyle.copyWith(
-                                    color: subscriptionType == 'oneday'
+                                    color: subcription_type == 'OneDay'
                                         ? Colors.black
                                         : Colors.white,
                                     fontSize: 20,
@@ -214,13 +218,14 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                       builder: (context) {
                         return ChoosePaymentMethodScreen(
                           amount: amount,
+                          subcriptionType: 'Yearly',
                         );
                       },
                     ));
                   },
                   child: Stack(
                     children: [
-                      if (subscriptionType == 'yearly') selectedflatIcon,
+                      if (subcription_type == 'Yearly') selectedflatIcon,
                       flatIcon,
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -231,7 +236,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                             Text(
                               AppLocalizations.of(context)!.yearly,
                               style: poppinsRegTextStyle.copyWith(
-                                color: subscriptionType == 'yearly'
+                                color: subcription_type == 'Yearly'
                                     ? Colors.black
                                     : Colors.white,
                                 fontSize: 15,
@@ -242,7 +247,7 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                                 Text(
                                   "₹ 3000.00",
                                   style: poppinsMedTextStyle.copyWith(
-                                    color: subscriptionType == 'yearly'
+                                    color: subcription_type == 'Yearly'
                                         ? Colors.black
                                         : Colors.white,
                                     fontSize: 20,
