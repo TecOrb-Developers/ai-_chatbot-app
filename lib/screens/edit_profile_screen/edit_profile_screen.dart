@@ -281,14 +281,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 Icons.person,
                                 color: Colors.white,
                               ),
-                              name: 'Arihant Singh',
                               text: AppLocalizations.of(context)!.fullName,
                               onChanged: (val) {},
                               validator: (val) {
                                 if (val == '') {
                                   return AppLocalizations.of(context)!
                                       .enterTheName;
+                                } else if (!nameRegExp.hasMatch(val!)) {
+                                  return 'Only alphabets are allowed';
                                 }
+
                                 return null;
                               },
                               keyBoardType: TextInputType.name,

@@ -14,7 +14,6 @@ import '../../utils/util.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
-import '../../widgets/loading_indicator.dart';
 import 'widget/card_utils.dart';
 
 enum SelectPaymentType { DebitCard, CreditCard }
@@ -106,7 +105,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
   // SelectPaymentType? _card = SelectPaymentType.DebitCard;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kBlackColor,
       body: Stack(
@@ -149,6 +147,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                   if (value!.isEmpty) {
                                     return 'Please enter the Card Holder Name';
                                   }
+                                  return null;
                                 },
                                 controller: cardnameController,
                                 keyBoardType: TextInputType.name,
@@ -210,6 +209,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               ),
                               TextWhiteBtnWidget(
                                 onTap: () async {
+                                  setState(() {
+                                    isPosting = true;
+                                  });
                                   if (_formKey.currentState!.validate()) {
                                     cardName = cardnameController.text;
                                     cardNumber = cardNumberController.text;
@@ -295,9 +297,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
     } catch (e) {
       print(e);
     }
-    setState(() {
-      isPosting = true;
-    });
   }
 
   Future<void> getProfile() async {
@@ -327,9 +326,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
       print("no");
       print(e);
     }
-    setState(() {
-      isPosting = true;
-    });
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
+import 'package:ai_chatbot_flutter/screens/add_card_screen/add_card_screen.dart';
 import 'package:ai_chatbot_flutter/screens/add_card_screen/widget/card_utils.dart';
 import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
@@ -246,11 +247,101 @@ class _PayNowScreenState extends State<PayNowScreen> {
         print(widget.amount);
         print(widget.subcriptionType);
         subscription(paymentResult.id);
+        setState(() {
+          paymentProcess = false;
+        });
+
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (ctx) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                backgroundColor: Colors.white,
+                title: Text(
+                  'Payment Successfull',
+                  style: poppinsMedTextStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: 17,
+                  ),
+                ),
+                content: const Icon(
+                  Icons.check,
+                  color: Colors.green,
+                  size: 40,
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => BottomBar()),
+                            (Route<dynamic> route) => false);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => BottomBar(),
+                        //     ));
+
+                        showSnackbar(
+                          context: context,
+                          title: "Payment Successfull",
+                        );
+                      },
+                      child: Text('OK')),
+                ],
+              );
+            });
+
         print("paymentResul===${paymentResult.id}");
       }
     } catch (e) {
       print("error---$e");
+      setState(() {
+        paymentProcess = false;
+      });
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              backgroundColor: Colors.white,
+              title: Text(
+                'Oops!,Some thing went wrong',
+                style: poppinsMedTextStyle.copyWith(
+                  color: Colors.red,
+                  fontSize: 17,
+                ),
+              ),
+              content: Icon(
+                Icons.dangerous,
+                color: Colors.red,
+                size: 40,
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      showSnackbar(
+                        context: context,
+                        title: "Payment Not Successfull",
+                      );
+                    },
+                    child: Text('OK')),
+              ],
+            );
+          });
     }
+    setState(() {
+      paymentProcess = false;
+    });
   }
 
   Future<void> subscription(String id) async {
@@ -296,38 +387,6 @@ class _PayNowScreenState extends State<PayNowScreen> {
                 color: Colors.green,
               ),
             ));
-        showDialog(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                backgroundColor: Colors.white,
-                title: Text(
-                  'Payment Successfull',
-                  style: poppinsMedTextStyle.copyWith(
-                    color: Colors.black,
-                    fontSize: 17,
-                  ),
-                ),
-                content: Icon(
-                  Icons.check,
-                  color: Colors.green,
-                  size: 40,
-                ),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BottomBar(),
-                            ));
-                      },
-                      child: Text('OK')),
-                ],
-              );
-            });
       }
     } catch (e) {
       print(e);
