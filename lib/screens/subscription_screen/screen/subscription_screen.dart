@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/screens/choose_paymont_method/choose_payment_method.dart';
+import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
@@ -17,10 +18,19 @@ class SubscrptionScreen extends StatefulWidget {
 
 class _SubscrptionScreenState extends State<SubscrptionScreen> {
   bool isSubcribtion = false;
+  bool isReady = true;
 
   void initState() {
     print('subscription');
     super.initState();
+    print("1$subscribeType");
+    print("2$subscription");
+    if ((subscribeType == 'expire' || subscribeType == 'null') &&
+        subscription == false) {
+      setState(() {
+        isReady = false;
+      });
+    }
   }
 
   @override
@@ -54,14 +64,16 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                     child: GestureDetector(
                         onTap: () {
                           var amount = "500";
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return ChoosePaymentMethodScreen(
-                                amount: amount,
-                                subcriptionType: "Weekly",
-                              );
-                            },
-                          ));
+                          isReady
+                              ? null
+                              : Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChoosePaymentMethodScreen(
+                                      amount: amount,
+                                      subcriptionType: "Weekly",
+                                    );
+                                  },
+                                ));
                         },
                         child: Stack(
                           children: [
@@ -107,14 +119,16 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                     child: GestureDetector(
                         onTap: () {
                           var amount = "1500";
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return ChoosePaymentMethodScreen(
-                                amount: amount,
-                                subcriptionType: 'Monthly',
-                              );
-                            },
-                          ));
+                          isReady
+                              ? null
+                              : Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChoosePaymentMethodScreen(
+                                      amount: amount,
+                                      subcriptionType: 'Monthly',
+                                    );
+                                  },
+                                ));
                         },
                         child: Stack(
                           children: [
@@ -161,14 +175,16 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
               GestureDetector(
                   onTap: () {
                     var amount = "80";
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return ChoosePaymentMethodScreen(
-                          amount: amount,
-                          subcriptionType: 'OneDay',
-                        );
-                      },
-                    ));
+                    isReady
+                        ? null
+                        : Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return ChoosePaymentMethodScreen(
+                                amount: amount,
+                                subcriptionType: 'OneDay',
+                              );
+                            },
+                          ));
                   },
                   child: Stack(
                     children: [
@@ -214,14 +230,16 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
               GestureDetector(
                   onTap: () {
                     var amount = "3000";
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return ChoosePaymentMethodScreen(
-                          amount: amount,
-                          subcriptionType: 'Yearly',
-                        );
-                      },
-                    ));
+                    isReady
+                        ? null
+                        : Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return ChoosePaymentMethodScreen(
+                                amount: amount,
+                                subcriptionType: 'Yearly',
+                              );
+                            },
+                          ));
                   },
                   child: Stack(
                     children: [
