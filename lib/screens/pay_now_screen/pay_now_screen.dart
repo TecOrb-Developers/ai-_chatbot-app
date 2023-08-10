@@ -1,19 +1,22 @@
+import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
 import 'package:ai_chatbot_flutter/screens/add_card_screen/widget/card_utils.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
+import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/api_const.dart';
-import '../../controllers/payment_controller.dart';
 import '../../services/headers_map.dart';
 import '../../services/network_api.dart';
 import '../../utils/text_styles.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import '../../utils/ui_parameters.dart';
+import '../../utils/util.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
-// import 'package:stripe_sdk/stripe_sdk.dart';
+import '../../widgets/loading_indicator.dart';
 
 class PayNowScreen extends StatefulWidget {
   const PayNowScreen(
@@ -25,7 +28,8 @@ class PayNowScreen extends StatefulWidget {
       this.amount,
       required this.cardNo,
       this.saveCardBool,
-      this.id});
+      this.id,
+      this.subcriptionType});
   final String? last4;
   final String? expMonth;
   final String? expYear;
@@ -34,6 +38,7 @@ class PayNowScreen extends StatefulWidget {
   final String? amount;
   final String cardNo;
   final bool? saveCardBool;
+  final String? subcriptionType;
 
   @override
   State<PayNowScreen> createState() => _PayNowScreenState();
@@ -46,11 +51,13 @@ class _PayNowScreenState extends State<PayNowScreen> {
   late TextEditingController expiryDateController;
   late TextEditingController cvvCodeController;
   var client_scret_id = '';
+  bool paymentProcess = false;
+
   @override
   void initState() {
     super.initState();
-    PaymentController paymentController = Get.put(PaymentController());
-    cardnameController = TextEditingController(text: 'Card Holder Name');
+    // PaymentController paymentController = Get.put(PaymentController());
+    cardnameController = TextEditingController(text: widget.cardHolderName);
     cardNumberController =
         TextEditingController(text: 'XXXX-XXXX-XXXX-${widget.last4}');
     expiryDateController = TextEditingController(
@@ -157,19 +164,20 @@ class _PayNowScreenState extends State<PayNowScreen> {
                             onTap: () async {
                               if (_formKey.currentState!.validate()) {
                                 await paymentIntent(widget.id!, widget.amount);
-                                // PaymentController.cardName = '';
-                                PaymentController.cardNumber =
-                                    PaymentController.cardNumber;
-                                PaymentController.cvv = cvvCodeController.text;
-                                PaymentController.expiryMonth =
-                                    widget.expMonth!;
-                                PaymentController.expiryYear = widget.expYear!;
-                                PaymentController.saveCardBoolean =
-                                    PaymentController.saveCardBoolean;
-                                PaymentController.cardId = widget.id!;
-                                PaymentController.client_secret_id =
-                                    client_scret_id;
-                                PaymentController.saveCardDetails();
+                                comfirmPayment();
+                                // // PaymentController.cardName = '';
+                                // PaymentController.cardNumber =
+                                //     PaymentController.cardNumber;
+                                // PaymentController.cvv = cvvCodeController.text;
+                                // PaymentController.expiryMonth =
+                                //     widget.expMonth!;
+                                // PaymentController.expiryYear = widget.expYear!;
+                                // PaymentController.saveCardBoolean =
+                                //     PaymentController.saveCardBoolean;
+                                // PaymentController.cardId = widget.id!;
+                                // PaymentController.client_secret_id =
+                                //     client_scret_id;
+                                // PaymentController.saveCardDetails();
                               }
                             },
                             title: 'Payment',
@@ -183,6 +191,15 @@ class _PayNowScreenState extends State<PayNowScreen> {
               ],
             ),
           ),
+          Visibility(
+            visible: paymentProcess,
+            child: const Scaffold(
+              backgroundColor: Colors.black38,
+              body: Center(
+                child: LoadingIndicator(),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -191,6 +208,9 @@ class _PayNowScreenState extends State<PayNowScreen> {
   Future<void> paymentIntent(String cardId, String? amount) async {
     print('payment intent');
     try {
+      setState(() {
+        paymentProcess = true;
+      });
       final body = {"amount": amount, "cardAttachedID": cardId};
       final headers = {
         "Authorization": authorizationValue,
@@ -207,6 +227,169 @@ class _PayNowScreenState extends State<PayNowScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> comfirmPayment() async {
+    print('confirm Payment');
+    try {
+      final paymentResult = await Stripe.instance.confirmPayment(
+        paymentIntentClientSecret: client_scret_id,
+      );
+      print('confirm Payment1');
+      print("paymentResul===$paymentResult");
+
+      if (paymentResult.status == PaymentIntentsStatus.Succeeded) {
+        print('confirm Payment2');
+        print(widget.amount);
+        print(widget.subcriptionType);
+        subscription(paymentResult.id);
+        setState(() {
+          paymentProcess = false;
+        });
+
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (ctx) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                backgroundColor: Colors.white,
+                title: Text(
+                  'Payment Successfull',
+                  style: poppinsMedTextStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: 17,
+                  ),
+                ),
+                content: const Icon(
+                  Icons.check,
+                  color: Colors.green,
+                  size: 40,
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => BottomBar()),
+                            (Route<dynamic> route) => false);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => BottomBar(),
+                        //     ));
+
+                        showSnackbar(
+                          context: context,
+                          title: "Payment Successfull",
+                        );
+                      },
+                      child: Text('OK')),
+                ],
+              );
+            });
+
+        print("paymentResul===${paymentResult.id}");
+      }
+    } catch (e) {
+      print("error---$e");
+      setState(() {
+        paymentProcess = false;
+      });
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              backgroundColor: Colors.white,
+              title: Text(
+                'Oops!,Some thing went wrong',
+                style: poppinsMedTextStyle.copyWith(
+                  color: Colors.red,
+                  fontSize: 17,
+                ),
+              ),
+              content: Icon(
+                Icons.dangerous,
+                color: Colors.red,
+                size: 40,
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      showSnackbar(
+                        context: context,
+                        title: "Payment Not Successfull",
+                      );
+                    },
+                    child: Text('OK')),
+              ],
+            );
+          });
+    }
+    setState(() {
+      paymentProcess = false;
+    });
+  }
+
+  Future<void> subscription(String id) async {
+    print('subscription');
+    try {
+      final body = {
+        "subscriptionType":
+            widget.subcriptionType, // OneDay , Weekly , Monthly ,Yearly
+        "amount": widget.amount,
+        "paymentId": id,
+        "cardType": "Debit", // Debit , Cradit
+        "paymentStatus": "succeeded" // succeeded
+      };
+      final headers = {
+        "Authorization": authorizationValue,
+      };
+
+      var response = await NetworkApi.post(
+          url: subsciptionUrl, body: body, headers: headers);
+      if (response['code'] == 200) {
+        print("response>>>>>$response");
+        print("response>>>>>${response['data']}");
+        print("response>>>>>${response['data']['subscriptionType']}");
+
+        final prefs = await SharedPreferences.getInstance();
+
+        prefs.setString(
+            subcriptionTypeKey, response["data"]["subscriptionType"]);
+        AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            backgroundColor: Colors.white,
+            title: Text(
+              'Payment Successfull',
+              style: poppinsMedTextStyle.copyWith(
+                color: Colors.black,
+                fontSize: 17,
+              ),
+            ),
+            content: const Center(
+              child: Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
+            ));
+      }
+    } catch (e) {
+      print(e);
+    }
+    setState(() {
+      paymentProcess = false;
+    });
   }
 }
 

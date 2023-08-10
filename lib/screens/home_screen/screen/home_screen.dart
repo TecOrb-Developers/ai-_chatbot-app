@@ -1,15 +1,8 @@
-import 'dart:convert';
-import 'package:ai_chatbot_flutter/constants/api_const.dart';
-import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
-import 'package:ai_chatbot_flutter/services/headers_map.dart';
-import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
-import 'package:ai_chatbot_flutter/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:gradient_borders/gradient_borders.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_back_widget.dart';
@@ -26,6 +19,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return ScreenBackgroundWidget(
       child: SingleChildScrollView(
@@ -68,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 110,
             ),
-            // if (circularIndicatorShow) const LoadingIndicator(),
           ],
         ),
       ),

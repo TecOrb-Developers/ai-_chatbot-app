@@ -125,45 +125,54 @@ class _SettingScreenState extends State<SettingScreen> {
                                       AssetImage("assets/images/avatar.png"),
                                 ),
                           const SizedBox(width: 12),
-                          Column(
+                          Expanded(
+                              child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                name,
-                                style: poppinsMedTextStyle.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 20,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      name,
+                                      style: poppinsMedTextStyle.copyWith(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      "V1.1.16",
+                                      style: poppinsRegTextStyle.copyWith(
+                                        color: Colors.white54,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                              Text(
-                                "V1.1.16",
-                                style: poppinsRegTextStyle.copyWith(
-                                  color: Colors.white54,
-                                ),
-                              )
-                            ],
-                          ),
-                          const Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return EditProfileScreen(
-                                      email: email,
-                                      image: image,
-                                      phoneNo: phoneNo,
-                                      selectedCountryCode: selectedCountryCode,
-                                      subscription: subscription,
-                                      name: name,
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return EditProfileScreen(
+                                          email: email,
+                                          image: image,
+                                          phoneNo: phoneNo,
+                                          selectedCountryCode:
+                                              selectedCountryCode,
+                                          subscription: subscription,
+                                          name: name,
+                                        );
+                                      },
+                                    )).then(
+                                      (value) {
+                                        getProfile();
+                                      },
                                     );
                                   },
-                                )).then(
-                                  (value) {
-                                    getProfile();
-                                  },
-                                );
-                              },
-                              icon: editProfileIcon)
+                                  icon: editProfileIcon)
+                            ],
+                          ))
                         ],
                       )
                     : Shimmer.fromColors(

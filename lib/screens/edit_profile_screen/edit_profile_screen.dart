@@ -64,14 +64,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: source);
-    if (pickedImage == null) return;
+    try {
+      print('pick Image1');
+      final picker = ImagePicker();
+      print('pick Image2');
+      final pickedImage = await picker.pickImage(source: source);
+      print('pick Image3');
+      if (pickedImage == null) return;
+      print('pick Image4');
 
-    final imageTemporary = File(pickedImage.path);
-    setState(() {
-      this.pickedImage = imageTemporary;
-    });
+      final imageTemporary = File(pickedImage.path);
+      print('pick Image5');
+      setState(() {
+        this.pickedImage = imageTemporary;
+      });
+    } catch (e) {
+      print('not pick image');
+      print(e);
+    }
   }
 
   // Future<void> getProfile() async {
@@ -204,9 +214,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
-                                      Future.delayed(Duration(seconds: 5), () {
-                                        Navigator.of(context).pop(true);
-                                      });
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -281,14 +288,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 Icons.person,
                                 color: Colors.white,
                               ),
-                              name: 'Arihant Singh',
                               text: AppLocalizations.of(context)!.fullName,
                               onChanged: (val) {},
                               validator: (val) {
                                 if (val == '') {
                                   return AppLocalizations.of(context)!
                                       .enterTheName;
+                                } else if (!nameRegExp.hasMatch(val!)) {
+                                  return 'Only alphabets are allowed';
                                 }
+
                                 return null;
                               },
                               keyBoardType: TextInputType.name,

@@ -4,6 +4,7 @@ import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/share_prefs_keys.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,13 +17,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  Stripe.publishableKey =
+      "pk_test_51NNrKrSFPGceK1Mz303vBJkaxMgq3LGX6p2fbRo0PnycSIoiUsSgVwjTCBGJFY4BJrzH6YfKZev0mz3J1U8DgrhB00v55q5jkZ";
   final prefs = await SharedPreferences.getInstance();
   authorizationValue = prefs.getString(userTokenKey) ?? "";
+  subcription_type = prefs.getString(subcriptionTypeKey) ?? '';
+
   localizationValue = prefs.getString(locale) ?? 'en';
   selectLanguage = prefs.getString(selectedLang) ?? "English";
   print(authorizationValue);
   print(selectedLang);
+  print(subcription_type);
   runApp(
     const MyApp(),
   );

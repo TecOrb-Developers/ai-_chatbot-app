@@ -21,8 +21,10 @@ import '../../widgets/text_white_btn_widget.dart';
 enum SelectCardName { Visa, Axis }
 
 class ChoosePaymentMethodScreen extends StatefulWidget {
-  const ChoosePaymentMethodScreen({super.key, this.amount});
+  const ChoosePaymentMethodScreen(
+      {super.key, this.amount, this.subcriptionType});
   final String? amount;
+  final String? subcriptionType;
 
   @override
   State<ChoosePaymentMethodScreen> createState() =>
@@ -46,7 +48,7 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
 
   bool isloading = false;
   List<dynamic> cardDataList = [];
-  int currentIndex = 0;
+  int currentIndex = -1;
 
   @override
   void initState() {
@@ -149,6 +151,7 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
                                 cardDataList.length,
                                 (index) {
                                   id = cardDataList[index]['id'];
+
                                   if (index == currentIndex) {
                                     chooseId = id;
                                     choose_ex_month = cardDataList[index]
@@ -305,20 +308,27 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
                         onTap: () {
                           print('payment');
                           print(widget.amount);
-
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return PayNowScreen(
-                                expMonth: choose_ex_month,
-                                expYear: choose_ex_year,
-                                id: chooseId,
-                                last4: choose_last4,
-                                amount: widget.amount,
-                                cardNo: cardId,
-                                saveCardBool: true,
-                              );
-                            },
-                          ));
+                          if (currentIndex >= 0) {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return PayNowScreen(
+                                  expMonth: choose_ex_month,
+                                  expYear: choose_ex_year,
+                                  id: chooseId,
+                                  last4: choose_last4,
+                                  amount: widget.amount,
+                                  cardNo: cardId,
+                                  saveCardBool: true,
+                                  subcriptionType: widget.subcriptionType,
+                                );
+                              },
+                            ));
+                          } else {
+                            showSnackbar(
+                              context: context,
+                              title: "Please Select the Card first",
+                            );
+                          }
                         },
                         title: 'Pay',
                         margin: const EdgeInsets.symmetric(vertical: 30),
@@ -418,70 +428,6 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
     }
     print(response);
   }
-
-  // Future<void>confirmCardPayment()async{
-  //   var stripe;
-  //   var response= await stripe.confirmCardPayment({secretPublicKey}, {
-  //       payment_method: selectedCard,
-  //       return_url: "https://aichatbot-web.vercel.app/subscription",
-  //     });
-  // }
-//  void confirmPayment()async{
-//   const stripe
-// var Res = await stripe.confirmCardPayment(`${isSecretKey}`, {
-//         payment_method: `${selectedCard}`,
-//         return_url: "https://aichatbot-web.vercel.app/subscription",
-//       });
-//  }
-//   Future<void> handleStripePayment() async {
-//     print("payment card confirmation");
-
-//     try {
-//       final clientSecret =
-//           ''; // Replace with your actual client secret
-
-//       if (clientSecret == null || clientSecret.isEmpty) {
-//         print('Invalid client secret.');
-//         return;
-//       }
-
-//       final url = 'https://api.stripe.com/v1/payment_intents/$clientSecret';
-//       print(url);
-
-//       final headers = {
-//         'Authorization': "Bearer $secretPublicKey",
-//         'Content_method_type': 'application/x-www-form-urlencoded'
-//       };
-
-//       final response = await http.get(
-//         Uri.parse(url),
-//         headers: headers,
-//       );
-
-//       final data = json.decode(response.body);
-//       print('payment---$data');
-
-//       if (response.statusCode == 200) {
-//         print('200');
-//         final jsonResponse = json.decode(response.body);
-//         final paymentIntent = jsonResponse['paymentIntent'];
-
-//         if (paymentIntent != null && paymentIntent['status'] == 'succeeded') {
-//           // Handle successful payment here
-//           print('Payment succeeded');
-//         } else {
-//           // Handle unsuccessful, processing, or canceled payments and API errors here
-//           print('Payment failed or still processing');
-//         }
-//       } else {
-//         // Handle other response statuses or errors
-//         print('Failed to retrieve payment intent: ${response.statusCode}');
-//       }
-//     } catch (e) {
-//       print('002');
-//       print(e);
-//     }
-//   }
 }
 
 class AddCardList extends StatelessWidget {
@@ -533,7 +479,7 @@ class AddCardList extends StatelessWidget {
               ],
             ),
             Spacer(),
-            index == currentIndex
+            currentIndex == index
                 ? const Icon(
                     Icons.radio_button_checked,
                     color: kPearColor,
