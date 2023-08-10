@@ -12,7 +12,6 @@ import 'package:ai_chatbot_flutter/widgets/screen_background_widget.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/api_const.dart';
 import '../../constants/shared_prefs_keys.dart';
@@ -43,6 +42,9 @@ class _OtpScreenState extends State<OtpScreen> {
   bool isLoading = false;
 
   String smsCode = "";
+  String _verificationId = "";
+  int? _resendToken;
+  int maxlength = 10;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -175,6 +177,10 @@ class _OtpScreenState extends State<OtpScreen> {
                                 canResend = false;
                               });
                               print("reset");
+                              // reSendOTP(
+                              //     phone:
+                              //         "+{${widget.countryCode}${widget.phoneNo}}");
+                              checkAndGetOtp();
                             }
                           : null,
                       child: Text(
@@ -269,6 +275,68 @@ class _OtpScreenState extends State<OtpScreen> {
     if (countdownTimer!.isActive) countdownTimer!.cancel();
     super.dispose();
   }
+
+  void checkAndGetOtp() async {
+    print('check otp');
+    if (widget.phoneNo.length != maxlength) {
+      showSnackbar(
+        context: context,
+        title: "Invalid phone number",
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+${widget.countryCode}${widget.phoneNo}",
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print('vericication failed-----------------------------------');
+        print(e);
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        LoginScreen.verificationId = verificationId;
+
+        print('code send');
+      },
+      timeout: const Duration(seconds: 50),
+      codeAutoRetrievalTimeout: (String verificationId) {
+        verificationId = LoginScreen.verificationId;
+      },
+    );
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  // Future<bool> reSendOTP({required String phone}) async {
+  //   print('resend otp');
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //     phoneNumber: phone,
+  //     verificationCompleted: (PhoneAuthCredential credential) {
+  //       print('phone verification completed');
+  //     },
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       print('failed verification-------------$e');
+  //     },
+  //     codeSent: (String verificationId, int? resendToken) async {
+  //       _verificationId = verificationId;
+  //       _resendToken = resendToken;
+  //     },
+  //     timeout: const Duration(seconds: 50),
+  //     forceResendingToken: _resendToken,
+  //     codeAutoRetrievalTimeout: (String verificationId) {
+  //       verificationId = _verificationId;
+  //     },
+  //   );
+  //   debugPrint("_verificationId: $_verificationId");
+  //   return true;
+  // }
 
   Future<bool> checkAccount() async {
     try {

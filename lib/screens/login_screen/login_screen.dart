@@ -1,15 +1,12 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
-import 'package:ai_chatbot_flutter/screens/signup_screen/signup_screen.dart';
 import 'package:ai_chatbot_flutter/services/auth_service.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/share_prefs_keys.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
-import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
-import 'package:ai_chatbot_flutter/widgets/gradient_rect_btn_widget.dart';
 import 'package:ai_chatbot_flutter/widgets/screen_background_widget.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:country_picker/country_picker.dart';

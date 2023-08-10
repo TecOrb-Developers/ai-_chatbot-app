@@ -1,7 +1,5 @@
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
-import 'package:ai_chatbot_flutter/screens/add_card_screen/add_card_screen.dart';
 import 'package:ai_chatbot_flutter/screens/add_card_screen/widget/card_utils.dart';
-import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
@@ -15,12 +13,10 @@ import '../../utils/text_styles.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import '../../utils/ui_parameters.dart';
 import '../../utils/util.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
 import '../../widgets/loading_indicator.dart';
-// import 'package:stripe_sdk/stripe_sdk.dart';
 
 class PayNowScreen extends StatefulWidget {
   const PayNowScreen(
@@ -61,7 +57,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
   void initState() {
     super.initState();
     // PaymentController paymentController = Get.put(PaymentController());
-    cardnameController = TextEditingController(text: 'Card Holder Name');
+    cardnameController = TextEditingController(text: widget.cardHolderName);
     cardNumberController =
         TextEditingController(text: 'XXXX-XXXX-XXXX-${widget.last4}');
     expiryDateController = TextEditingController(

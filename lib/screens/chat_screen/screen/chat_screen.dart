@@ -11,7 +11,6 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
-import 'package:docx_template/docx_template.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
