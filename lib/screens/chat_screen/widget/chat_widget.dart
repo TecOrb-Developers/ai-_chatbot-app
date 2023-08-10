@@ -6,11 +6,9 @@ import '../../../utils/text_styles.dart';
 class ChatWidget extends StatelessWidget {
   final String text;
   final bool isSender;
-  const ChatWidget({
-    super.key,
-    required this.text,
-    required this.isSender,
-  });
+  final Widget? child;
+  const ChatWidget(
+      {super.key, required this.text, required this.isSender, this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
 import 'package:ai_chatbot_flutter/screens/splash_screen/splash_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
@@ -17,8 +18,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Stripe.publishableKey =
-      "pk_test_51NNrKrSFPGceK1Mz303vBJkaxMgq3LGX6p2fbRo0PnycSIoiUsSgVwjTCBGJFY4BJrzH6YfKZev0mz3J1U8DgrhB00v55q5jkZ";
+  Stripe.publishableKey = secretPublicKey;
+
   final prefs = await SharedPreferences.getInstance();
   authorizationValue = prefs.getString(userTokenKey) ?? "";
   subcription_type = prefs.getString(subcriptionTypeKey) ?? '';

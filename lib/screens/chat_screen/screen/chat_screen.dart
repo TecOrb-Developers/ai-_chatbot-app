@@ -11,6 +11,7 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
+import 'package:docx_template/docx_template.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -135,10 +136,12 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               Obx(
                 () => chatController.isTyping.value
-                    ? const SpinKitThreeBounce(
-                        color: Colors.grey,
-                        size: 18,
-                      )
+                    ? const ChatShrinkWidget()
+
+                    // const SpinKitThreeBounce(
+                    //     color: Colors.grey,
+                    //     size: 18,
+                    //   )
                     : const SizedBox.shrink(),
               ),
               SendMessageWidget(
@@ -752,6 +755,50 @@ class BottomSheetHeadDivider extends StatelessWidget {
         color: Color(0xffBABABA),
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
+    );
+  }
+}
+
+class ChatShrinkWidget extends StatelessWidget {
+  final Widget? child;
+  const ChatShrinkWidget({super.key, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Column(
+          children: [
+            chatbotAvatarIcon,
+            SizedBox(height: 10),
+          ],
+        ),
+        const SizedBox(width: 10),
+        Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 10,
+            ),
+            margin: const EdgeInsets.only(
+              top: 10,
+              bottom: 10,
+              right: 80,
+            ),
+            decoration: const BoxDecoration(
+              color: Color(0xff171717),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(22),
+                topRight: Radius.circular(22),
+                bottomRight: Radius.circular(22),
+              ),
+            ),
+            child: const SpinKitThreeBounce(
+              color: Colors.grey,
+              size: 18,
+            )),
+      ],
     );
   }
 }
