@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
-import 'package:ai_chatbot_flutter/screens/settings_screen/screen/settings_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
@@ -14,6 +13,8 @@ import '../../utils/util.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
+import '../../widgets/loading_indicator.dart';
+import '../home_screen/screen/home_screen.dart';
 import 'widget/card_utils.dart';
 
 enum SelectPaymentType { DebitCard, CreditCard }
@@ -66,6 +67,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
         showSnackbar(context: context, title: 'Successfully add card');
         Navigator.pop(context, true);
       }
+      setState(() {
+        isPosting = false;
+      });
       print("response===$response");
 
       print(response['message']);
@@ -157,7 +161,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                 controller: cardNumberController,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(19),
+                                  LengthLimitingTextInputFormatter(16),
                                   CardNumberInputFormatter()
                                 ],
                                 onChanged: (value) {},
@@ -173,7 +177,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       text: 'Exp Date',
                                       inputFormatters: [
                                         FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(5),
+                                        LengthLimitingTextInputFormatter(4),
                                         CardMonthInputFormatter()
                                       ],
                                       controller: expiryDateController,
@@ -194,7 +198,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       keyBoardType: TextInputType.number,
                                       inputFormatters: [
                                         FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(4),
+                                        LengthLimitingTextInputFormatter(3),
                                       ],
                                       onChanged: (value) {},
                                       validator: (value) {
@@ -209,9 +213,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               ),
                               TextWhiteBtnWidget(
                                 onTap: () async {
-                                  setState(() {
-                                    isPosting = true;
-                                  });
                                   if (_formKey.currentState!.validate()) {
                                     cardName = cardnameController.text;
                                     cardNumber = cardNumberController.text;
@@ -243,15 +244,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ],
             ),
           ),
-          // Visibility(
-          //   visible: isPosting,
-          //   child: const Scaffold(
-          //     backgroundColor: Colors.black38,
-          //     body: Center(
-          //       child: LoadingIndicator(),
-          //     ),
-          //   ),
-          // ),
+          Visibility(
+            visible: isPosting,
+            child: const Scaffold(
+              backgroundColor: Colors.black38,
+              body: Center(
+                child: LoadingIndicator(),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -259,9 +260,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   Future<void> createToken() async {
     print('create Token');
-    setState(() {
-      isPosting = true;
-    });
 
     Map<String, dynamic> body = {
       "card[number]": cardNumber,
@@ -270,6 +268,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
       "card[cvc]": cvvNumber,
     };
     try {
+      setState(() {
+        isPosting = true;
+      });
       http.Response response;
       response = await http.post(
         Uri.parse(
@@ -301,10 +302,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   Future<void> getProfile() async {
     print('getProfile');
-    setState(() {
-      isPosting = true;
-    });
+
     try {
+      setState(() {
+        isPosting = true;
+      });
       final headers = {
         "Authorization": authorizationValue,
       };

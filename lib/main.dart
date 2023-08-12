@@ -24,22 +24,20 @@ void main() async {
   authorizationValue = prefs.getString(userTokenKey) ?? "";
   subcription_type = prefs.getString(subcriptionTypeKey) ?? '';
 
-  localizationValue = prefs.getString(locale) ?? 'en';
-  selectLanguage = prefs.getString(selectedLang) ?? "English";
   print(authorizationValue);
   print(selectedLang);
   print(subcription_type);
-  runApp(
-    const MyApp(),
-  );
+  print(localizationValue);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  LanguageController controller = Get.put(LanguageController());
 
   @override
   Widget build(BuildContext context) {
-    LanguageController controller = Get.put(LanguageController());
+    controller.giveLocal();
     print(authorizationValue);
     return Obx(
       () => MaterialApp(

@@ -15,6 +15,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 var subscribeType = '';
 bool subscription = false;
+bool isImage = false;
+var stripeId = '';
+var name = '';
+var image = '';
+bool isLoading = false;
+var selectedCountryCode = '';
+var email = '';
+var phoneNo = '';
+
+bool isUploading = false;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,6 +57,19 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           subscribeType = response['data']['subscriptionType'].toString();
           subscription = response['data']['subscription'];
+          name = response['data']['name'];
+          selectedCountryCode = response['data']['countryCode'];
+          email = response['data']['email'];
+          phoneNo = response['data']['phoneNumber'];
+          stripeId = response['data']['stripeId'];
+          subscription = response['data']['subscription'];
+          if (response['data']['image'] != null) {
+            print('image');
+            image = response['data']['image'];
+            isImage = true;
+          } else {
+            print('image null');
+          }
         });
       }
       print(subscribeType);

@@ -17,12 +17,10 @@ import '../../../utils/text_styles.dart';
 import '../../../utils/util.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../current_subscription_screen/current_subscription_scrren.dart';
+import '../../home_screen/screen/home_screen.dart';
 import '../widgets/profile_avatar.dart';
 import '../widgets/settings_tile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-bool isImage = false;
-var stripeId = '';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -32,55 +30,17 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  var name = '';
-  var image = '';
-  bool isLoading = false;
-  var selectedCountryCode = '';
-  var email = '';
-  var phoneNo = '';
-  bool subscription = false;
-  bool isUploading = false;
+  // var name = '';
+  // var image = '';
+  // bool isLoading = false;
+  // var selectedCountryCode = '';
+  // var email = '';
+  // var phoneNo = '';
+  // bool subscription = false;
+  // bool isUploading = false;
 
   void initState() {
     super.initState();
-    getProfile();
-  }
-
-  Future<void> getProfile() async {
-    print('getProfile');
-    try {
-      final headers = {
-        "Authorization": authorizationValue,
-      };
-      var response = await NetworkApi.getResponse(
-        url: getProfileUrl,
-        headers: headers,
-      );
-      print('getProfile--$response');
-      if (response['code'] == 200) {
-        print('ok');
-        isLoading = true;
-        setState(() {
-          name = response['data']['name'];
-          selectedCountryCode = response['data']['countryCode'];
-          email = response['data']['email'];
-          phoneNo = response['data']['phoneNumber'];
-          stripeId = response['data']['stripeId'];
-          subscription = response['data']['subscription'];
-          if (response['data']['image'] != null) {
-            print('image');
-            image = response['data']['image'];
-            isImage = true;
-          } else {
-            print('image null');
-          }
-        });
-      }
-      print('okk');
-    } catch (e) {
-      print("no");
-      print(e);
-    }
   }
 
   @override
@@ -114,71 +74,70 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             child: Column(
               children: [
-                isLoading
-                    ? Row(
-                        children: [
-                          isImage
-                              ? ProfileAvatar(
-                                  backgroundImage: NetworkImage(image))
-                              : const ProfileAvatar(
-                                  backgroundImage:
-                                      AssetImage("assets/images/avatar.png"),
-                                ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                              child: Row(
+                // isLoading
+                //     ?
+                Row(
+                  children: [
+                    isImage
+                        ? ProfileAvatar(backgroundImage: NetworkImage(image))
+                        : const ProfileAvatar(
+                            backgroundImage:
+                                AssetImage("assets/images/avatar.png"),
+                          ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      name,
-                                      style: poppinsMedTextStyle.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    Text(
-                                      "V1.1.16",
-                                      style: poppinsRegTextStyle.copyWith(
-                                        color: Colors.white54,
-                                      ),
-                                    )
-                                  ],
+                              Text(
+                                name,
+                                style: poppinsMedTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
                               ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return EditProfileScreen(
-                                          email: email,
-                                          image: image,
-                                          phoneNo: phoneNo,
-                                          selectedCountryCode:
-                                              selectedCountryCode,
-                                          subscription: subscription,
-                                          name: name,
-                                        );
-                                      },
-                                    )).then(
-                                      (value) {
-                                        getProfile();
-                                      },
-                                    );
-                                  },
-                                  icon: editProfileIcon)
+                              Text(
+                                "V1.1.16",
+                                style: poppinsRegTextStyle.copyWith(
+                                  color: Colors.white54,
+                                ),
+                              )
                             ],
-                          ))
-                        ],
-                      )
-                    : Shimmer.fromColors(
-                        baseColor: Colors.grey.shade900,
-                        highlightColor: Colors.grey.shade500,
-                        child: const ShimmerListTile()),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfileScreen(
+                                    email: email,
+                                    image: image,
+                                    phoneNo: phoneNo,
+                                    selectedCountryCode: selectedCountryCode,
+                                    subscription: subscription,
+                                    name: name,
+                                  );
+                                },
+                              )).then(
+                                (value) {
+                                  // getProfile();
+                                },
+                              );
+                            },
+                            icon: editProfileIcon)
+                      ],
+                    ))
+                  ],
+                ),
+                // : Shimmer.fromColors(
+                //     baseColor: Colors.grey.shade900,
+                //     highlightColor: Colors.grey.shade500,
+                //     child: const ShimmerListTile()),
                 const SizedBox(height: 18),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),

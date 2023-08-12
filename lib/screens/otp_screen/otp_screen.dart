@@ -304,7 +304,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
         print('code send');
       },
-      timeout: const Duration(seconds: 50),
+      timeout: const Duration(seconds: 60),
       codeAutoRetrievalTimeout: (String verificationId) {
         verificationId = LoginScreen.verificationId;
       },

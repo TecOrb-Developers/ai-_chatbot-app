@@ -20,6 +20,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../home_screen/screen/home_screen.dart';
+
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen(
       {super.key,

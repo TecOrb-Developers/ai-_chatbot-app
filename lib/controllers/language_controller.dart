@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageController extends GetxController {
   RxString selectedLanguage = 'English'.obs;
-  var selectLocale = 'en'.obs;
+  var selectLocale = " en".obs;
 
   void setLanguage(String language, String locale) async {
     selectedLanguage.value = language;
-    selectLocale.value = locale;
+    // selectLocale.value = locale;
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('locale', locale);
@@ -22,8 +22,8 @@ class LanguageController extends GetxController {
 
   Future<void> giveLocal() async {
     final prefs = await SharedPreferences.getInstance();
-
-    localizationValue = prefs.getString(locale) ?? 'en';
-    selectLanguage = prefs.getString(selectedLang) ?? "English";
+    selectLocale.value = (prefs.getString(locale) ?? 'en');
+    // localizationValue = (prefs.getString(locale) ?? 'en');
+    selectedLanguage.value = prefs.getString(selectedLang) ?? "English";
   }
 }

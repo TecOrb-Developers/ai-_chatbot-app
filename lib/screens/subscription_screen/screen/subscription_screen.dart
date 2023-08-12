@@ -25,7 +25,9 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
     super.initState();
     print("1$subscribeType");
     print("2$subscription");
-    if ((subscribeType == 'expire' || subscribeType == 'null') &&
+    if ((subscribeType == 'Expire' ||
+            subscribeType == 'null' ||
+            subscribeType == '') &&
         subscription == false) {
       setState(() {
         isReady = false;
