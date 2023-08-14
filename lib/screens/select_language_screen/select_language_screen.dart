@@ -28,6 +28,7 @@ class _SelectLanguageState extends State<SelectLanguage> {
   void initState() {
     super.initState();
     languageController = Get.find();
+    languageController.giveLocal();
   }
 
   int currentIndex = 0;

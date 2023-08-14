@@ -1,10 +1,11 @@
 import 'package:ai_chatbot_flutter/screens/choose_paymont_method/choose_payment_method.dart';
-import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/widgets/grad_horizontal_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../controllers/profile_controller.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../widgets/subtick_text.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,14 +20,18 @@ class SubscrptionScreen extends StatefulWidget {
 class _SubscrptionScreenState extends State<SubscrptionScreen> {
   bool isSubcribtion = false;
   bool isReady = true;
+  late final ProfileController profileController;
 
   void initState() {
     print('subscription');
     super.initState();
-    print("1$subscribeType");
-    print("2$subscription");
-    if ((subscribeType == 'expire' || subscribeType == 'null') &&
-        subscription == false) {
+    profileController = Get.find();
+    print("1${profileController.subscribeType}");
+    print("2${profileController.subscription}");
+    if ((profileController.subscribeType == 'Expire' ||
+            profileController.subscribeType == 'null' ||
+            profileController.subscribeType == '') &&
+        profileController.subscription == false) {
       setState(() {
         isReady = false;
       });

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
-import 'package:ai_chatbot_flutter/screens/settings_screen/screen/settings_screen.dart';
+import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/text_styles.dart';
 import '../../utils/ui_parameters.dart';
@@ -14,6 +15,8 @@ import '../../utils/util.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
+import '../../widgets/loading_indicator.dart';
+import '../home_screen/screen/home_screen.dart';
 import 'widget/card_utils.dart';
 
 enum SelectPaymentType { DebitCard, CreditCard }
@@ -24,6 +27,7 @@ var cvvNumber = '';
 var cardExpiryMonth = '';
 var cardExpiryYear = '';
 String cardToken = '';
+late final ProfileController profileController;
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({
@@ -48,6 +52,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
       },
     );
     super.initState();
+    profileController = Get.find();
   }
 
   Future<void> postCardToken() async {
@@ -58,7 +63,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
       final headers = {
         "Authorization": authorizationValue,
       };
-      final body = {"cardToken": cardToken, "customerId": stripeId};
+      final body = {
+        "cardToken": cardToken,
+        "customerId": profileController.stripeId
+      };
       print("body--$body");
       var response = await NetworkApi.post(
           url: addCustomerSourceApi, headers: headers, body: body);
@@ -66,6 +74,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
         showSnackbar(context: context, title: 'Successfully add card');
         Navigator.pop(context, true);
       }
+      setState(() {
+        isPosting = false;
+      });
       print("response===$response");
 
       print(response['message']);
@@ -157,7 +168,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                 controller: cardNumberController,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(19),
+                                  LengthLimitingTextInputFormatter(16),
                                   CardNumberInputFormatter()
                                 ],
                                 onChanged: (value) {},
@@ -173,7 +184,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       text: 'Exp Date',
                                       inputFormatters: [
                                         FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(5),
+                                        LengthLimitingTextInputFormatter(4),
                                         CardMonthInputFormatter()
                                       ],
                                       controller: expiryDateController,
@@ -194,7 +205,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       keyBoardType: TextInputType.number,
                                       inputFormatters: [
                                         FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(4),
+                                        LengthLimitingTextInputFormatter(3),
                                       ],
                                       onChanged: (value) {},
                                       validator: (value) {
@@ -209,9 +220,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               ),
                               TextWhiteBtnWidget(
                                 onTap: () async {
-                                  setState(() {
-                                    isPosting = true;
-                                  });
                                   if (_formKey.currentState!.validate()) {
                                     cardName = cardnameController.text;
                                     cardNumber = cardNumberController.text;
@@ -222,11 +230,12 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                     cardExpiryYear =
                                         CardUtils.giveYear(cardExpiryNumber)!;
                                     cvvNumber = cvvCodeController.text;
-                                    if (stripeId == '') {
+                                    if (profileController.stripeId == '') {
                                       getProfile();
                                     }
                                     createToken();
-                                    if (cardToken != '' && stripeId != '') {
+                                    if (cardToken != '' &&
+                                        profileController.stripeId != '') {
                                       postCardToken();
                                     }
                                   }
@@ -243,15 +252,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ],
             ),
           ),
-          // Visibility(
-          //   visible: isPosting,
-          //   child: const Scaffold(
-          //     backgroundColor: Colors.black38,
-          //     body: Center(
-          //       child: LoadingIndicator(),
-          //     ),
-          //   ),
-          // ),
+          Visibility(
+            visible: isPosting,
+            child: const Scaffold(
+              backgroundColor: Colors.black38,
+              body: Center(
+                child: LoadingIndicator(),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -259,9 +268,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   Future<void> createToken() async {
     print('create Token');
-    setState(() {
-      isPosting = true;
-    });
 
     Map<String, dynamic> body = {
       "card[number]": cardNumber,
@@ -270,6 +276,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
       "card[cvc]": cvvNumber,
     };
     try {
+      setState(() {
+        isPosting = true;
+      });
       http.Response response;
       response = await http.post(
         Uri.parse(
@@ -301,10 +310,11 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   Future<void> getProfile() async {
     print('getProfile');
-    setState(() {
-      isPosting = true;
-    });
+
     try {
+      setState(() {
+        isPosting = true;
+      });
       final headers = {
         "Authorization": authorizationValue,
       };
@@ -317,9 +327,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
         print('ok');
 
         setState(() {
-          stripeId = response['data']['stripeId'];
+          profileController.stripeId = response['data']['stripeId'];
         });
-        print(stripeId);
+        print(profileController.stripeId);
       }
       print('okk');
     } catch (e) {

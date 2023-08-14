@@ -1,15 +1,16 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
+import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/screens/chat_history_screen/chat_history.dart';
 import 'package:ai_chatbot_flutter/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:ai_chatbot_flutter/screens/help_and_support_screen/help_and_support_screen.dart';
 import 'package:ai_chatbot_flutter/screens/login_screen/login_screen.dart';
 import 'package:ai_chatbot_flutter/screens/privacy_policy_screen.dart/privacy_policy_screen.dart';
 import 'package:ai_chatbot_flutter/screens/select_language_screen/select_language_screen.dart';
-import 'package:ai_chatbot_flutter/screens/settings_screen/widgets/ListileShimmerWidget.dart';
 import 'package:ai_chatbot_flutter/screens/term_and_condition/term_and_condition.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../services/auth_service.dart';
 import '../../../utils/image_assets.dart';
@@ -17,12 +18,10 @@ import '../../../utils/text_styles.dart';
 import '../../../utils/util.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../current_subscription_screen/current_subscription_scrren.dart';
+import '../widgets/ListileShimmerWidget.dart';
 import '../widgets/profile_avatar.dart';
 import '../widgets/settings_tile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-bool isImage = false;
-var stripeId = '';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -32,55 +31,10 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  var name = '';
-  var image = '';
-  bool isLoading = false;
-  var selectedCountryCode = '';
-  var email = '';
-  var phoneNo = '';
-  bool subscription = false;
-  bool isUploading = false;
-
+  late final ProfileController profileController;
   void initState() {
     super.initState();
-    getProfile();
-  }
-
-  Future<void> getProfile() async {
-    print('getProfile');
-    try {
-      final headers = {
-        "Authorization": authorizationValue,
-      };
-      var response = await NetworkApi.getResponse(
-        url: getProfileUrl,
-        headers: headers,
-      );
-      print('getProfile--$response');
-      if (response['code'] == 200) {
-        print('ok');
-        isLoading = true;
-        setState(() {
-          name = response['data']['name'];
-          selectedCountryCode = response['data']['countryCode'];
-          email = response['data']['email'];
-          phoneNo = response['data']['phoneNumber'];
-          stripeId = response['data']['stripeId'];
-          subscription = response['data']['subscription'];
-          if (response['data']['image'] != null) {
-            print('image');
-            image = response['data']['image'];
-            isImage = true;
-          } else {
-            print('image null');
-          }
-        });
-      }
-      print('okk');
-    } catch (e) {
-      print("no");
-      print(e);
-    }
+    profileController = Get.find();
   }
 
   @override
@@ -114,71 +68,68 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             child: Column(
               children: [
-                isLoading
-                    ? Row(
-                        children: [
-                          isImage
-                              ? ProfileAvatar(
-                                  backgroundImage: NetworkImage(image))
-                              : const ProfileAvatar(
-                                  backgroundImage:
-                                      AssetImage("assets/images/avatar.png"),
-                                ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                              child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      name,
-                                      style: poppinsMedTextStyle.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    Text(
-                                      "V1.1.16",
-                                      style: poppinsRegTextStyle.copyWith(
-                                        color: Colors.white54,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                GetBuilder<ProfileController>(
+                  builder: (controller) {
+                    return // controller.isLoading
+                        //     ?
+                        Row(
+                      children: [
+                        controller.isImage
+                            ? ProfileAvatar(
+                                backgroundImage: NetworkImage(controller.image))
+                            : const ProfileAvatar(
+                                backgroundImage:
+                                    AssetImage("assets/images/avatar.png"),
                               ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return EditProfileScreen(
-                                          email: email,
-                                          image: image,
-                                          phoneNo: phoneNo,
-                                          selectedCountryCode:
-                                              selectedCountryCode,
-                                          subscription: subscription,
-                                          name: name,
-                                        );
-                                      },
-                                    )).then(
-                                      (value) {
-                                        getProfile();
-                                      },
-                                    );
-                                  },
-                                  icon: editProfileIcon)
-                            ],
-                          ))
-                        ],
-                      )
-                    : Shimmer.fromColors(
-                        baseColor: Colors.grey.shade900,
-                        highlightColor: Colors.grey.shade500,
-                        child: const ShimmerListTile()),
+                        const SizedBox(width: 12),
+                        Expanded(
+                            child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.name,
+                                    style: poppinsMedTextStyle.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "V1.1.16",
+                                    style: poppinsRegTextStyle.copyWith(
+                                      color: Colors.white54,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return EditProfileScreen();
+                                    },
+                                  )).then(
+                                    (value) {
+                                      controller.getProfile();
+                                    },
+                                  );
+                                },
+                                icon: editProfileIcon)
+                          ],
+                        ))
+                      ],
+                    );
+                    // : Shimmer.fromColors(
+                    //     baseColor: Colors.grey.shade900,
+                    //     highlightColor: Colors.grey.shade500,
+                    //     child: const ShimmerListTile()),
+                  },
+                ),
                 const SizedBox(height: 18),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),

@@ -335,7 +335,10 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         print('code send');
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      timeout: const Duration(seconds: 60),
+      codeAutoRetrievalTimeout: (String verificationId) {
+        verificationId = LoginScreen.verificationId;
+      },
     );
   }
 
