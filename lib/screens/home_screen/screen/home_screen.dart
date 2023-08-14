@@ -3,28 +3,14 @@ import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import '../../../constants/api_const.dart';
-import '../../../services/headers_map.dart';
-import '../../../services/network_api.dart';
+import '../../../controllers/profile_controller.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_back_widget.dart';
 import '../../../widgets/screen_background_widget.dart';
 import '../../chat_screen/screen/chat_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-var subscribeType = '';
-bool subscription = false;
-bool isImage = false;
-var stripeId = '';
-var name = '';
-var image = '';
-bool isLoading = false;
-var selectedCountryCode = '';
-var email = '';
-var phoneNo = '';
-
-bool isUploading = false;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,51 +20,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final ProfileController profileController;
   @override
   void initState() {
     super.initState();
-    getProfile();
-  }
-
-  Future<void> getProfile() async {
-    print('getProfile');
-    try {
-      final headers = {
-        "Authorization": authorizationValue,
-      };
-      var response = await NetworkApi.getResponse(
-        url: getProfileUrl,
-        headers: headers,
-      );
-      print('getProfile--$response');
-      if (response['code'] == 200) {
-        print('ok');
-
-        setState(() {
-          subscribeType = response['data']['subscriptionType'].toString();
-          subscription = response['data']['subscription'];
-          name = response['data']['name'];
-          selectedCountryCode = response['data']['countryCode'];
-          email = response['data']['email'];
-          phoneNo = response['data']['phoneNumber'];
-          stripeId = response['data']['stripeId'];
-          subscription = response['data']['subscription'];
-          if (response['data']['image'] != null) {
-            print('image');
-            image = response['data']['image'];
-            isImage = true;
-          } else {
-            print('image null');
-          }
-        });
-      }
-      print(subscribeType);
-      print(subscription);
-      print('okk');
-    } catch (e) {
-      print("no");
-      print(e);
-    }
+    profileController = Get.put(ProfileController());
+    profileController.getProfile();
   }
 
   @override

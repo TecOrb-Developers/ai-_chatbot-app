@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
+import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/text_styles.dart';
 import '../../utils/ui_parameters.dart';
@@ -25,6 +27,7 @@ var cvvNumber = '';
 var cardExpiryMonth = '';
 var cardExpiryYear = '';
 String cardToken = '';
+late final ProfileController profileController;
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({
@@ -49,6 +52,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
       },
     );
     super.initState();
+    profileController = Get.find();
   }
 
   Future<void> postCardToken() async {
@@ -59,7 +63,10 @@ class _AddCardScreenState extends State<AddCardScreen> {
       final headers = {
         "Authorization": authorizationValue,
       };
-      final body = {"cardToken": cardToken, "customerId": stripeId};
+      final body = {
+        "cardToken": cardToken,
+        "customerId": profileController.stripeId
+      };
       print("body--$body");
       var response = await NetworkApi.post(
           url: addCustomerSourceApi, headers: headers, body: body);
@@ -223,11 +230,12 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                     cardExpiryYear =
                                         CardUtils.giveYear(cardExpiryNumber)!;
                                     cvvNumber = cvvCodeController.text;
-                                    if (stripeId == '') {
+                                    if (profileController.stripeId == '') {
                                       getProfile();
                                     }
                                     createToken();
-                                    if (cardToken != '' && stripeId != '') {
+                                    if (cardToken != '' &&
+                                        profileController.stripeId != '') {
                                       postCardToken();
                                     }
                                   }
@@ -319,9 +327,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
         print('ok');
 
         setState(() {
-          stripeId = response['data']['stripeId'];
+          profileController.stripeId = response['data']['stripeId'];
         });
-        print(stripeId);
+        print(profileController.stripeId);
       }
       print('okk');
     } catch (e) {

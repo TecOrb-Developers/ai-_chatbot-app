@@ -54,5 +54,6 @@ class ProfileController extends GetxController {
       print("no");
       print(e);
     }
+    update();
   }
 }
