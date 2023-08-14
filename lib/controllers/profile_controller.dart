@@ -18,6 +18,8 @@ class ProfileController extends GetxController {
   bool isUploading = false;
 
   Future<void> getProfile() async {
+    isLoading = true;
+
     print('getProfile1');
     try {
       final headers = {
@@ -30,6 +32,8 @@ class ProfileController extends GetxController {
 
       print('getProfile--$response');
       if (response['code'] == 200) {
+        isLoading = false;
+
         print('ok');
         subscribeType = response['data']['subscriptionType'].toString();
         subscription = response['data']['subscription'];
@@ -54,6 +58,7 @@ class ProfileController extends GetxController {
       print("no");
       print(e);
     }
+
     update();
   }
 }

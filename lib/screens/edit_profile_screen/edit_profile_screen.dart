@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
-import 'package:ai_chatbot_flutter/screens/settings_screen/screen/settings_screen.dart';
 import 'package:ai_chatbot_flutter/screens/settings_screen/widgets/profile_avatar.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';

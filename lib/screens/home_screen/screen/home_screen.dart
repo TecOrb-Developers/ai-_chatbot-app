@@ -8,6 +8,7 @@ import 'package:gradient_borders/gradient_borders.dart';
 import '../../../controllers/profile_controller.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_back_widget.dart';
+import '../../../widgets/loading_indicator.dart';
 import '../../../widgets/screen_background_widget.dart';
 import '../../chat_screen/screen/chat_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,51 +35,66 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget build(BuildContext context) {
-    return ScreenBackgroundWidget(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
+    return ScreenBackgroundWidget(child: GetBuilder<ProfileController>(
+      builder: (controller) {
+        return Stack(
           children: [
-            const CustomAppBar(
-              leading: botIcon,
-              trailing: notificationBadgeIcon,
+            SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const CustomAppBar(
+                    leading: botIcon,
+                    trailing: notificationBadgeIcon,
+                  ),
+                  homeBotIcon,
+                  aiTextIcon,
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => ChatScreen()),
+                      );
+                    },
+                    child: GradientBackWidget(
+                      topChild: Column(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.chatNow,
+                            style: poppinsMedTextStyle.copyWith(
+                              fontSize: 16,
+                              color: kBlackColor,
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.freemess,
+                            style: poppinsLightTextStyle.copyWith(
+                              color: kBlackColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 110,
+                  ),
+                ],
+              ),
             ),
-            homeBotIcon,
-            aiTextIcon,
-            const SizedBox(height: 24),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => ChatScreen()),
-                );
-              },
-              child: GradientBackWidget(
-                topChild: Column(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.chatNow,
-                      style: poppinsMedTextStyle.copyWith(
-                        fontSize: 16,
-                        color: kBlackColor,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.freemess,
-                      style: poppinsLightTextStyle.copyWith(
-                        color: kBlackColor,
-                      ),
-                    ),
-                  ],
+            Visibility(
+              visible: controller.isLoading,
+              child: const Scaffold(
+                backgroundColor: Colors.black38,
+                body: Center(
+                  child: LoadingIndicator(),
                 ),
               ),
             ),
-            SizedBox(
-              height: 110,
-            ),
           ],
-        ),
-      ),
-    );
+        );
+      },
+    ));
   }
 }
 
