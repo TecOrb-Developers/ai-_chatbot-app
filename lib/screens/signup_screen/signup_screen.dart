@@ -37,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String selectedCountryCode = "91";
   int maxLength = 10;
   bool isLoading = false;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -50,219 +51,176 @@ class _SignupScreenState extends State<SignupScreen> {
     return ScreenBackgroundWidget(
       child: Stack(
         children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomAppBar(
-                  // leading: GradientRectBtnWidget(
-                  //   padding: paddingAll10,
-                  //   colors: whiteGradientBoxColor,
-                  //   child: backArrowIcon,
-                  //   // onTap: () => Navigator.of(context).pop(),
-                  // ),
-                  trailing: botIcon,
-                ),
-                const GradientHorizontalDivider(),
-                const SizedBox(height: 40),
-                Text(
-                  AppLocalizations.of(context)!.createAccount,
-                  style: poppinsSemiBoldTextStyle.copyWith(
-                    fontSize: 22,
-                    color: Colors.white,
+          Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomAppBar(
+                    // leading: GradientRectBtnWidget(
+                    //   padding: paddingAll10,
+                    //   colors: whiteGradientBoxColor,
+                    //   child: backArrowIcon,
+                    //   // onTap: () => Navigator.of(context).pop(),
+                    // ),
+                    trailing: botIcon,
                   ),
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  AppLocalizations.of(context)!.fullName,
-                  style: interRegTextStyle.copyWith(
-                    color: kGraniteGrayColor,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  cursorColor: Colors.white,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide.none,
+                  const GradientHorizontalDivider(),
+                  const SizedBox(height: 40),
+                  Text(
+                    AppLocalizations.of(context)!.createAccount,
+                    style: poppinsSemiBoldTextStyle.copyWith(
+                      fontSize: 22,
+                      color: Colors.white,
                     ),
-                    prefixIcon: userIcon,
-                    fillColor: Color(0xff171717),
-                    filled: true,
                   ),
-                  keyboardType: TextInputType.name,
-                  style: poppinsRegTextStyle.copyWith(
-                    color: Colors.white,
-                  ),
-                  onChanged: (value) => name = value,
-                ),
-                const SizedBox(height: 22),
-                Text(
-                  AppLocalizations.of(context)!.email,
-                  style: interRegTextStyle.copyWith(
-                    color: kGraniteGrayColor,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  cursorColor: Colors.white,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide.none,
+                  const SizedBox(height: 30),
+                  Text(
+                    AppLocalizations.of(context)!.fullName,
+                    style: interRegTextStyle.copyWith(
+                      color: kGraniteGrayColor,
+                      fontSize: 16,
                     ),
-                    prefixIcon: emailIcon,
-                    fillColor: Color(0xff171717),
-                    filled: true,
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  style: poppinsRegTextStyle.copyWith(
-                    color: Colors.white,
-                  ),
-                  onChanged: (value) => email = value,
-                ),
-                const SizedBox(height: 22),
-                Text(
-                  AppLocalizations.of(context)!.mobileNo,
-                  style: interRegTextStyle.copyWith(
-                    color: kGraniteGrayColor,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 18,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Color(0xff171717),
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Row(
-                    children: [
-                      mobileIcon,
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     countryPickerBottomSheet(context);
-                      //   },
-                      //   child: Container(
-                      //     color: Colors.transparent,
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         mobileIcon,
-                      //         const SizedBox(width: 10),
-                      //         Text(
-                      //           "+$selectedCountryCode",
-                      //           style: poppinsRegTextStyle.copyWith(
-                      //             color: Colors.white,
-                      //           ),
-                      //         ),
-                      //         const Icon(
-                      //           Icons.keyboard_arrow_down_rounded,
-                      //           color: Colors.white,
-                      //           size: 15,
-                      //         )
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          initialValue: "+$selectedCountryCode $phoneNo",
-                          enabled: false,
-                          textAlign: TextAlign.left,
-                          maxLength: maxLength,
-                          // controller: phoneTextController,
-                          cursorColor: Colors.white,
-                          maxLines: 1,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            counterText: "",
-                          ),
-                          style: poppinsRegTextStyle.copyWith(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r"[0-9]"),
-                            ),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          onChanged: (value) {
-                            phoneNo = value;
-                          },
-                        ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    cursorColor: Colors.white,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide.none,
                       ),
-                    ],
+                      prefixIcon: userIcon,
+                      fillColor: Color(0xff171717),
+                      filled: true,
+                    ),
+                    keyboardType: TextInputType.name,
+                    style: poppinsRegTextStyle.copyWith(
+                      color: Colors.white,
+                    ),
+                    onChanged: (value) => name = value,
+                    validator: (value) {
+                      if (value == '') {
+                        return AppLocalizations.of(context)!.enterTheName;
+                      } else if (!nameRegExp.hasMatch(value!)) {
+                        return 'Only alphabets are allowed';
+                      }
+
+                      return null;
+                    },
                   ),
-                ),
-                TextWhiteBtnWidget(
-                  margin: const EdgeInsets.symmetric(vertical: 30),
-                  title: AppLocalizations.of(context)!.signUp,
-                  onTap: signup,
-                ),
-                // const OrGradDivider(),
-                // const SizedBox(height: 28),
-                // LogoTextBtnWidget(
-                //   icon: googleLogoIcon,
-                //   text: "Sign Up With Google",
-                //   onTap: () async {
-                //     if (await AuthService().signInWithGoogle()) {
-                //       final prefs = await SharedPreferences.getInstance();
-                //       await prefs.setBool(isLoggedIn, true);
+                  const SizedBox(height: 22),
+                  Text(
+                    AppLocalizations.of(context)!.email,
+                    style: interRegTextStyle.copyWith(
+                      color: kGraniteGrayColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    cursorColor: Colors.white,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: emailIcon,
+                      fillColor: Color(0xff171717),
+                      filled: true,
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    style: poppinsRegTextStyle.copyWith(
+                      color: Colors.white,
+                    ),
+                    onChanged: (value) => email = value,
+                    validator: (value) {
+                      if (value == '') {
+                        return AppLocalizations.of(context)!.enterTheEmail;
+                      } else if (!emailRegExp.hasMatch(value!)) {
+                        return 'Enter correct email';
+                      }
 
-                //       if (context.mounted) {
-                //         showSnackbar(
-                //           context: context,
-                //           title: "You have successfully logged in",
-                //         );
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 22),
+                  Text(
+                    AppLocalizations.of(context)!.mobileNo,
+                    style: interRegTextStyle.copyWith(
+                      color: kGraniteGrayColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 18,
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Color(0xff171717),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Row(
+                      children: [
+                        mobileIcon,
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            initialValue: "+$selectedCountryCode $phoneNo",
+                            enabled: false,
+                            textAlign: TextAlign.left,
+                            maxLength: maxLength,
+                            // controller: phoneTextController,
+                            cursorColor: Colors.white,
+                            maxLines: 1,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              counterText: "",
+                            ),
+                            style: poppinsRegTextStyle.copyWith(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r"[0-9]"),
+                              ),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            onChanged: (value) {
+                              phoneNo = value;
+                            },
+                            validator: (value) {
+                              if (value == '') {
+                                return 'enter the number';
+                              } else if (!nameRegExp.hasMatch(value!)) {
+                                return 'enter the valid number';
+                              }
 
-                //         Navigator.of(context).pushAndRemoveUntil(
-                //           MaterialPageRoute(builder: (_) => const BottomBar()),
-                //           (route) => false,
-                //         );
-                //       }
-                //     }
-                //   },
-                // ),
-                // const SizedBox(height: 20),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       "Already have an account?",
-                //       style: poppinsRegTextStyle.copyWith(
-                //         color: Colors.white,
-                //         fontSize: 15,
-                //       ),
-                //     ),
-                //     TextButton(
-                //       onPressed: () => Navigator.of(context).pushReplacement(
-                //         MaterialPageRoute(builder: (_) => const LoginScreen()),
-                //       ),
-                //       child: Text(
-                //         "Log in",
-                //         style: poppinsRegTextStyle.copyWith(
-                //           color: kPearColor,
-                //           fontSize: 15,
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextWhiteBtnWidget(
+                    margin: const EdgeInsets.symmetric(vertical: 30),
+                    title: AppLocalizations.of(context)!.signUp,
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        signup();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Visibility(
@@ -301,20 +259,6 @@ class _SignupScreenState extends State<SignupScreen> {
       );
       return;
     }
-    // if (phoneNo.isEmpty) {
-    //   showSnackbar(
-    //     context: context,
-    //     title: "Please fill mobile number",
-    //   );
-    //   return;
-    // }
-    // if (phoneNo.length != maxLength) {
-    //   showSnackbar(
-    //     context: context,
-    //     title: "Invalid phone number",
-    //   );
-    //   return;
-    // }
 
     try {
       setState(() {
@@ -413,7 +357,6 @@ class _SignupScreenState extends State<SignupScreen> {
             borderRadius: BorderRadius.all(
               Radius.circular(8.0),
             ),
-            // borderSide: BorderSide(color: kAccentColor),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -424,7 +367,6 @@ class _SignupScreenState extends State<SignupScreen> {
           hintText: AppLocalizations.of(context)!.enterCountryName,
           contentPadding: const EdgeInsets.only(left: 28),
           hintStyle: const TextStyle(
-            // color: kLightestTextColor,
             fontSize: 14,
           ),
         ),

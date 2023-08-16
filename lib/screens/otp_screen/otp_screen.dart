@@ -380,7 +380,7 @@ class _OtpScreenState extends State<OtpScreen> {
       saveToPrefs(response["data"]);
       print("saved to prefs");
     } catch (e) {
-      // TODO
+      print('error in loginHit api - $e');
     }
   }
 

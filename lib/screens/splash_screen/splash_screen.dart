@@ -51,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
             alignment: Alignment.center,
             children: [
               const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Spacer(),
                   patternImageIcon,
@@ -58,6 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),

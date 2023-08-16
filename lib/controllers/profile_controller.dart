@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/api_const.dart';
+import '../constants/shared_prefs_keys.dart';
 import '../services/headers_map.dart';
 import '../services/network_api.dart';
 
@@ -53,6 +55,9 @@ class ProfileController extends GetxController {
       }
       print(subscribeType);
       print(subscription);
+      final prefs = await SharedPreferences.getInstance();
+
+      prefs.setString(subcriptionTypeKey, subscribeType);
       print('okk');
     } catch (e) {
       print("no");

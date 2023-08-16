@@ -362,10 +362,6 @@ class _PayNowScreenState extends State<PayNowScreen> {
         print("response>>>>>${response['data']}");
         print("response>>>>>${response['data']['subscriptionType']}");
 
-        final prefs = await SharedPreferences.getInstance();
-
-        prefs.setString(
-            subcriptionTypeKey, response["data"]["subscriptionType"]);
         AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
