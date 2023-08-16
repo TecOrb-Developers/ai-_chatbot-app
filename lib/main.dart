@@ -26,7 +26,7 @@ void main() async {
 
   print(authorizationValue);
   print(selectedLang);
-  print(subcription_type);
+  print("subscription type---$subcription_type");
   print(localizationValue);
   runApp(MyApp());
 }

@@ -234,10 +234,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                       getProfile();
                                     }
                                     createToken();
-                                    if (cardToken != '' &&
-                                        profileController.stripeId != '') {
-                                      postCardToken();
-                                    }
                                   }
                                 },
                                 title: 'SAVE & CONTINUE',
@@ -252,15 +248,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ],
             ),
           ),
-          Visibility(
-            visible: isPosting,
-            child: const Scaffold(
-              backgroundColor: Colors.black38,
-              body: Center(
-                child: LoadingIndicator(),
-              ),
-            ),
-          ),
+          // Visibility(
+          //   visible: isPosting,
+          //   child: const Scaffold(
+          //     backgroundColor: Colors.black38,
+          //     body: Center(
+          //       child: LoadingIndicator(),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -300,7 +296,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
         setState(() {
           cardToken = data['id'];
         });
-
+        if (cardToken != '' && profileController.stripeId != '') {
+          postCardToken();
+        }
         print('cardToken- $cardToken');
       }
     } catch (e) {

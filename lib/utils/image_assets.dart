@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const patternImageIcon = Image(
-  image: AssetImage("assets/images/pattern.png"),
+  image: AssetImage("assets/images/2.0x/pattern.png"),
 );
 
 const aiTextIcon = Image(

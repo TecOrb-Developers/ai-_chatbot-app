@@ -12,44 +12,53 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: const EdgeInsets.all(1),
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xffC7F431),
-                Color(0xff06CFF1),
-              ],
-            ),
-          ),
-          child: CircleAvatar(
-            radius: 38,
-            backgroundColor: kBlackColor,
-            child: GestureDetector(
-              onTap: onpress,
-              child: CircleAvatar(
-                backgroundColor: kBlackColor,
-                radius: 34,
-                backgroundImage: backgroundImage,
-                child: icon,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-            top: 43,
-            left: 200,
-            child: Container(
+        Stack(
+          children: [
+            CircleAvatar(
+              radius: 48,
+              backgroundColor: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.all(1),
+                // alignment: Alignment.center,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xffC7F431),
+                      Color(0xff06CFF1),
+                    ],
+                  ),
                 ),
-                child: child))
+                child: CircleAvatar(
+                  radius: 38,
+                  backgroundColor: kBlackColor,
+                  child: GestureDetector(
+                    onTap: onpress,
+                    child: CircleAvatar(
+                      backgroundColor: kBlackColor,
+                      radius: 34,
+                      backgroundImage: backgroundImage,
+                      child: icon,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+                left: 55,
+                bottom: 10,
+                child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: child))
+          ],
+        ),
       ],
     );
   }
