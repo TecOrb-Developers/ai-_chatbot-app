@@ -55,7 +55,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       final picker = ImagePicker();
       print('pick Image2');
       final pickedImage = await picker.pickImage(source: source);
-      print('pick Image3');
+      print('pick Image3--$pickedImage');
+
       if (pickedImage == null) return;
       print('pick Image4');
 
@@ -224,7 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           );
                                         });
                                   },
-                                  backgroundImage: controller.isImage
+                                  backgroundImage: controller.image != ''
                                       ? pickedImage != null
                                           ? Image.file(
                                               pickedImage!,
