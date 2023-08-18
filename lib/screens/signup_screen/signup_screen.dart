@@ -98,6 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       filled: true,
                     ),
                     keyboardType: TextInputType.name,
+                    maxLength: 20,
                     style: poppinsRegTextStyle.copyWith(
                       color: Colors.white,
                     ),
@@ -107,6 +108,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         return AppLocalizations.of(context)!.enterTheName;
                       } else if (!nameRegExp.hasMatch(value!)) {
                         return 'Only alphabets are allowed';
+                      } else if (value.length < 3) {
+                        return 'Enter at least 3 character';
                       }
 
                       return null;
@@ -178,6 +181,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             // controller: phoneTextController,
                             cursorColor: Colors.white,
                             maxLines: 1,
+
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               counterText: "",
@@ -187,6 +191,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               fontSize: 14,
                             ),
                             keyboardType: TextInputType.number,
+
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.allow(
                                 RegExp(r"[0-9]"),

@@ -51,6 +51,8 @@ class ProfileContainer extends StatelessWidget {
               color: Colors.white,
             ),
             validator: validator,
+            maxLength: 20,
+
             decoration: InputDecoration(
                 labelStyle: poppinsRegTextStyle.copyWith(
                   fontSize: 16,

@@ -1,11 +1,9 @@
-import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
 import 'package:ai_chatbot_flutter/screens/add_card_screen/widget/card_utils.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/api_const.dart';
 import '../../services/headers_map.dart';
 import '../../services/network_api.dart';

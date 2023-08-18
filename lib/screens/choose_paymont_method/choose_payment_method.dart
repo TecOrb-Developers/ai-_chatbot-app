@@ -42,6 +42,7 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
   var choose_last4 = '';
   var ex_year = '';
   var ex_month = '';
+  var cardHolderName = 'Card Holder Name';
   var brand = '';
   var last4 = '';
   Map data = {};
@@ -162,6 +163,11 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
                                         .toString();
                                     choose_last4 =
                                         cardDataList[index]['last4'].toString();
+                                    if (cardDataList[index]['name'] != null) {
+                                      cardHolderName = cardDataList[index]
+                                              ['name']
+                                          .toString();
+                                    }
                                   }
                                   // final item = cardList[index].toString();
                                   return GestureDetector(
@@ -320,6 +326,7 @@ class _ChoosePaymentMethodScreenState extends State<ChoosePaymentMethodScreen> {
                                   cardNo: cardId,
                                   saveCardBool: true,
                                   subcriptionType: widget.subcriptionType,
+                                  cardHolderName: cardHolderName,
                                 );
                               },
                             ));
