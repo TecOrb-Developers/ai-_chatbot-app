@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(
+                const CustomAppBar(
                   // leading: GradientRectBtnWidget(
                   //   padding: paddingAll10,
                   //   colors: whiteGradientBoxColor,
@@ -172,7 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   title: AppLocalizations.of(context)!.sendOtp,
                   margin: const EdgeInsets.symmetric(vertical: 30),
                 ),
+
                 const OrGradDivider(),
+
                 const SizedBox(height: 20),
                 LogoTextBtnWidget(
                   icon: googleLogoIcon,

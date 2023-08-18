@@ -258,6 +258,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           .enterTheName;
                                     } else if (!nameRegExp.hasMatch(val!)) {
                                       return 'Only alphabets are allowed';
+                                    } else if (val.length < 3) {
+                                      return 'Enter at least 3 character';
                                     }
 
                                     return null;

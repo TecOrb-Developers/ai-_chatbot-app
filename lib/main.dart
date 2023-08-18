@@ -1,8 +1,8 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
-import 'package:ai_chatbot_flutter/screens/splash_screen/splash_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/share_prefs_keys.dart';
+import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -11,6 +11,7 @@ import 'package:gradient_borders/gradient_borders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/language_controller.dart';
 import 'l10n/l10n.dart';
+import 'screens/splash_screen/splash_screen.dart';
 import 'widgets/btn_text_widet.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,6 +23,7 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   authorizationValue = prefs.getString(userTokenKey) ?? "";
+  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTJhMmE4YTIzMWM2MWMwNTM3ZjVmOSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjkyMjc4ODA1LCJleHAiOjE2OTQ4NzA4MDV9.UiqfE7xr9b6HqXVDlTBLHp03N0MepJkMmQ9bwq-bpnY";
   subcription_type = prefs.getString(subcriptionTypeKey) ?? '';
 
   print(authorizationValue);

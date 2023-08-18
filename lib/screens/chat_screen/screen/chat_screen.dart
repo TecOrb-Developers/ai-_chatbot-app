@@ -548,7 +548,7 @@ class _ChatScreenState extends State<ChatScreen> {
           print('response=$res');
           showSnackbar(
             context: context,
-            title: " TXT download successfully",
+            title: " DOC download successfully",
           );
         }
       } else {
@@ -558,7 +558,7 @@ class _ChatScreenState extends State<ChatScreen> {
       print('get pdf4');
       showSnackbar(
         context: context,
-        title: "Error downloading TXT",
+        title: "Error downloading DOC",
       );
       print('error====$e');
     }

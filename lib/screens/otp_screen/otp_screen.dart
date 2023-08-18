@@ -277,7 +277,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void checkAndGetOtp() async {
-    print('check otp');
+    print('check otp 1');
     if (widget.phoneNo.length != maxlength) {
       showSnackbar(
         context: context,
@@ -296,17 +296,18 @@ class _OtpScreenState extends State<OtpScreen> {
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        print('vericication failed-----------------------------------');
+        print('vericication failed----------------------------------- 2');
         print(e);
       },
       codeSent: (String verificationId, int? resendToken) {
         LoginScreen.verificationId = verificationId;
 
-        print('code send');
+        print('code send 3');
       },
       timeout: const Duration(seconds: 60),
       codeAutoRetrievalTimeout: (String verificationId) {
         verificationId = LoginScreen.verificationId;
+        print('4');
       },
     );
     setState(() {
@@ -340,7 +341,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Future<bool> checkAccount() async {
     try {
-      print('check account');
+      print('check account 5');
       var response = await NetworkApi.post200(
         url: checkAccountUrl,
         body: {
@@ -348,18 +349,19 @@ class _OtpScreenState extends State<OtpScreen> {
           "phoneNumber": widget.phoneNo,
         },
       );
-      print(response);
+      print("6 $response");
       if (response["code"] != 200) return false;
-      print('number exit');
+      print('number exit 7');
       return response["data"]["isUser"];
     } catch (e) {
+      print('8--$e');
       return false;
     }
   }
 
   void loginApiHit() async {
     try {
-      print('hit login api');
+      print('hit login api 9');
       var response = await NetworkApi.post200(
         url: loginUrl,
         body: {
@@ -367,20 +369,22 @@ class _OtpScreenState extends State<OtpScreen> {
           "phoneNumber": widget.phoneNo,
         },
       );
+      print('10 $response');
       if (response["code"] != 200) {
         showSnackbar(
           context: context,
           title: response["message"],
         );
+        print('11');
         return;
       }
 
       authorizationValue = response["data"]["token"];
 
       saveToPrefs(response["data"]);
-      print("saved to prefs");
+      print("saved to prefs 12");
     } catch (e) {
-      print('error in loginHit api - $e');
+      print('error in loginHit api 13 - $e');
     }
   }
 

@@ -16,7 +16,6 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import '../../widgets/gradient_rect_btn_widget.dart';
 import '../../widgets/loading_indicator.dart';
-import '../home_screen/screen/home_screen.dart';
 import 'widget/card_utils.dart';
 
 enum SelectPaymentType { DebitCard, CreditCard }
@@ -27,7 +26,7 @@ var cvvNumber = '';
 var cardExpiryMonth = '';
 var cardExpiryYear = '';
 String cardToken = '';
-late final ProfileController profileController;
+final ProfileController profileController = Get.find<ProfileController>();
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({
@@ -52,7 +51,6 @@ class _AddCardScreenState extends State<AddCardScreen> {
       },
     );
     super.initState();
-    profileController = Get.find();
   }
 
   Future<void> postCardToken() async {
@@ -84,9 +82,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
       print('catch');
       print(e);
     }
-    setState(() {
-      isPosting = false;
-    });
+    // setState(() {
+    //   isPosting = false;
+    // });
   }
 
   void getCardTypeFrmNumber() {
@@ -221,6 +219,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                               TextWhiteBtnWidget(
                                 onTap: () async {
                                   if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isPosting = true;
+                                    });
                                     cardName = cardnameController.text;
                                     cardNumber = cardNumberController.text;
                                     cardExpiryNumber =
@@ -248,15 +249,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ],
             ),
           ),
-          // Visibility(
-          //   visible: isPosting,
-          //   child: const Scaffold(
-          //     backgroundColor: Colors.black38,
-          //     body: Center(
-          //       child: LoadingIndicator(),
-          //     ),
-          //   ),
-          // ),
+          Visibility(
+            visible: isPosting,
+            child: const Scaffold(
+              backgroundColor: Colors.black38,
+              body: Center(
+                child: LoadingIndicator(),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -270,6 +271,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
       "card[exp_month]": cardExpiryMonth,
       "card[exp_year]": cardExpiryYear,
       "card[cvc]": cvvNumber,
+      "card[name]": cardName,
     };
     try {
       setState(() {
