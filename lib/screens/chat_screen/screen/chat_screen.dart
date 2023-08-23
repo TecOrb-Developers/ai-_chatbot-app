@@ -11,7 +11,6 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
 import 'package:flutter/material.dart';
-import 'package:docx_template/docx_template.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,7 +20,6 @@ import '../../../models/chat_model.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_text.dart';
 import '../../../widgets/loading_indicator.dart';
-import '../../chat_history_screen/chat_history.dart';
 import '../widget/chat_widget.dart';
 import '../widget/docbox_widget.dart';
 import '../widget/send_message_widget.dart';
@@ -30,11 +28,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 String sessionId = '';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({
-    super.key,
-    this.session_id,
-  });
+  const ChatScreen({super.key, this.session_id, this.title});
   final String? session_id;
+  final String? title;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -698,7 +694,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           text: "TXT",
                           onpress: () {
                             if (msg == '') {
-                              msg = title;
+                              msg = widget.title!;
                             }
                             getTextFile(msg, chatController.getChatList, "txt");
                             Navigator.pop(context);
@@ -710,7 +706,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           text: "PDF",
                           onpress: () {
                             if (msg == '') {
-                              msg = title;
+                              msg = widget.title!;
                             }
                             getPdf(msg, 'pdf');
                             Navigator.pop(context);
@@ -720,7 +716,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           text: "DOC",
                           onpress: () {
                             if (msg == '') {
-                              msg = title;
+                              msg = widget.title!;
                             }
                             getDocxFile(msg, chatController.getChatList);
                             Navigator.pop(context);

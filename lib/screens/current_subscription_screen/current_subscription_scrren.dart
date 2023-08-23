@@ -151,11 +151,11 @@ class _CurrentSubscriptionScreenState extends State<CurrentSubscriptionScreen> {
                 const SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const AddCardScreen();
-                      },
-                    ));
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return const AddCardScreen();
+                    //   },
+                    // ));
                   },
                   child: GradientBackWidget(
                     topChild: Padding(

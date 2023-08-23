@@ -71,17 +71,16 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                     child: GestureDetector(
                         onTap: () {
                           var amount = "500";
-                          // isReady
-                          // ? null
-                          // :
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return ChoosePaymentMethodScreen(
-                                amount: amount,
-                                subcriptionType: "Weekly",
-                              );
-                            },
-                          ));
+                          isReady
+                              ? null
+                              : Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return ChoosePaymentMethodScreen(
+                                      amount: amount,
+                                      subcriptionType: "Weekly",
+                                    );
+                                  },
+                                ));
                         },
                         child: Stack(
                           children: [
