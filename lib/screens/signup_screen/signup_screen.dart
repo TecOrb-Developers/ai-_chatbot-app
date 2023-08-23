@@ -106,9 +106,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     validator: (value) {
                       if (value == '') {
                         return AppLocalizations.of(context)!.enterTheName;
-                      } else if (!nameRegExp.hasMatch(value!)) {
+                      }
+                      if (!nameRegExp.hasMatch(value!)) {
                         return 'Only alphabets are allowed';
-                      } else if (value.length < 3) {
+                      }
+                      if (value.length < 3) {
                         return 'Enter at least 3 character';
                       }
 
@@ -143,7 +145,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     validator: (value) {
                       if (value == '') {
                         return AppLocalizations.of(context)!.enterTheEmail;
-                      } else if (!emailRegExp.hasMatch(value!)) {
+                      }
+                      if (!emailRegExp.hasMatch(value!)) {
                         return 'Enter correct email';
                       }
 
@@ -201,15 +204,15 @@ class _SignupScreenState extends State<SignupScreen> {
                             onChanged: (value) {
                               phoneNo = value;
                             },
-                            validator: (value) {
-                              if (value == '') {
-                                return 'enter the number';
-                              } else if (!nameRegExp.hasMatch(value!)) {
-                                return 'enter the valid number';
-                              }
+                            // validator: (value) {
+                            //   if (value == '') {
+                            //     return 'enter the number';
+                            //   } else if (!nameRegExp.hasMatch(value!)) {
+                            //     return 'enter the valid number';
+                            //   }
 
-                              return null;
-                            },
+                            //   return null;
+                            // },
                           ),
                         ),
                       ],
@@ -221,6 +224,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         signup();
+                      } else {
+                        showSnackbar(
+                          context: context,
+                          title: 'not validate',
+                        );
                       }
                     },
                   ),
@@ -243,27 +251,27 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void signup() async {
-    if (name.isEmpty) {
-      showSnackbar(
-        context: context,
-        title: AppLocalizations.of(context)!.fillName,
-      );
-      return;
-    }
-    if (email.isEmpty) {
-      showSnackbar(
-        context: context,
-        title: AppLocalizations.of(context)!.fillEmail,
-      );
-      return;
-    }
-    if (!isValidEmail(email)) {
-      showSnackbar(
-        context: context,
-        title: AppLocalizations.of(context)!.invalidEmail,
-      );
-      return;
-    }
+    // if (name.isEmpty) {
+    //   showSnackbar(
+    //     context: context,
+    //     title: AppLocalizations.of(context)!.fillName,
+    //   );
+    //   return;
+    // }
+    // if (email.isEmpty) {
+    //   showSnackbar(
+    //     context: context,
+    //     title: AppLocalizations.of(context)!.fillEmail,
+    //   );
+    //   return;
+    // }
+    // if (!isValidEmail(email)) {
+    //   showSnackbar(
+    //     context: context,
+    //     title: AppLocalizations.of(context)!.invalidEmail,
+    //   );
+    //   return;
+    // }
 
     try {
       setState(() {

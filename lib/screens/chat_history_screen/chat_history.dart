@@ -17,8 +17,6 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-String title = '';
-
 class ChatHistoryScreen extends StatefulWidget {
   const ChatHistoryScreen({Key? key}) : super(key: key);
 
@@ -29,6 +27,7 @@ class ChatHistoryScreen extends StatefulWidget {
 class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
   List<ChatHistoryItem> chatHistory = [];
   bool isHistory = false;
+  String title = '';
 
   String formatDate(String dateString, String time) {
     final date = DateTime.parse(dateString);
@@ -198,6 +197,7 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return ChatScreen(
+                                      title: chatHistory[index].text,
                                       session_id:
                                           chatHistory[index].sessionItemId,
                                     );

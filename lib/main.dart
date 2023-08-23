@@ -23,9 +23,6 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   authorizationValue = prefs.getString(userTokenKey) ?? "";
-  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTJhMmE4YTIzMWM2MWMwNTM3ZjVmOSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjkyMjc4ODA1LCJleHAiOjE2OTQ4NzA4MDV9.UiqfE7xr9b6HqXVDlTBLHp03N0MepJkMmQ9bwq-bpnY";
-  subcription_type = prefs.getString(subcriptionTypeKey) ?? '';
-
   print(authorizationValue);
   print(selectedLang);
   print("subscription type---$subcription_type");

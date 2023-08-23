@@ -20,7 +20,6 @@ import '../../../models/chat_model.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_text.dart';
 import '../../../widgets/loading_indicator.dart';
-import '../../chat_history_screen/chat_history.dart';
 import '../widget/chat_widget.dart';
 import '../widget/docbox_widget.dart';
 import '../widget/send_message_widget.dart';
