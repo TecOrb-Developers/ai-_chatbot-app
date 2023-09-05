@@ -231,6 +231,11 @@ const selectedflatIcon = Image(
 const yearlyIcon = Image(
   image: AssetImage("assets/images/yealrybtn.png"),
 );
+
 const selectedyearlyIcon = Image(
   image: AssetImage("assets/images/selectyearlybtn.png"),
+);
+
+const successfullpaymentIcon = Image(
+  image: AssetImage("assets/images/successfulpayment.png"),
 );

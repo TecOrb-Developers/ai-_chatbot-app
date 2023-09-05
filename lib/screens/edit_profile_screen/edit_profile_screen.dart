@@ -148,224 +148,230 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
                 key: _formKey,
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        CustomAppBar(
-                          leading: GradientRectBtnWidget(
-                            padding: paddingAll10,
-                            colors: whiteGradientBoxColor,
-                            child: backArrowIcon,
-                            onTap: () => Navigator.of(context).pop(),
+                child: Container(
+                  height: size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          CustomAppBar(
+                            leading: GradientRectBtnWidget(
+                              padding: paddingAll10,
+                              colors: whiteGradientBoxColor,
+                              child: backArrowIcon,
+                              onTap: () => Navigator.of(context).pop(),
+                            ),
+                            title: AppLocalizations.of(context)!.editProfile,
                           ),
-                          title: AppLocalizations.of(context)!.editProfile,
-                        ),
-                        const GradientHorizontalDivider(),
-                        GetBuilder<ProfileController>(
-                          builder: (controller) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 20),
-                                ProfileAvatar(
-                                  onpress: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    255, 58, 54, 54),
-                                            content: Text(
-                                              AppLocalizations.of(context)!
-                                                  .selectImagefrom,
-                                              style:
-                                                  poppinsMedTextStyle.copyWith(
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  pickImage(ImageSource.camera);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .camera,
-                                                  style: poppinsRegTextStyle
-                                                      .copyWith(
-                                                    color: Colors.blue,
-                                                    fontSize: 15,
-                                                  ),
+                          const GradientHorizontalDivider(),
+                          GetBuilder<ProfileController>(
+                            builder: (controller) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 20),
+                                  ProfileAvatar(
+                                    onpress: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      255, 58, 54, 54),
+                                              content: Text(
+                                                AppLocalizations.of(context)!
+                                                    .selectImagefrom,
+                                                style: poppinsMedTextStyle
+                                                    .copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 15,
                                                 ),
                                               ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  pickImage(
-                                                      ImageSource.gallery);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .gallery,
-                                                  style: poppinsRegTextStyle
-                                                      .copyWith(
-                                                    color: Colors.blue,
-                                                    fontSize: 15,
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    pickImage(
+                                                        ImageSource.camera);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .camera,
+                                                    style: poppinsRegTextStyle
+                                                        .copyWith(
+                                                      color: Colors.blue,
+                                                      fontSize: 15,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  backgroundImage: controller.image != ''
-                                      ? pickedImage != null
-                                          ? Image.file(
-                                              pickedImage!,
-                                              fit: BoxFit.contain,
-                                            ).image
-                                          : NetworkImage(
-                                              controller.image,
-                                            )
-                                      : const AssetImage(
-                                          'assets/images/avatar.png'),
-                                  child: const CircleAvatar(
-                                    radius: 16,
-                                    backgroundColor: kBlackColor,
-                                    child: cameraIcon,
+                                                TextButton(
+                                                  onPressed: () {
+                                                    pickImage(
+                                                        ImageSource.gallery);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .gallery,
+                                                    style: poppinsRegTextStyle
+                                                        .copyWith(
+                                                      color: Colors.blue,
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    backgroundImage: controller.image != ''
+                                        ? pickedImage != null
+                                            ? Image.file(
+                                                pickedImage!,
+                                                fit: BoxFit.contain,
+                                              ).image
+                                            : NetworkImage(
+                                                controller.image,
+                                              )
+                                        : const AssetImage(
+                                            'assets/images/avatar.png'),
+                                    child: const CircleAvatar(
+                                      radius: 16,
+                                      backgroundColor: kBlackColor,
+                                      child: cameraIcon,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                ProfileContainer(
-                                  icon: const Icon(
-                                    Icons.person,
-                                    color: Colors.white,
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                  text: AppLocalizations.of(context)!.fullName,
-                                  onChanged: (val) {},
-                                  validator: (val) {
-                                    if (val == '') {
-                                      return AppLocalizations.of(context)!
-                                          .enterTheName;
-                                    } else if (!nameRegExp.hasMatch(val!)) {
-                                      return 'Only alphabets are allowed';
-                                    } else if (val.length < 3) {
-                                      return 'Enter at least 3 character';
-                                    }
+                                  ProfileContainer(
+                                    icon: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                    text:
+                                        AppLocalizations.of(context)!.fullName,
+                                    onChanged: (val) {},
+                                    validator: (val) {
+                                      if (val == '') {
+                                        return AppLocalizations.of(context)!
+                                            .enterTheName;
+                                      } else if (!nameRegExp.hasMatch(val!)) {
+                                        return 'Only alphabets are allowed';
+                                      } else if (val.length < 3) {
+                                        return 'Enter at least 3 character';
+                                      }
 
-                                    return null;
-                                  },
-                                  keyBoardType: TextInputType.name,
-                                  controller: nameController,
-                                ),
-                                ProfileContainer(
-                                  icon: const Icon(Icons.mail,
-                                      color: Colors.white),
-                                  name: 'arihant@gmail.com',
-                                  text: AppLocalizations.of(context)!.email,
-                                  onChanged: (val) {},
-                                  validator: (val) {
-                                    if (val == null) {
-                                      return AppLocalizations.of(context)!
-                                          .enterTheEmail;
-                                    } else if (!emailRegExp.hasMatch(val)) {
-                                      return AppLocalizations.of(context)!
-                                          .enterTheValidMail;
-                                    }
-                                    return null;
-                                  },
-                                  keyBoardType: TextInputType.emailAddress,
-                                  controller: emailController,
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.mobileNo,
-                                  style: poppinsRegTextStyle.copyWith(
-                                    fontSize: 16,
-                                    color: kdarkTextColor,
+                                      return null;
+                                    },
+                                    keyBoardType: TextInputType.name,
+                                    controller: nameController,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8,
-                                    horizontal: 18,
+                                  ProfileContainer(
+                                    icon: const Icon(Icons.mail,
+                                        color: Colors.white),
+                                    name: 'arihant@gmail.com',
+                                    text: AppLocalizations.of(context)!.email,
+                                    onChanged: (val) {},
+                                    validator: (val) {
+                                      if (val == null) {
+                                        return AppLocalizations.of(context)!
+                                            .enterTheEmail;
+                                      } else if (!emailRegExp.hasMatch(val)) {
+                                        return AppLocalizations.of(context)!
+                                            .enterTheValidMail;
+                                      }
+                                      return null;
+                                    },
+                                    keyBoardType: TextInputType.emailAddress,
+                                    controller: emailController,
                                   ),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xff171717),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
+                                  Text(
+                                    AppLocalizations.of(context)!.mobileNo,
+                                    style: poppinsRegTextStyle.copyWith(
+                                      fontSize: 16,
+                                      color: kdarkTextColor,
+                                    ),
                                   ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 13),
-                                        color: Colors.transparent,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            mobileIcon,
-                                            const SizedBox(width: 10),
-                                            Text(
-                                              controller.selectedCountryCode,
-                                              style:
-                                                  poppinsRegTextStyle.copyWith(
-                                                color: Colors.white,
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                      horizontal: 18,
+                                    ),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xff171717),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 13),
+                                          color: Colors.transparent,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              mobileIcon,
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                controller.selectedCountryCode,
+                                                style: poppinsRegTextStyle
+                                                    .copyWith(
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                            ),
-                                            const Icon(
-                                              Icons.keyboard_arrow_down_rounded,
-                                              color: Colors.white,
-                                              size: 15,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          controller.phoneNo,
-                                          style: poppinsRegTextStyle.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 14,
+                                              const Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Colors.white,
+                                                size: 15,
+                                              )
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            controller.phoneNo,
+                                            style: poppinsRegTextStyle.copyWith(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 160,
-                                ),
-                                TextWhiteBtnWidget(
-                                  onTap: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      updateProfile();
-                                    }
-                                  },
-                                  title: AppLocalizations.of(context)!.update,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 30),
-                                ),
-                              ],
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                  ],
+                                ],
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                      TextWhiteBtnWidget(
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            updateProfile();
+                          }
+                        },
+                        title: AppLocalizations.of(context)!.update,
+                        margin: const EdgeInsets.symmetric(vertical: 30),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

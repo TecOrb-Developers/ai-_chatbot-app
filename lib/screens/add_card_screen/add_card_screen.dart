@@ -114,139 +114,136 @@ class _AddCardScreenState extends State<AddCardScreen> {
   // SelectPaymentType? _card = SelectPaymentType.DebitCard;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kBlackColor,
       body: Stack(
         children: [
-          Container(
-            height: double.maxFinite,
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBar(
-                  leading: GradientRectBtnWidget(
-                    padding: paddingAll10,
-                    colors: whiteGradientBoxColor,
-                    child: backArrowIcon,
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  title: 'Add Card',
-                ),
-                const GradientHorizontalDivider(),
-                Expanded(
-                  child: ListView(
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              ProfileTextContainer(
-                                text: 'Card Holder Name',
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter the Card Holder Name';
-                                  }
-                                  return null;
-                                },
-                                controller: cardnameController,
-                                keyBoardType: TextInputType.name,
-                              ),
-                              ProfileTextContainer(
-                                text: 'Card Number',
-                                controller: cardNumberController,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(16),
-                                  CardNumberInputFormatter()
-                                ],
-                                onChanged: (value) {},
-                                validator: (value) {
-                                  return CardUtils.validateCardNum(value);
-                                },
-                                keyBoardType: TextInputType.number,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ProfileTextContainer(
-                                      text: 'Exp Date',
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(4),
-                                        CardMonthInputFormatter()
-                                      ],
-                                      controller: expiryDateController,
-                                      keyBoardType: TextInputType.datetime,
-                                      onChanged: (value) {},
-                                      validator: (value) {
-                                        return CardUtils.validateDate(value);
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: ProfileTextContainer(
-                                      text: 'CVV',
-                                      controller: cvvCodeController,
-                                      keyBoardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(3),
-                                      ],
-                                      onChanged: (value) {},
-                                      validator: (value) {
-                                        return CardUtils.validateCVV(value);
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 160,
-                              ),
-                              TextWhiteBtnWidget(
-                                onTap: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                      isPosting = true;
-                                    });
-                                    cardName = cardnameController.text;
-                                    cardNumber = cardNumberController.text;
-                                    cardExpiryNumber =
-                                        expiryDateController.text;
-                                    cardExpiryMonth =
-                                        CardUtils.giveMonth(cardExpiryNumber)!;
-                                    cardExpiryYear =
-                                        CardUtils.giveYear(cardExpiryNumber)!;
-                                    cvvNumber = cvvCodeController.text;
-                                    if (profileController.stripeId == '') {
-                                      getProfile();
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: SizedBox(
+                height: size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        CustomAppBar(
+                          leading: GradientRectBtnWidget(
+                            padding: paddingAll10,
+                            colors: whiteGradientBoxColor,
+                            child: backArrowIcon,
+                            onTap: () => Navigator.pop(context),
+                          ),
+                          title: 'Add Card',
+                        ),
+                        const GradientHorizontalDivider(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                ProfileTextContainer(
+                                  text: 'Card Holder Name',
+                                  onChanged: (value) {},
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter the Card Holder Name';
                                     }
-                                    createToken();
-                                  }
-                                },
-                                title: 'SAVE & CONTINUE',
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 30),
-                              ),
-                            ],
-                          )),
-                    ],
-                  ),
+                                    return null;
+                                  },
+                                  controller: cardnameController,
+                                  keyBoardType: TextInputType.name,
+                                ),
+                                ProfileTextContainer(
+                                  text: 'Card Number',
+                                  controller: cardNumberController,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(16),
+                                    CardNumberInputFormatter()
+                                  ],
+                                  onChanged: (value) {},
+                                  validator: (value) {
+                                    return CardUtils.validateCardNum(value);
+                                  },
+                                  keyBoardType: TextInputType.number,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ProfileTextContainer(
+                                        text: 'Exp Date',
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(4),
+                                          CardMonthInputFormatter()
+                                        ],
+                                        controller: expiryDateController,
+                                        keyBoardType: TextInputType.datetime,
+                                        onChanged: (value) {},
+                                        validator: (value) {
+                                          return CardUtils.validateDate(value);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: ProfileTextContainer(
+                                        text: 'CVV',
+                                        controller: cvvCodeController,
+                                        keyBoardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(3),
+                                        ],
+                                        onChanged: (value) {},
+                                        validator: (value) {
+                                          return CardUtils.validateCVV(value);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                    TextWhiteBtnWidget(
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            isPosting = true;
+                          });
+                          cardName = cardnameController.text;
+                          cardNumber = cardNumberController.text;
+                          cardExpiryNumber = expiryDateController.text;
+                          cardExpiryMonth =
+                              CardUtils.giveMonth(cardExpiryNumber)!;
+                          cardExpiryYear =
+                              CardUtils.giveYear(cardExpiryNumber)!;
+                          cvvNumber = cvvCodeController.text;
+                          if (profileController.stripeId == '') {
+                            getProfile();
+                          }
+                          createToken();
+                        }
+                      },
+                      title: 'SAVE & CONTINUE',
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           Visibility(

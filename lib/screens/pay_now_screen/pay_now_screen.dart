@@ -1,5 +1,6 @@
 import 'package:ai_chatbot_flutter/screens/add_card_screen/widget/card_utils.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
+import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
@@ -66,127 +67,124 @@ class _PayNowScreenState extends State<PayNowScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kBlackColor,
       body: Stack(
         children: [
-          Container(
-            height: double.maxFinite,
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBar(
-                  leading: GradientRectBtnWidget(
-                    padding: paddingAll10,
-                    colors: whiteGradientBoxColor,
-                    child: backArrowIcon,
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  title: 'Payment',
-                ),
-                const GradientHorizontalDivider(),
-                Expanded(
-                  child: ListView(
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        children: [
-                          ProfileTextContainer(
-                            enabled: false,
-                            text: 'Card Holder Name',
-                            onChanged: (value) {},
-                            controller: cardnameController,
-                            keyBoardType: TextInputType.name,
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: SizedBox(
+                height: size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        CustomAppBar(
+                          leading: GradientRectBtnWidget(
+                            padding: paddingAll10,
+                            colors: whiteGradientBoxColor,
+                            child: backArrowIcon,
+                            onTap: () => Navigator.pop(context),
                           ),
-                          ProfileTextContainer(
-                            enabled: false,
-                            text: 'Card Number',
-                            controller: cardNumberController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(19),
-                            ],
-                            onChanged: (value) {},
-                            keyBoardType: TextInputType.number,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ProfileTextContainer(
-                                  enabled: false,
-                                  text: 'Exp Date',
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                    LengthLimitingTextInputFormatter(5),
-                                  ],
-                                  controller: expiryDateController,
-                                  keyBoardType: TextInputType.datetime,
-                                  onChanged: (value) {},
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(
-                                child: Form(
-                                  key: _formKey,
+                          title: 'Payment',
+                        ),
+                        const GradientHorizontalDivider(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          children: [
+                            ProfileTextContainer(
+                              enabled: false,
+                              text: 'Card Holder Name',
+                              onChanged: (value) {},
+                              controller: cardnameController,
+                              keyBoardType: TextInputType.name,
+                            ),
+                            ProfileTextContainer(
+                              enabled: false,
+                              text: 'Card Number',
+                              controller: cardNumberController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(19),
+                              ],
+                              onChanged: (value) {},
+                              keyBoardType: TextInputType.number,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
                                   child: ProfileTextContainer(
-                                    text: 'CVV',
-                                    controller: cvvCodeController,
-                                    keyBoardType: TextInputType.number,
+                                    enabled: false,
+                                    text: 'Exp Date',
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly,
-                                      LengthLimitingTextInputFormatter(3),
+                                      LengthLimitingTextInputFormatter(5),
                                     ],
+                                    controller: expiryDateController,
+                                    keyBoardType: TextInputType.datetime,
                                     onChanged: (value) {},
-                                    validator: (value) {
-                                      return CardUtils.validateCVV(value);
-                                    },
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 160,
-                          ),
-                          TextWhiteBtnWidget(
-                            onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                await paymentIntent(widget.id!, widget.amount);
-                                comfirmPayment();
-                                // // PaymentController.cardName = '';
-                                // PaymentController.cardNumber =
-                                //     PaymentController.cardNumber;
-                                // PaymentController.cvv = cvvCodeController.text;
-                                // PaymentController.expiryMonth =
-                                //     widget.expMonth!;
-                                // PaymentController.expiryYear = widget.expYear!;
-                                // PaymentController.saveCardBoolean =
-                                //     PaymentController.saveCardBoolean;
-                                // PaymentController.cardId = widget.id!;
-                                // PaymentController.client_secret_id =
-                                //     client_scret_id;
-                                // PaymentController.saveCardDetails();
-                              }
-                            },
-                            title: 'Payment',
-                            margin: const EdgeInsets.symmetric(vertical: 30),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Expanded(
+                                  child: Form(
+                                    key: _formKey,
+                                    child: ProfileTextContainer(
+                                      text: 'CVV',
+                                      controller: cvvCodeController,
+                                      keyBoardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(3),
+                                      ],
+                                      onChanged: (value) {},
+                                      validator: (value) {
+                                        return CardUtils.validateCVV(value);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    TextWhiteBtnWidget(
+                      onTap: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await paymentIntent(widget.id!, widget.amount);
+                          comfirmPayment();
+                          // // PaymentController.cardName = '';
+                          // PaymentController.cardNumber =
+                          //     PaymentController.cardNumber;
+                          // PaymentController.cvv = cvvCodeController.text;
+                          // PaymentController.expiryMonth =
+                          //     widget.expMonth!;
+                          // PaymentController.expiryYear = widget.expYear!;
+                          // PaymentController.saveCardBoolean =
+                          //     PaymentController.saveCardBoolean;
+                          // PaymentController.cardId = widget.id!;
+                          // PaymentController.client_secret_id =
+                          //     client_scret_id;
+                          // PaymentController.saveCardDetails();
+                        }
+                      },
+                      title: 'Payment',
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           Visibility(
@@ -250,9 +248,9 @@ class _PayNowScreenState extends State<PayNowScreen> {
             barrierDismissible: false,
             builder: (ctx) {
               return AlertDialog(
+                backgroundColor: const Color.fromARGB(255, 58, 54, 54),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                backgroundColor: Colors.white,
                 title: Text(
                   'Payment Successfull',
                   style: poppinsMedTextStyle.copyWith(
@@ -260,10 +258,9 @@ class _PayNowScreenState extends State<PayNowScreen> {
                     fontSize: 17,
                   ),
                 ),
-                content: const Icon(
-                  Icons.check,
-                  color: Colors.green,
-                  size: 40,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [successfullpaymentIcon],
                 ),
                 actions: [
                   TextButton(

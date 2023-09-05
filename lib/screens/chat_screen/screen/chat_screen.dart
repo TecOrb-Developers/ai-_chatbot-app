@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/controllers/chat_controller.dart';
+import 'package:ai_chatbot_flutter/controllers/mic_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
@@ -16,6 +17,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../models/chat_model.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_text.dart';
@@ -24,6 +26,7 @@ import '../widget/chat_widget.dart';
 import '../widget/docbox_widget.dart';
 import '../widget/send_message_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:docx_template/docx_template.dart';
 
 String sessionId = '';
 
@@ -46,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late dynamic pdf;
   late final ChatController chatController;
+  late final MicController micController;
 
   bool circularIndicatorShow = false;
   @override
@@ -53,6 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     try {
       _listScrollController = ScrollController();
+      micController = Get.put(MicController());
       chatController = Get.put(ChatController());
       if (widget.session_id == null) {
         chatNow();
@@ -142,6 +147,24 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               SendMessageWidget(
                 textController: textController,
+                onTapdown: (p0) {
+                  print('mic1');
+                  micController.startListening();
+                  micController.speechToText.isListening
+                      ? print('Printing.........')
+                      : printError;
+                  setState(() {
+                    print('mic2');
+
+                    textController.text = micController.text;
+                    print(
+                        ' 22222-${textController.text} - ${micController.text}');
+                  });
+                },
+                onTapup: (details) {
+                  print('mic3');
+                  micController.stopListening();
+                },
                 onTap: () async {
                   await sendMessageFCT(controller: chatController);
                 },
@@ -507,6 +530,71 @@ class _ChatScreenState extends State<ChatScreen> {
       loading = false;
     });
   }
+
+// Future<void> getDocxFile(String msg) async {
+//   try {
+//     setState(() {
+//       loading = true;
+//     });
+
+//     if (Platform.isAndroid) {
+//       if (await requestPermission(Permission.storage)) {
+//         Directory? appDocumentsDirectory = await getExternalStorageDirectory();
+//         String newPath = '';
+//         List<String> folders = appDocumentsDirectory!.path.split('/');
+//         for (int x = 1; x < folders.length; x++) {
+//           String folder = folders[x];
+//           if (folder != 'Android') {
+//             newPath += "/$folder"; // /storage/emulated/0
+//           } else {
+//             break;
+//           }
+//         }
+//         newPath = "$newPath/Download/${msg.trim()}.docx";
+
+//         print("appDocumentsDirectory.path---${appDocumentsDirectory.path}");
+//         File file = File(newPath);
+
+//         final headers = {"Authorization": authorizationValue};
+
+//         final response = await Dio().get(
+//           "$baseUrl$getPdfUrl$sessionId",
+//           options: Options(
+//             headers: headers,
+//             responseType: ResponseType.bytes,
+//           ),
+//         );
+
+//         List<int> responseData = response.data;
+//         // await file.writeAsBytes(responseData);
+
+//         final template = await DocxTemplate.fromBytes(responseData);
+//         final content = {
+//           'variable_name': 'Your Data Here', // Replace with your actual data
+//         };
+//         final docx = await template.generate(content);
+
+//         await file.writeAsBytes(docx);
+
+//         showSnackbar(
+//           context: context,
+//           title: "DOCX download successfully",
+//         );
+//       }
+//     } else {
+//       print('not android');
+//     }
+//   } catch (e) {
+//     print('Error: $e');
+//     showSnackbar(
+//       context: context,
+//       title: "Error downloading DOCX",
+//     );
+//   }
+//   setState(() {
+//     loading = false;
+//   });
+// }
 
   Future<void> getDocxFile(String title, RxList<ChatModel> answer) async {
     try {

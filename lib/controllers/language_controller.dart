@@ -21,6 +21,7 @@ class LanguageController extends GetxController {
   }
 
   Future<void> giveLocal() async {
+    print('hello');
     final prefs = await SharedPreferences.getInstance();
     selectLocale.value = (prefs.getString(locale) ?? 'en');
     // localizationValue = (prefs.getString(locale) ?? 'en');
