@@ -1,3 +1,4 @@
+import 'package:ai_chatbot_flutter/screens/chat_screen/screen/mic_screen.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
@@ -5,8 +6,6 @@ import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../constants/shared_prefs_keys.dart';
 import '../../../controllers/profile_controller.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../../widgets/gradient_back_widget.dart';
@@ -27,8 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    profileController = Get.put(ProfileController());
-    profileController.getProfile();
+    profileController = Get.find();
   }
 
   @override
@@ -45,9 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  const CustomAppBar(
+                  CustomAppBar(
                     leading: botIcon,
-                    trailing: notificationBadgeIcon,
+                    trailing: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const SpeechSampleApp();
+                            },
+                          ));
+                        },
+                        child: notificationBadgeIcon),
                   ),
                   homeBotIcon,
                   aiTextIcon,

@@ -11,14 +11,12 @@ import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../services/auth_service.dart';
 import '../../../utils/image_assets.dart';
 import '../../../utils/text_styles.dart';
 import '../../../utils/util.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../../current_subscription_screen/current_subscription_scrren.dart';
-import '../widgets/ListileShimmerWidget.dart';
 import '../widgets/profile_avatar.dart';
 import '../widgets/settings_tile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -99,7 +97,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "V1.1.16",
+                                    controller.phoneNo,
                                     style: poppinsRegTextStyle.copyWith(
                                       color: Colors.white54,
                                     ),
@@ -245,6 +243,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                         Navigator.of(ctx).pop();
                                         if (await AuthService().signOut()) {
                                           if (context.mounted) {
+                                            logout();
                                             showSnackbar(
                                               context: context,
                                               title:
@@ -289,11 +288,15 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Future<void> logout() async {
     print('logout');
-    final headers = {
-      "Authorization": authorizationValue,
-    };
-    var response =
-        await NetworkApi.getResponse(url: logOutUrl, headers: headers);
-    print(response);
+    try {
+      final headers = {
+        "Authorization": authorizationValue,
+      };
+      var response =
+          await NetworkApi.getResponse(url: logOutUrl, headers: headers);
+      print(response);
+    } catch (e) {
+      print(e);
+    }
   }
 }

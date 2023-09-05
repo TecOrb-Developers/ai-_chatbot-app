@@ -1,8 +1,8 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
+import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/share_prefs_keys.dart';
-import 'package:ai_chatbot_flutter/widgets/bottom_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -33,10 +33,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   LanguageController controller = Get.put(LanguageController());
+  ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     controller.giveLocal();
+
     print(authorizationValue);
     return Obx(
       () => MaterialApp(

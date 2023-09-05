@@ -6,6 +6,11 @@ import '../services/headers_map.dart';
 import '../services/network_api.dart';
 
 class ProfileController extends GetxController {
+  void onInit() {
+    super.onInit();
+    getProfile();
+  }
+
   var subscribeType = '';
   bool subscription = false;
   bool isImage = false;
@@ -16,7 +21,6 @@ class ProfileController extends GetxController {
   var selectedCountryCode = '';
   var email = '';
   var phoneNo = '';
-
   bool isUploading = false;
 
   Future<void> getProfile() async {
@@ -58,6 +62,8 @@ class ProfileController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
 
       prefs.setString(subcriptionTypeKey, subscribeType);
+      subcription_type = prefs.getString(subcriptionTypeKey) ?? '';
+
       print('okk');
     } catch (e) {
       print("no");
