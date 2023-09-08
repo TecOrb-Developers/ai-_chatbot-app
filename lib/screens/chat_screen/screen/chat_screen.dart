@@ -154,15 +154,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       ? print('Printing.........')
                       : printError;
                   setState(() {
-                    print('mic2');
-
                     textController.text = micController.text;
-                    print(
-                        ' 22222-${textController.text} - ${micController.text}');
                   });
                 },
                 onTapup: (details) {
                   print('mic3');
+                  setState(() {
+                    textController.text = micController.text;
+                  });
                   micController.stopListening();
                 },
                 onTap: () async {

@@ -1,6 +1,5 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
 import 'package:ai_chatbot_flutter/constants/shared_prefs_keys.dart';
-import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/share_prefs_keys.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +32,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   LanguageController controller = Get.put(LanguageController());
-  ProfileController profileController = Get.put(ProfileController());
+  // ProfileController profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {

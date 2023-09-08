@@ -1,8 +1,10 @@
+import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
 import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/screens/settings_screen/screen/settings_screen.dart';
 import 'package:ai_chatbot_flutter/screens/subscription_screen/screen/subscription_screen.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../utils/image_assets.dart';
 import '../utils/text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,6 +18,12 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _index = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    ProfileController profileController = Get.put(ProfileController());
+  }
 
   @override
   Widget build(BuildContext context) {

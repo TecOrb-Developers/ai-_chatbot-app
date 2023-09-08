@@ -17,6 +17,7 @@ class MicController extends GetxController {
         },
       );
     }
+    update();
   }
 
   void stopListening() async {
