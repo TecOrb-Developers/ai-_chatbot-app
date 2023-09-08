@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/utils/colors.dart';
+import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/widgets/custom_app_bar.dart';
@@ -33,7 +34,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 title: 'Notification'),
             const GradientHorizontalDivider(),
-            const SizedBox(height: 20),
+            // const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemCount: 10,
@@ -47,25 +48,40 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         color: kchatBodyColor,
                         borderRadius: BorderRadius.circular(10)),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    child: Column(
+                        horizontal: 10, vertical: 10),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'hh',
-                          style: poppinsRegTextStyle.copyWith(
-                            fontSize: 16,
-                            color: klightTextColor,
-                          ),
-                        ),
+                        notificationBotIcon,
                         SizedBox(
-                          height: 7,
+                          width: 8,
                         ),
-                        Text(
-                          'gy',
-                          style: poppinsRegTextStyle.copyWith(
-                            fontSize: 12,
-                            color: kgrayColor,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Current Subscription',
+                                style: poppinsMedTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                ),
+                              ),
+                              Text(
+                                'Lorem Ipsum is that it has a more-or-less normal distribution of letters,',
+                                style: poppinsRegTextStyle.copyWith(
+                                  fontSize: 10,
+                                  color: Colors.white.withOpacity(0.63),
+                                ),
+                              ),
+                              Text(
+                                '8:30 AM',
+                                style: poppinsRegTextStyle.copyWith(
+                                  fontSize: 8,
+                                  color: klightwhiteColor,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -26,7 +26,6 @@ import '../widget/chat_widget.dart';
 import '../widget/docbox_widget.dart';
 import '../widget/send_message_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:docx_template/docx_template.dart';
 
 String sessionId = '';
 
@@ -43,6 +42,8 @@ class _ChatScreenState extends State<ChatScreen> {
   String msg = '';
   bool loading = false;
   String ans = '';
+  SpeechToText speechToText = SpeechToText();
+  var text = '';
 
   final TextEditingController textController = TextEditingController();
   late ScrollController _listScrollController;
@@ -138,7 +139,6 @@ class _ChatScreenState extends State<ChatScreen> {
               Obx(
                 () => chatController.isTyping.value
                     ? const ChatShrinkWidget()
-
                     // const SpinKitThreeBounce(
                     //     color: Colors.grey,
                     //     size: 18,
@@ -147,22 +147,26 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               SendMessageWidget(
                 textController: textController,
-                onTapdown: (p0) {
-                  print('mic1');
-                  micController.startListening();
-                  micController.speechToText.isListening
-                      ? print('Printing.........')
-                      : printError;
-                  setState(() {
-                    textController.text = micController.text;
-                  });
+                onTapdown: (details) async {
+                  print('initialize');
+                  var available = await speechToText.initialize();
+                  if (available) {
+                    setState(() {
+                      speechToText.listen(
+                        onResult: (result) {
+                          setState(() {
+                            textController.text = result.recognizedWords;
+                            text = result.recognizedWords;
+                            print(text);
+                          });
+                        },
+                      );
+                    });
+                  }
                 },
                 onTapup: (details) {
-                  print('mic3');
-                  setState(() {
-                    textController.text = micController.text;
-                  });
-                  micController.stopListening();
+                  print('stop');
+                  speechToText.stop();
                 },
                 onTap: () async {
                   await sendMessageFCT(controller: chatController);

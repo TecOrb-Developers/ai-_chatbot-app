@@ -239,3 +239,7 @@ const selectedyearlyIcon = Image(
 const successfullpaymentIcon = Image(
   image: AssetImage("assets/images/successfulpayment.png"),
 );
+
+const notificationBotIcon = Image(
+  image: AssetImage("assets/images/notificationBot.png"),
+);

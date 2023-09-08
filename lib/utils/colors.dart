@@ -8,3 +8,4 @@ const kchatBodyColor = Color(0xff171717);
 const klightTextColor = Color(0xffCCCCCC);
 const kdarkTextColor = Color(0xff646464);
 const kIconContainerBoxColor = Color(0xff262626);
+const klightwhiteColor = Color(0xff8C8C8C);

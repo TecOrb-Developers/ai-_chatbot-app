@@ -4,6 +4,7 @@ import 'package:ai_chatbot_flutter/screens/chat_history_screen/chat_history.dart
 import 'package:ai_chatbot_flutter/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:ai_chatbot_flutter/screens/help_and_support_screen/help_and_support_screen.dart';
 import 'package:ai_chatbot_flutter/screens/login_screen/login_screen.dart';
+import 'package:ai_chatbot_flutter/screens/notification_screen/notification_screen.dart';
 import 'package:ai_chatbot_flutter/screens/privacy_policy_screen.dart/privacy_policy_screen.dart';
 import 'package:ai_chatbot_flutter/screens/select_language_screen/select_language_screen.dart';
 import 'package:ai_chatbot_flutter/screens/term_and_condition/term_and_condition.dart';
@@ -49,7 +50,15 @@ class _SettingScreenState extends State<SettingScreen> {
                 fontSize: 18,
               ),
             ),
-            trailing: notificationBadgeIcon,
+            trailing: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const NotificationScreen();
+                    },
+                  ));
+                },
+                child: notificationBadgeIcon),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

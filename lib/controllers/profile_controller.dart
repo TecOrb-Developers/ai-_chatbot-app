@@ -39,7 +39,7 @@ class ProfileController extends GetxController {
       print('getProfile--$response');
       if (response['code'] == 200) {
         isLoading = false;
-
+        update();
         print('ok');
         subscribeType = response['data']['subscriptionType'].toString();
         subscription = response['data']['subscription'];
@@ -69,6 +69,7 @@ class ProfileController extends GetxController {
       print("no");
       print(e);
     }
+    isLoading = false;
 
     update();
   }

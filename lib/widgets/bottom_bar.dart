@@ -1,8 +1,10 @@
 import 'package:ai_chatbot_flutter/controllers/profile_controller.dart';
+import 'package:ai_chatbot_flutter/screens/add_card_screen/add_card_screen.dart';
 import 'package:ai_chatbot_flutter/screens/home_screen/screen/home_screen.dart';
 import 'package:ai_chatbot_flutter/screens/settings_screen/screen/settings_screen.dart';
 import 'package:ai_chatbot_flutter/screens/subscription_screen/screen/subscription_screen.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
+import 'package:ai_chatbot_flutter/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/image_assets.dart';
@@ -30,7 +32,24 @@ class _BottomBarState extends State<BottomBar> {
     return Scaffold(
       backgroundColor: kBlackColor,
       extendBody: true,
-      body: _screens[_index],
+      body: GetBuilder<ProfileController>(
+        builder: (controller) {
+          return Stack(
+            children: [
+              _screens[_index],
+              Visibility(
+                visible: controller.isLoading,
+                child: const Scaffold(
+                  backgroundColor: Colors.black38,
+                  body: Center(
+                    child: LoadingIndicator(),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
 
       // Stack(
       //   children: [

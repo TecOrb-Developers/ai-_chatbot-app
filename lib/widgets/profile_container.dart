@@ -58,6 +58,9 @@ class ProfileContainer extends StatelessWidget {
                   fontSize: 16,
                   color: Colors.white,
                 ),
+                focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: kchatBodyColor)),
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(color: kchatBodyColor)),
@@ -72,7 +75,8 @@ class ProfileContainer extends StatelessWidget {
                   color: Colors.white,
                 ),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12))),
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: kchatBodyColor))),
           )
         ],
       ),
