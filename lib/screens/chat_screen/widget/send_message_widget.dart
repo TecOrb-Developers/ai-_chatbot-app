@@ -1,3 +1,5 @@
+import 'package:ai_chatbot_flutter/utils/colors.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/image_assets.dart';
 import '../../../utils/text_styles.dart';
@@ -6,13 +8,17 @@ class SendMessageWidget extends StatelessWidget {
   final void Function()? onTap;
   final Function(TapDownDetails)? onTapdown;
   final void Function(TapUpDetails)? onTapup;
+  GestureTapCancelCallback? onTapCancel;
   final TextEditingController textController;
-  const SendMessageWidget({
+  bool? isListning;
+  SendMessageWidget({
     super.key,
     this.onTap,
     this.onTapdown,
     this.onTapup,
+    this.onTapCancel,
     required this.textController,
+    this.isListning,
   });
 
   @override
@@ -38,7 +44,16 @@ class SendMessageWidget extends StatelessWidget {
                   suffixIcon: GestureDetector(
                     onTapDown: onTapdown,
                     onTapUp: onTapup,
-                    child: micIcon,
+                    onTapCancel: onTapCancel,
+                    child: AvatarGlow(
+                        animate: isListning!,
+                        glowColor: kPearColor,
+                        repeat: true,
+                        repeatPauseDuration: Duration(milliseconds: 300),
+                        showTwoGlows: true,
+                        duration: Duration(milliseconds: 2000),
+                        endRadius: 35,
+                        child: micIcon),
                   ),
                   hintText: "Start a new chat...",
                   hintStyle: poppinsRegTextStyle.copyWith(

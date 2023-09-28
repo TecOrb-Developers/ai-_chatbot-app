@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class ProfileContainer extends StatelessWidget {
       this.keyBoardType,
       this.validator,
       this.initialvalue,
+      this.maxlength,
       this.onChanged});
   final String? text;
   final String? name;
@@ -20,6 +23,7 @@ class ProfileContainer extends StatelessWidget {
   final TextInputType? keyBoardType;
   final String? initialvalue;
   void Function(String)? onChanged;
+  final int? maxlength;
 
   String? Function(String?)? validator;
 
@@ -51,7 +55,7 @@ class ProfileContainer extends StatelessWidget {
               color: Colors.white,
             ),
             validator: validator,
-            maxLength: 20,
+            maxLength: maxlength,
 
             decoration: InputDecoration(
                 labelStyle: poppinsRegTextStyle.copyWith(

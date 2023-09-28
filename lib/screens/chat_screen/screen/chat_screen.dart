@@ -11,6 +11,7 @@ import 'package:ai_chatbot_flutter/utils/text_styles.dart';
 import 'package:ai_chatbot_flutter/utils/ui_parameters.dart';
 import 'package:ai_chatbot_flutter/utils/util.dart';
 import 'package:ai_chatbot_flutter/widgets/half_grad_container.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -41,6 +42,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String msg = '';
   bool loading = false;
+  bool isListning = false;
   String ans = '';
   SpeechToText speechToText = SpeechToText();
   var text = '';
@@ -146,18 +148,21 @@ class _ChatScreenState extends State<ChatScreen> {
                     : const SizedBox.shrink(),
               ),
               SendMessageWidget(
+                isListning: isListning,
                 textController: textController,
                 onTapdown: (details) async {
                   print('initialize');
                   var available = await speechToText.initialize();
                   if (available) {
                     setState(() {
+                      isListning = true;
                       speechToText.listen(
                         onResult: (result) {
                           setState(() {
                             textController.text = result.recognizedWords;
                             text = result.recognizedWords;
                             print(text);
+                            // isListning = false;
                           });
                         },
                       );
@@ -165,8 +170,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                 },
                 onTapup: (details) {
-                  print('stop');
+                  setState(() {
+                    print('stop');
+                    isListning = false;
+                  });
                   speechToText.stop();
+                },
+                onTapCancel: () {
+                  // setState(() {
+                  //   isListning = false;
+                  // });
                 },
                 onTap: () async {
                   await sendMessageFCT(controller: chatController);
@@ -482,6 +495,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> getTextFile(
       String title, RxList<ChatModel> answer, String type) async {
+    print('textfile');
     try {
       setState(() {
         loading = true;
@@ -492,7 +506,15 @@ class _ChatScreenState extends State<ChatScreen> {
       }
 
       if (Platform.isAndroid) {
-        if (await requestPermission(Permission.storage)) {
+        Permission permission;
+        final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+        final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
+        if ((info.version.sdkInt) >= 33) {
+          permission = Permission.manageExternalStorage;
+        } else {
+          permission = Permission.storage;
+        }
+        if (await requestPermission(permission)) {
           print('get pdf1');
           Directory? appDocumentsDirectory =
               await getExternalStorageDirectory();
@@ -600,6 +622,7 @@ class _ChatScreenState extends State<ChatScreen> {
 // }
 
   Future<void> getDocxFile(String title, RxList<ChatModel> answer) async {
+    print('doc file');
     try {
       setState(() {
         loading = true;
@@ -610,7 +633,15 @@ class _ChatScreenState extends State<ChatScreen> {
       }
 
       if (Platform.isAndroid) {
-        if (await requestPermission(Permission.storage)) {
+        Permission permission;
+        final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+        final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
+        if ((info.version.sdkInt) >= 33) {
+          permission = Permission.manageExternalStorage;
+        } else {
+          permission = Permission.storage;
+        }
+        if (await requestPermission(permission)) {
           print('get pdf1');
           Directory? appDocumentsDirectory =
               await getExternalStorageDirectory();
@@ -655,13 +686,24 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> getPdf(String msg, String type) async {
+    print('get pdf');
     try {
+      print('get pdf 11');
       setState(() {
         loading = true;
       });
 
       if (Platform.isAndroid) {
-        if (await requestPermission(Permission.storage)) {
+        print('get pdf 12');
+        Permission permission;
+        final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+        final AndroidDeviceInfo info = await deviceInfoPlugin.androidInfo;
+        if ((info.version.sdkInt) >= 33) {
+          permission = Permission.manageExternalStorage;
+        } else {
+          permission = Permission.storage;
+        }
+        if (await requestPermission(permission)) {
           print('get pdf1');
 
           print('get pdf2');
@@ -718,14 +760,25 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+//     if ((info.version.sdkInt) >= 33) {
+//       status = await Permission.manageExternalStorage.request();
+//     } else {
+//       status = await Permission.storage.request();
+//     }
+//   } else {
+//     status = await Permission.storage.request();
+//   }
+
   Future<bool> requestPermission(Permission permission) async {
     if (await permission.isGranted) {
+      print('permission granted');
       return true;
     } else {
       var result = await permission.request();
       if (result == PermissionStatus.granted) {
         return true;
       } else {
+        print('permission is not granted');
         return false;
       }
     }

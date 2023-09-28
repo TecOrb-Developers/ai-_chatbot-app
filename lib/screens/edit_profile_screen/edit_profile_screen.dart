@@ -259,6 +259,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     ),
                                     text:
                                         AppLocalizations.of(context)!.fullName,
+                                    maxlength: 20,
                                     onChanged: (val) {},
                                     validator: (val) {
                                       if (val == '') {
