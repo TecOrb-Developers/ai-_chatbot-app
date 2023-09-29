@@ -16,6 +16,7 @@ class ChatController extends GetxController {
   RxBool get isTyping => _isTyping;
   var messageId = '';
   var createdAt = '';
+  var time = '';
   bool getsession_id = false;
 
   void toggleTypingBool() => _isTyping.value = !_isTyping.value;
@@ -108,9 +109,9 @@ class ChatController extends GetxController {
           url: sendMessageUrl, body: body, headers: headers);
       messageId = response['data']['_id'];
       createdAt = response['data']['createdAt'];
-
+      time = response['data']['time'];
       print("----$response");
-      print("messageId====$messageId");
+      print("TIME====${response['data']['time']};");
       print(createdAt);
     } catch (e) {
       print(e);

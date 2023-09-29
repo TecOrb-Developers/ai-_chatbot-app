@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/screens/choose_paymont_method/choose_payment_method.dart';
+import 'package:ai_chatbot_flutter/screens/notification_screen/notification_screen.dart';
 import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
@@ -45,7 +46,6 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
       children: [
         subscriptionBackgroundImage,
         SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -59,250 +59,268 @@ class _SubscrptionScreenState extends State<SubscrptionScreen> {
                       fontSize: 18,
                     ),
                   ),
-                  trailing: notificationBadgeIcon,
+                  trailing: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const NotificationScreen();
+                          },
+                        ));
+                      },
+                      child: notificationBadgeIcon),
                 ),
-                const GradientHorizontalDivider(),
-                const SizedBox(height: 40),
-                const SubTickWithText(),
-                const SizedBox(height: 40),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                var amount = "500";
-                                isReady
-                                    ? null
-                                    : Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          return ChoosePaymentMethodScreen(
-                                            amount: amount,
-                                            subcriptionType: "Weekly",
-                                          );
-                                        },
-                                      ));
-                              },
-                              child: Stack(
-                                children: [
-                                  if (subcription_type == 'Weekly')
-                                    selectedsquareIcon,
-                                  squareIcon,
-                                  Positioned(
-                                    top: 20,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .weekly,
-                                            style: poppinsRegTextStyle.copyWith(
-                                              color:
-                                                  subcription_type == 'Weekly'
-                                                      ? Colors.black
-                                                      : Colors.white,
-                                              fontSize: 15,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const GradientHorizontalDivider(),
+                      const SizedBox(height: 40),
+                      const SubTickWithText(),
+                      const SizedBox(height: 40),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                                onTap: () {
+                                  var amount = "500";
+                                  isReady
+                                      ? null
+                                      : Navigator.push(context,
+                                          MaterialPageRoute(
+                                          builder: (context) {
+                                            return ChoosePaymentMethodScreen(
+                                              amount: amount,
+                                              subcriptionType: "Weekly",
+                                            );
+                                          },
+                                        ));
+                                },
+                                child: Stack(
+                                  children: [
+                                    if (subcription_type == 'Weekly')
+                                      selectedsquareIcon,
+                                    squareIcon,
+                                    Positioned(
+                                      top: 20,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .weekly,
+                                              style:
+                                                  poppinsRegTextStyle.copyWith(
+                                                color:
+                                                    subcription_type == 'Weekly'
+                                                        ? Colors.black
+                                                        : Colors.white,
+                                                fontSize: 15,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            "₹ 500.00",
-                                            style: poppinsMedTextStyle.copyWith(
-                                              color:
-                                                  subcription_type == 'Weekly'
-                                                      ? Colors.black
-                                                      : Colors.white,
-                                              fontSize: 20,
+                                            Text(
+                                              "₹ 500.00",
+                                              style:
+                                                  poppinsMedTextStyle.copyWith(
+                                                color:
+                                                    subcription_type == 'Weekly'
+                                                        ? Colors.black
+                                                        : Colors.white,
+                                                fontSize: 20,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        const SizedBox(width: 13),
-                        Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                var amount = "1500";
-                                // isReady
-                                //     ? null
-                                //     :
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return ChoosePaymentMethodScreen(
-                                      amount: amount,
-                                      subcriptionType: 'Monthly',
-                                    );
-                                  },
-                                ));
-                              },
-                              child: Stack(
-                                children: [
-                                  if (subcription_type == 'Monthly')
-                                    selectedsquareIcon,
-                                  squareIcon,
-                                  Positioned(
-                                    top: 20,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .monthly,
-                                            style: poppinsRegTextStyle.copyWith(
-                                              color:
-                                                  subcription_type == 'Monthly'
-                                                      ? Colors.black
-                                                      : Colors.white,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          Text(
-                                            "₹ 1500.00",
-                                            style: poppinsMedTextStyle.copyWith(
-                                              color:
-                                                  subcription_type == 'Monthly'
-                                                      ? Colors.black
-                                                      : Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    GestureDetector(
-                        onTap: () {
-                          var amount = "80";
-                          isReady
-                              ? null
-                              : Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return ChoosePaymentMethodScreen(
-                                      amount: amount,
-                                      subcriptionType: 'OneDay',
-                                    );
-                                  },
-                                ));
-                        },
-                        child: Stack(
-                          children: [
-                            if (subcription_type == 'OneDay') selectedflatIcon,
-                            flatIcon,
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.day,
-                                    style: poppinsRegTextStyle.copyWith(
-                                      color: subcription_type == 'OneDay'
-                                          ? Colors.black
-                                          : Colors.white,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "₹ 80.00",
-                                        style: poppinsMedTextStyle.copyWith(
-                                          color: subcription_type == 'OneDay'
-                                              ? Colors.black
-                                              : Colors.white,
-                                          fontSize: 20,
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(
-                                        width: 45,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )),
-                    const SizedBox(height: 30),
-                    GestureDetector(
-                        onTap: () {
-                          var amount = "3000";
-                          isReady
-                              ? null
-                              : Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return ChoosePaymentMethodScreen(
-                                      amount: amount,
-                                      subcriptionType: 'Yearly',
-                                    );
-                                  },
-                                ));
-                        },
-                        child: Stack(
-                          children: [
-                            if (subcription_type == 'Yearly') selectedflatIcon,
-                            flatIcon,
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.yearly,
-                                    style: poppinsRegTextStyle.copyWith(
-                                      color: subcription_type == 'Yearly'
-                                          ? Colors.black
-                                          : Colors.white,
-                                      fontSize: 15,
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "₹ 3000.00",
-                                        style: poppinsMedTextStyle.copyWith(
-                                          color: subcription_type == 'Yearly'
-                                              ? Colors.black
-                                              : Colors.white,
-                                          fontSize: 20,
+                                  ],
+                                )),
+                          ),
+                          const SizedBox(width: 13),
+                          Expanded(
+                            child: GestureDetector(
+                                onTap: () {
+                                  var amount = "1500";
+                                  isReady
+                                      ? null
+                                      : Navigator.push(context,
+                                          MaterialPageRoute(
+                                          builder: (context) {
+                                            return ChoosePaymentMethodScreen(
+                                              amount: amount,
+                                              subcriptionType: 'Monthly',
+                                            );
+                                          },
+                                        ));
+                                },
+                                child: Stack(
+                                  children: [
+                                    if (subcription_type == 'Monthly')
+                                      selectedsquareIcon,
+                                    squareIcon,
+                                    Positioned(
+                                      top: 20,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .monthly,
+                                              style:
+                                                  poppinsRegTextStyle.copyWith(
+                                                color: subcription_type ==
+                                                        'Monthly'
+                                                    ? Colors.black
+                                                    : Colors.white,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                            Text(
+                                              "₹ 1500.00",
+                                              style:
+                                                  poppinsMedTextStyle.copyWith(
+                                                color: subcription_type ==
+                                                        'Monthly'
+                                                    ? Colors.black
+                                                    : Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 45,
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                          onTap: () {
+                            var amount = "80";
+                            isReady
+                                ? null
+                                : Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return ChoosePaymentMethodScreen(
+                                        amount: amount,
+                                        subcriptionType: 'OneDay',
+                                      );
+                                    },
+                                  ));
+                          },
+                          child: Stack(
+                            children: [
+                              if (subcription_type == 'OneDay')
+                                selectedflatIcon,
+                              flatIcon,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.day,
+                                      style: poppinsRegTextStyle.copyWith(
+                                        color: subcription_type == 'OneDay'
+                                            ? Colors.black
+                                            : Colors.white,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "₹ 80.00",
+                                          style: poppinsMedTextStyle.copyWith(
+                                            color: subcription_type == 'OneDay'
+                                                ? Colors.black
+                                                : Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 45,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        )),
-                  ],
+                            ],
+                          )),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                          onTap: () {
+                            var amount = "3000";
+                            isReady
+                                ? null
+                                : Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return ChoosePaymentMethodScreen(
+                                        amount: amount,
+                                        subcriptionType: 'Yearly',
+                                      );
+                                    },
+                                  ));
+                          },
+                          child: Stack(
+                            children: [
+                              if (subcription_type == 'Yearly')
+                                selectedflatIcon,
+                              flatIcon,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.yearly,
+                                      style: poppinsRegTextStyle.copyWith(
+                                        color: subcription_type == 'Yearly'
+                                            ? Colors.black
+                                            : Colors.white,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "₹ 3000.00",
+                                          style: poppinsMedTextStyle.copyWith(
+                                            color: subcription_type == 'Yearly'
+                                                ? Colors.black
+                                                : Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 45,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
+                    ],
+                  ),
                 )
               ],
             ),

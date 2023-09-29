@@ -242,7 +242,6 @@ class _CurrentSubscriptionScreenState extends State<CurrentSubscriptionScreen> {
         children: [
           subscriptionBackgroundImage,
           SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -257,197 +256,208 @@ class _CurrentSubscriptionScreenState extends State<CurrentSubscriptionScreen> {
                     ),
                   ),
                   const GradientHorizontalDivider(),
-                  const SizedBox(height: 20),
-                  Text(
-                    AppLocalizations.of(context)!.upgradeSubscription,
-                    style: poppinsRegTextStyle.copyWith(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    AppLocalizations.of(context)!.currentsubs,
-                    style: poppinsLightTextStyle.copyWith(
-                      fontSize: 15,
-                      color: kgrayColor,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Stack(
-                              children: [
-                                if (subcription_type == 'Weekly')
-                                  selectedsquareIcon,
-                                squareIcon,
-                                Positioned(
-                                  top: 20,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!.weekly,
-                                          style: poppinsRegTextStyle.copyWith(
-                                            color: subcription_type == 'Weekly'
-                                                ? Colors.black
-                                                : Colors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        Text(
-                                          "₹ 500.00",
-                                          style: poppinsMedTextStyle.copyWith(
-                                            color: subcription_type == 'Weekly'
-                                                ? Colors.black
-                                                : Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 20),
+                        Text(
+                          AppLocalizations.of(context)!.upgradeSubscription,
+                          style: poppinsRegTextStyle.copyWith(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
-                          const SizedBox(width: 13),
-                          Expanded(
-                            child: Stack(
-                              children: [
-                                if (subcription_type == 'Monthly')
-                                  selectedsquareIcon,
-                                squareIcon,
-                                Positioned(
-                                  top: 20,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!.monthly,
-                                          style: poppinsRegTextStyle.copyWith(
-                                            color: subcription_type == 'Monthly'
-                                                ? Colors.black
-                                                : Colors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        Text(
-                                          "₹ 1500.00",
-                                          style: poppinsMedTextStyle.copyWith(
-                                            color: subcription_type == 'Monthly'
-                                                ? Colors.black
-                                                : Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          AppLocalizations.of(context)!.currentsubs,
+                          style: poppinsLightTextStyle.copyWith(
+                            fontSize: 15,
+                            color: kgrayColor,
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      Stack(
-                        children: [
-                          if (subcription_type == 'OneDay') selectedflatIcon,
-                          flatIcon,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.day,
-                                  style: poppinsRegTextStyle.copyWith(
-                                    color: subcription_type == 'OneDay'
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "₹ 80.00",
-                                      style: poppinsMedTextStyle.copyWith(
-                                        color: subcription_type == 'OneDay'
-                                            ? Colors.black
-                                            : Colors.white,
-                                        fontSize: 20,
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  if (subcription_type == 'Weekly')
+                                    selectedsquareIcon,
+                                  squareIcon,
+                                  Positioned(
+                                    top: 20,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .weekly,
+                                            style: poppinsRegTextStyle.copyWith(
+                                              color:
+                                                  subcription_type == 'Weekly'
+                                                      ? Colors.black
+                                                      : Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          Text(
+                                            "₹ 500.00",
+                                            style: poppinsMedTextStyle.copyWith(
+                                              color:
+                                                  subcription_type == 'Weekly'
+                                                      ? Colors.black
+                                                      : Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 45,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      Stack(
-                        children: [
-                          if (subcription_type == 'Yearly') selectedflatIcon,
-                          flatIcon,
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.yearly,
-                                  style: poppinsRegTextStyle.copyWith(
-                                    color: subcription_type == 'Yearly'
-                                        ? Colors.black
-                                        : Colors.white,
-                                    fontSize: 15,
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "₹ 3000.00",
-                                      style: poppinsMedTextStyle.copyWith(
-                                        color: subcription_type == 'Yearly'
-                                            ? Colors.black
-                                            : Colors.white,
-                                        fontSize: 20,
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 13),
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  if (subcription_type == 'Monthly')
+                                    selectedsquareIcon,
+                                  squareIcon,
+                                  Positioned(
+                                    top: 20,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .monthly,
+                                            style: poppinsRegTextStyle.copyWith(
+                                              color:
+                                                  subcription_type == 'Monthly'
+                                                      ? Colors.black
+                                                      : Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          Text(
+                                            "₹ 1500.00",
+                                            style: poppinsMedTextStyle.copyWith(
+                                              color:
+                                                  subcription_type == 'Monthly'
+                                                      ? Colors.black
+                                                      : Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 45,
-                                    )
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        Stack(
+                          children: [
+                            if (subcription_type == 'OneDay') selectedflatIcon,
+                            flatIcon,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.day,
+                                    style: poppinsRegTextStyle.copyWith(
+                                      color: subcription_type == 'OneDay'
+                                          ? Colors.black
+                                          : Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "₹ 80.00",
+                                        style: poppinsMedTextStyle.copyWith(
+                                          color: subcription_type == 'OneDay'
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 45,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        Stack(
+                          children: [
+                            if (subcription_type == 'Yearly') selectedflatIcon,
+                            flatIcon,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.yearly,
+                                    style: poppinsRegTextStyle.copyWith(
+                                      color: subcription_type == 'Yearly'
+                                          ? Colors.black
+                                          : Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "₹ 3000.00",
+                                        style: poppinsMedTextStyle.copyWith(
+                                          color: subcription_type == 'Yearly'
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 45,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

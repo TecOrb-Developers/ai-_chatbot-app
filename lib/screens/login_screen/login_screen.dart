@@ -1,4 +1,5 @@
 import 'package:ai_chatbot_flutter/constants/api_const.dart';
+import 'package:ai_chatbot_flutter/screens/walkthrough_screens/screens/walkthrough_screen1.dart';
 import 'package:ai_chatbot_flutter/services/auth_service.dart';
 import 'package:ai_chatbot_flutter/services/network_api.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
@@ -315,12 +316,15 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        print('vericication failed-----------------------------------');
+        print('verification failed -----------------------------------');
         print(e);
+        setState(() {
+          isLoading = false;
+        });
+        showSnackbar(context: context, title: "Verification Failed");
         // Navigator.push(context, MaterialPageRoute(
         //   builder: (context) {
-        //     return SignupScreen(
-        //         phoneNo: phoneNo, selectedCountryCode: selectedCountryCode);
+        //     return const WalkthroughScreenOne();
         //   },
         // ));
       },

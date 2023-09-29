@@ -51,6 +51,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
   late TextEditingController cvvCodeController;
   var client_scret_id = '';
   bool paymentProcess = false;
+  var paymentId = '';
 
   @override
   void initState() {
@@ -243,50 +244,6 @@ class _PayNowScreenState extends State<PayNowScreen> {
           paymentProcess = false;
         });
 
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (ctx) {
-              return AlertDialog(
-                backgroundColor: const Color.fromARGB(255, 58, 54, 54),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                title: Text(
-                  'Payment Successfull',
-                  style: poppinsMedTextStyle.copyWith(
-                    color: Colors.black,
-                    fontSize: 17,
-                  ),
-                ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [successfullpaymentIcon],
-                ),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => BottomBar()),
-                            (Route<dynamic> route) => false);
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => BottomBar(),
-                        //     ));
-
-                        showSnackbar(
-                          context: context,
-                          title: "Payment Successfull",
-                        );
-                      },
-                      child: Text('OK')),
-                ],
-              );
-            });
-
         print("paymentResul===${paymentResult.id}");
       }
     } catch (e) {
@@ -355,25 +312,74 @@ class _PayNowScreenState extends State<PayNowScreen> {
       if (response['code'] == 200) {
         print("response>>>>>$response");
         print("response>>>>>${response['data']}");
-        print("response>>>>>${response['data']['subscriptionType']}");
+        paymentId = response['data']['paymentId'];
+        print("response>>>>>$paymentId");
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (ctx) {
+              return AlertDialog(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    successfullpaymentIcon,
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Payment Successfull',
+                      style: poppinsMedTextStyle.copyWith(
+                        color: Colors.black,
+                        fontSize: 22,
+                      ),
+                    ),
+                    Text(
+                      'You have completed your payment',
+                      style: poppinsRegTextStyle.copyWith(
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Text(
+                      'Transaction Number: ${paymentId.toString()}',
+                      style: poppinsRegTextStyle.copyWith(
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => BottomBar()),
+                            (Route<dynamic> route) => false);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => BottomBar(),
+                        //     ));
 
-        AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            backgroundColor: Colors.white,
-            title: Text(
-              'Payment Successfull',
-              style: poppinsMedTextStyle.copyWith(
-                color: Colors.black,
-                fontSize: 17,
-              ),
-            ),
-            content: const Center(
-              child: Icon(
-                Icons.check,
-                color: Colors.green,
-              ),
-            ));
+                        // showSnackbar(
+                        //   context: context,
+                        //   title: "Payment Successfull",
+                        // );
+                      },
+                      child: Text('OK')),
+                ],
+              );
+            });
       }
     } catch (e) {
       print(e);

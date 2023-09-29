@@ -131,6 +131,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     itemBuilder: (context, index) {
                       var chat = chatController.getChatList[index];
                       return ChatWidget(
+                        time: chatController.time,
                         text: chat.msg!,
                         isSender: chat.isUser ?? false,
                       );
@@ -162,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             textController.text = result.recognizedWords;
                             text = result.recognizedWords;
                             print(text);
-                            // isListning = false;
+                            isListning = false;
                           });
                         },
                       );
