@@ -226,7 +226,9 @@ class _OtpScreenState extends State<OtpScreen> {
                           print("bottom bar");
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                                builder: (_) => const BottomBar()),
+                                builder: (_) => BottomBar(
+                                      isGetProfile: true,
+                                    )),
                             (route) => false,
                           );
                         }
@@ -315,30 +317,6 @@ class _OtpScreenState extends State<OtpScreen> {
       isLoading = false;
     });
   }
-
-  // Future<bool> reSendOTP({required String phone}) async {
-  //   print('resend otp');
-  //   await FirebaseAuth.instance.verifyPhoneNumber(
-  //     phoneNumber: phone,
-  //     verificationCompleted: (PhoneAuthCredential credential) {
-  //       print('phone verification completed');
-  //     },
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       print('failed verification-------------$e');
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) async {
-  //       _verificationId = verificationId;
-  //       _resendToken = resendToken;
-  //     },
-  //     timeout: const Duration(seconds: 50),
-  //     forceResendingToken: _resendToken,
-  //     codeAutoRetrievalTimeout: (String verificationId) {
-  //       verificationId = _verificationId;
-  //     },
-  //   );
-  //   debugPrint("_verificationId: $_verificationId");
-  //   return true;
-  // }
 
   Future<bool> checkAccount() async {
     try {
