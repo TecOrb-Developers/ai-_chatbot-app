@@ -8,6 +8,7 @@ import '../services/network_api.dart';
 class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
+    print('get profile!!');
     getProfile();
   }
 
@@ -26,7 +27,7 @@ class ProfileController extends GetxController {
   Future<void> getProfile() async {
     isLoading = true;
 
-    print('getProfile1');
+    print('getProfile!!!');
     try {
       final headers = {
         "Authorization": authorizationValue,

@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    profileController = Get.find();
+    profileController = Get.find<ProfileController>();
   }
 
   @override
@@ -34,60 +34,57 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget build(BuildContext context) {
-    return ScreenBackgroundWidget(child: GetBuilder<ProfileController>(
-      builder: (controller) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              CustomAppBar(
-                leading: botIcon,
-                trailing: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const NotificationScreen();
-                        },
-                      ));
-                    },
-                    child: notificationBadgeIcon),
-              ),
-              homeBotIcon,
-              aiTextIcon,
-              const SizedBox(height: 24),
-              GestureDetector(
+    return ScreenBackgroundWidget(
+        child: SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          CustomAppBar(
+            leading: botIcon,
+            trailing: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ChatScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const NotificationScreen();
+                    },
+                  ));
                 },
-                child: GradientBackWidget(
-                  topChild: Column(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.chatNow,
-                        style: poppinsMedTextStyle.copyWith(
-                          fontSize: 16,
-                          color: kBlackColor,
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.freemess,
-                        style: poppinsLightTextStyle.copyWith(
-                          color: kBlackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 110,
-              ),
-            ],
+                child: notificationBadgeIcon),
           ),
-        );
-      },
+          homeBotIcon,
+          aiTextIcon,
+          const SizedBox(height: 24),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => ChatScreen()),
+              );
+            },
+            child: GradientBackWidget(
+              topChild: Column(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.chatNow,
+                    style: poppinsMedTextStyle.copyWith(
+                      fontSize: 16,
+                      color: kBlackColor,
+                    ),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.freemess,
+                    style: poppinsLightTextStyle.copyWith(
+                      color: kBlackColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 110,
+          ),
+        ],
+      ),
     ));
   }
 }

@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import '../../widgets/pear_box_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../home_screen/screen/home_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -99,7 +101,8 @@ class AuthWrapper extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const BottomBar();
+          return const HomeScreen();
+          // const BottomBar();
         } else {
           return const WalkthroughScreenOne();
         }

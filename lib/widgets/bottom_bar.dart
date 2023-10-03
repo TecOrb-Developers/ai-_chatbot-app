@@ -21,10 +21,14 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _index = 1;
 
+  late final ProfileController profileController;
+
   @override
   void initState() {
     super.initState();
-    ProfileController profileController = Get.put(ProfileController());
+
+    print('get profile!');
+    profileController = Get.put(ProfileController());
   }
 
   @override
@@ -50,36 +54,6 @@ class _BottomBarState extends State<BottomBar> {
           );
         },
       ),
-
-      // Stack(
-      //   children: [
-      //     const SizedBox(
-      //       height: double.infinity,
-      //       width: double.infinity,
-      //       child: DecoratedBox(
-      //         decoration: BoxDecoration(
-      //           color: Colors.transparent,
-      //         ),
-      //       ),
-      //     ),
-      //     Container(
-      //       // height: double.infinity,
-      //       // width: double.infinity,
-      //       decoration: const BoxDecoration(
-      //         gradient: RadialGradient(
-      //           center: Alignment.topLeft,
-      //           radius: 1.2,
-      //           colors: [
-      //             Color(0x40C7F431),
-      //             Color(0x00C7F431),
-      //           ],
-      //         ),
-      //       ),
-      //       child: _screens[_index],
-      //     ),
-      //   ],
-      // ),
-
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.transparent,

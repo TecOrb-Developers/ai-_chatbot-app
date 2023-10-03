@@ -3,6 +3,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/image_assets.dart';
 import '../../../utils/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SendMessageWidget extends StatelessWidget {
   final void Function()? onTap;
@@ -55,7 +56,7 @@ class SendMessageWidget extends StatelessWidget {
                         endRadius: 35,
                         child: micIcon),
                   ),
-                  hintText: "Start a new chat...",
+                  hintText: AppLocalizations.of(context)!.startChat,
                   hintStyle: poppinsRegTextStyle.copyWith(
                     color: const Color(0xff646464),
                   ),

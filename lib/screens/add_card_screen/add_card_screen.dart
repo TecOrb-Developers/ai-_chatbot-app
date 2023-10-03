@@ -7,6 +7,7 @@ import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/text_styles.dart';
@@ -138,7 +139,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                             child: backArrowIcon,
                             onTap: () => Navigator.pop(context),
                           ),
-                          title: 'Add Card',
+                          title: AppLocalizations.of(context)!.addCard,
                         ),
                         const GradientHorizontalDivider(),
                         const SizedBox(
@@ -149,11 +150,13 @@ class _AddCardScreenState extends State<AddCardScreen> {
                             child: Column(
                               children: [
                                 ProfileTextContainer(
-                                  text: 'Card Holder Name',
+                                  text: AppLocalizations.of(context)!
+                                      .cardHolderName,
                                   onChanged: (value) {},
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter the Card Holder Name';
+                                      return AppLocalizations.of(context)!
+                                          .pleseEnterCardHN;
                                     }
                                     return null;
                                   },
@@ -161,7 +164,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                   keyBoardType: TextInputType.name,
                                 ),
                                 ProfileTextContainer(
-                                  text: 'Card Number',
+                                  text: AppLocalizations.of(context)!
+                                      .cardHolderName,
                                   controller: cardNumberController,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
@@ -178,7 +182,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                   children: [
                                     Expanded(
                                       child: ProfileTextContainer(
-                                        text: 'Exp Date',
+                                        text: AppLocalizations.of(context)!
+                                            .expDate,
                                         inputFormatters: [
                                           FilteringTextInputFormatter
                                               .digitsOnly,
@@ -198,7 +203,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                                     ),
                                     Expanded(
                                       child: ProfileTextContainer(
-                                        text: 'CVV',
+                                        text: AppLocalizations.of(context)!.cVV,
                                         controller: cvvCodeController,
                                         keyBoardType: TextInputType.number,
                                         inputFormatters: [
@@ -238,7 +243,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           createToken();
                         }
                       },
-                      title: 'SAVE & CONTINUE',
+                      title: AppLocalizations.of(context)!.saveAndContinue,
                       margin: const EdgeInsets.symmetric(vertical: 30),
                     ),
                   ],

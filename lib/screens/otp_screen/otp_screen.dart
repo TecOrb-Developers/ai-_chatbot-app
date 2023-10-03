@@ -221,8 +221,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       await auth.signInWithCredential(credential);
 
                       if (await checkAccount()) {
-                        loginApiHit();
-                        if (context.mounted) {
+                        await loginApiHit();
+                        if (authorizationValue != '' && context.mounted) {
+                          print("bottom bar");
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
                                 builder: (_) => const BottomBar()),
@@ -350,16 +351,19 @@ class _OtpScreenState extends State<OtpScreen> {
         },
       );
       print("6 $response");
-      if (response["code"] != 200) return false;
-      print('number exit 7');
-      return response["data"]["isUser"];
+      if (response["code"] != 200) {
+        return false;
+      } else {
+        print('number exit 7');
+        return response["data"]["isUser"];
+      }
     } catch (e) {
       print('8--$e');
       return false;
     }
   }
 
-  void loginApiHit() async {
+  Future<void> loginApiHit() async {
     try {
       print('hit login api 9');
       var response = await NetworkApi.post200(
@@ -369,26 +373,29 @@ class _OtpScreenState extends State<OtpScreen> {
           "phoneNumber": widget.phoneNo,
         },
       );
-      print('10 $response');
+      print('10 response - $response');
       if (response["code"] != 200) {
+        print("any problem");
         showSnackbar(
           context: context,
           title: response["message"],
         );
-        print('11');
+
         return;
+      } else {
+        authorizationValue = response["data"]["token"];
+
+        print("authorizationValue--$authorizationValue");
+
+        await saveToPrefs(response["data"]);
+        print("saved to prefs 12");
       }
-
-      authorizationValue = response["data"]["token"];
-
-      saveToPrefs(response["data"]);
-      print("saved to prefs 12");
     } catch (e) {
       print('error in loginHit api 13 - $e');
     }
   }
 
-  void saveToPrefs(Map data) async {
+  Future<void> saveToPrefs(Map data) async {
     final prefs = await SharedPreferences.getInstance();
 
     await Future.wait([

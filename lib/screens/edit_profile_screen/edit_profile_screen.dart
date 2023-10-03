@@ -43,7 +43,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     print('editProfile');
-    profileController = Get.find();
+    profileController = Get.find<ProfileController>();
 
     emailController = TextEditingController(text: profileController.email);
     nameController = TextEditingController(text: profileController.name);

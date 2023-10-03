@@ -79,5 +79,31 @@
    "galleri": "Galleri",
    "enterTheName":"Indtast navnet",
    "enterTheEmail":"Indtast e-mail",
-   "enterTheValidMail":"Indtast den gyldige e-mail"
+   "enterTheValidMail":"Indtast den gyldige e-mail",
+
+   "addCard":"Tilføj kort",
+    "selectCardType":"Vælg korttype",
+    "debitCard":"Debetkort",
+    "creditCard":"Kreditkort",
+    "cardHolderName":"Kortindehaverens navn",
+    "expDate":"Exp Date",
+    "cVV":"CVV",
+    "pleseEnterCardHN":"Indtast venligst kortindehaverens navn",
+    "cardNumber":"Kortnummer",
+    "mobileNumber":"Kortnummer",
+    "saveAndContinue":"Gem og fortsæt",
+    "opps":"Ups!, Noget gik galt",
+    "choosePaymentMethod":"Vælg betalingsmetode",
+    "addNewCard":"Tilføj nyt kort",
+    "payNow":"Betal nu",
+    "paymentNotSuccessful":"Betalingen lykkedes ikke",
+    "paymentSuccessful":"Betalingen lykkedes",
+    "completedPayment":"Du har gennemført din betaling",
+    "transactionNumber":"Transaktionsnummer: ",
+    "notifiatiion":"Meddelelse",
+    "payMent":"Betaling",
+    "ok":"Okay",
+    "youCompleted": "Du har gennemført din betaling"
+ 
+
  }

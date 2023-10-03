@@ -221,7 +221,7 @@ class _CurrentSubscriptionScreenState extends State<CurrentSubscriptionScreen> {
   void initState() {
     print('subscription');
     super.initState();
-    profileController = Get.find();
+    profileController = Get.find<ProfileController>();
     print("1${profileController.subscribeType}");
     print("2${profileController.subscription}");
     if ((profileController.subscribeType == 'Expire' ||

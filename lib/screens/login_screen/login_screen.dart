@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 LogoTextBtnWidget(
                   icon: googleLogoIcon,
                   text: AppLocalizations.of(context)!.googleLogin,
-                  onTap: () async => await loginWithGoogle(context),
+                  onTap: () {},
                 ),
 
                 // Row(
@@ -348,33 +348,33 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> loginWithGoogle(BuildContext context) async {
-    print('login with google');
-    setState(() {
-      isLoading = true;
-    });
-    if (await AuthService().signInWithGoogle()) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(isLoggedIn, true);
+  // Future<void> loginWithGoogle(BuildContext context) async {
+  //   print('login with google');
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   if (await AuthService().signInWithGoogle()) {
+  //     final prefs = await SharedPreferences.getInstance();
+  //     await prefs.setBool(isLoggedIn, true);
 
-      setState(() {
-        isLoading = false;
-      });
+  //     setState(() {
+  //       isLoading = false;
+  //     });
 
-      if (context.mounted) {
-        showSnackbar(
-          context: context,
-          title: "You have successfully logged in",
-        );
+  //     if (context.mounted) {
+  //       showSnackbar(
+  //         context: context,
+  //         title: "You have successfully logged in",
+  //       );
 
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const BottomBar()),
-          (route) => false,
-        );
-      }
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
+  //       Navigator.of(context).pushAndRemoveUntil(
+  //         MaterialPageRoute(builder: (_) => const BottomBar()),
+  //         (route) => false,
+  //       );
+  //     }
+  //   }
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  // }
 }

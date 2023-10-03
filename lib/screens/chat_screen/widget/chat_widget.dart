@@ -74,19 +74,17 @@ class ChatWidget extends StatelessWidget {
             ),
           ],
         ),
-        // const SizedBox(
-        //   height: 6,
-        // ),
+        
         Row(
           mainAxisAlignment:
               isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             isSender
-                ? SizedBox(
+                ? const SizedBox(
                     width: 0,
                   )
-                : SizedBox(
+                : const SizedBox(
                     width: 50,
                   ),
             Text(

@@ -6,6 +6,7 @@ import 'package:ai_chatbot_flutter/widgets/text_white_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constants/api_const.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../services/headers_map.dart';
 import '../../services/network_api.dart';
 import '../../utils/text_styles.dart';
@@ -92,7 +93,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                             child: backArrowIcon,
                             onTap: () => Navigator.pop(context),
                           ),
-                          title: 'Payment',
+                          title: AppLocalizations.of(context)!.payMent,
                         ),
                         const GradientHorizontalDivider(),
                         const SizedBox(
@@ -102,14 +103,15 @@ class _PayNowScreenState extends State<PayNowScreen> {
                           children: [
                             ProfileTextContainer(
                               enabled: false,
-                              text: 'Card Holder Name',
+                              text:
+                                  AppLocalizations.of(context)!.cardHolderName,
                               onChanged: (value) {},
                               controller: cardnameController,
                               keyBoardType: TextInputType.name,
                             ),
                             ProfileTextContainer(
                               enabled: false,
-                              text: 'Card Number',
+                              text: AppLocalizations.of(context)!.cardNumber,
                               controller: cardNumberController,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
@@ -123,7 +125,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                                 Expanded(
                                   child: ProfileTextContainer(
                                     enabled: false,
-                                    text: 'Exp Date',
+                                    text: AppLocalizations.of(context)!.expDate,
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly,
                                       LengthLimitingTextInputFormatter(5),
@@ -140,7 +142,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                                   child: Form(
                                     key: _formKey,
                                     child: ProfileTextContainer(
-                                      text: 'CVV',
+                                      text: AppLocalizations.of(context)!.cVV,
                                       controller: cvvCodeController,
                                       keyBoardType: TextInputType.number,
                                       inputFormatters: [
@@ -180,7 +182,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                           // PaymentController.saveCardDetails();
                         }
                       },
-                      title: 'Payment',
+                      title: AppLocalizations.of(context)!.payMent,
                       margin: const EdgeInsets.symmetric(vertical: 30),
                     ),
                   ],
@@ -261,7 +263,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                   borderRadius: BorderRadius.circular(20)),
               backgroundColor: Colors.white,
               title: Text(
-                'Oops!,Some thing went wrong',
+                AppLocalizations.of(context)!.opps,
                 style: poppinsMedTextStyle.copyWith(
                   color: Colors.red,
                   fontSize: 17,
@@ -279,10 +281,11 @@ class _PayNowScreenState extends State<PayNowScreen> {
                       Navigator.pop(context);
                       showSnackbar(
                         context: context,
-                        title: "Payment Not Successfull",
+                        title:
+                            AppLocalizations.of(context)!.paymentNotSuccessful,
                       );
                     },
-                    child: Text('OK')),
+                    child: Text(AppLocalizations.of(context)!.ok)),
               ],
             );
           });
@@ -331,14 +334,14 @@ class _PayNowScreenState extends State<PayNowScreen> {
                       height: 10,
                     ),
                     Text(
-                      'Payment Successfull',
+                      AppLocalizations.of(context)!.paymentSuccessful,
                       style: poppinsMedTextStyle.copyWith(
                         color: Colors.black,
                         fontSize: 22,
                       ),
                     ),
                     Text(
-                      'You have completed your payment',
+                      AppLocalizations.of(context)!.youCompleted,
                       style: poppinsRegTextStyle.copyWith(
                         color: Colors.black,
                         fontSize: 14,
@@ -348,7 +351,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                       height: 14,
                     ),
                     Text(
-                      'Transaction Number: ${paymentId.toString()}',
+                      ' ${AppLocalizations.of(context)!.transactionNumber} ${paymentId.toString()}',
                       style: poppinsRegTextStyle.copyWith(
                         color: Colors.black,
                         fontSize: 14,
@@ -376,7 +379,7 @@ class _PayNowScreenState extends State<PayNowScreen> {
                         //   title: "Payment Successfull",
                         // );
                       },
-                      child: Text('OK')),
+                      child: Text(AppLocalizations.of(context)!.ok)),
                 ],
               );
             });

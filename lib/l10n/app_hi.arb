@@ -79,5 +79,31 @@
   "gallery":"गैलरी",
   "enterTheName":"नाम दर्ज करें",
   "enterTheEmail":"ईमेल दर्ज करें",
-  "enterTheValidMail":"वैध ईमेल दर्ज करें"
+  "enterTheValidMail":"वैध ईमेल दर्ज करें",
+
+  "addCard":"टिलफ़ोज़ कॉर्ट",
+    "selectCardType":"Select Card Type",
+    "debitCard":"डेबिट कार्ड",
+    "creditCard":"क्रेडिट कार्ड",
+    "cardHolderName":"कार्डधारक का नाम",
+    "expDate":"समाप्ति तिथि",
+    "cVV":"सीवीवी",
+    "pleseEnterCardHN":"कृपया कार्ड धारक का नाम दर्ज करें",
+    "cardNumber":"कार्ड नंबर",
+    "mobileNumber":"मोबाइल नंबर",
+    "saveAndContinue":"सहेजें और जारी रखें",
+    "opps":"उफ़!,कुछ ग़लत हो गया",
+    "choosePaymentMethod":"भुगतान विधि चुनें",
+    "addNewCard":"नया कार्ड जोड़ें",
+    "payNow":"अभी भुगतान करें",
+    "paymentNotSuccessful":"भुगतान सफल नहीं",
+    "paymentSuccessful":"भुगतान सफल",
+    "completedPayment":"आपने अपना भुगतान पूरा कर लिया है",
+    "transactionNumber":"लेन-देन संख्या: ",
+    "notifiatiion":"अधिसूचना",
+    "payMent":"भुगतान",
+    "ok":"ठीक है",
+    "youCompleted": "आपने अपना भुगतान पूरा कर लिया है"
+ 
+
 }

@@ -19,7 +19,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Stripe.publishableKey = secretPublicKey;
-
   final prefs = await SharedPreferences.getInstance();
   authorizationValue = prefs.getString(userTokenKey) ?? "";
   print(authorizationValue);

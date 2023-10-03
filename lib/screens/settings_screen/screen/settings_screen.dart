@@ -33,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
   late final ProfileController profileController;
   void initState() {
     super.initState();
-    profileController = Get.find();
+    profileController = Get.find<ProfileController>();
   }
 
   @override

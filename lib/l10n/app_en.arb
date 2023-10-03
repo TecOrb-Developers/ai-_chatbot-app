@@ -79,5 +79,42 @@
     "gallery":"Gallery",
     "enterTheName":"Enter the Name",
     "enterTheEmail":"Enter the Email",
-    "enterTheValidMail":"Enter the Valid Email"
+    "enterTheValidMail":"Enter the Valid Email",
+
+    "addCard":"Add Card",
+    "selectCardType":"Select Card Type",
+    "debitCard":"Debit Card",
+    "creditCard":"Credit Card",
+    "cardHolderName":"Card Holder Name",
+    "expDate":"Exp Date",
+    "cVV":"CVV",
+    "pleseEnterCardHN":"Please enter the Card Holder Name",
+    "cardNumber":"Card Number",
+    "mobileNumber":"Card Number",
+    "saveAndContinue":"Save & Continue",
+    "opps":"Oops!,Some thing went wrong",
+    "choosePaymentMethod":"Choose Payment Method",
+    "addNewCard":"Add New Card",
+    "payNow":"Pay Now",
+    "paymentNotSuccessful":"Payment Not Successfull",
+    "paymentSuccessful":"Payment Successful",
+    "completedPayment":"You have completed your payment",
+    "transactionNumber":"Transaction Number: ",
+    "notifiatiion":"Notification",
+    "payMent":"Payment",
+    "ok":"OK",
+    "youCompleted": "You have completed your payment"
+ 
+
+    
+    
+
+
+
+
+
+
+
+
+
   }
