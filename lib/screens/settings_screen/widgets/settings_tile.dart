@@ -23,12 +23,16 @@ class SettingsTileWidget extends StatelessWidget {
           children: [
             icon,
             const SizedBox(width: 15),
-            Text(
-              text,
-              style: poppinsRegTextStyle.copyWith(
-                color: Colors.white,
-                fontSize: 17,
-              ),
+            Column(
+              children: [
+                Text(
+                  text,
+                  style: poppinsRegTextStyle.copyWith(
+                    color: Colors.white,
+                    fontSize: 17,
+                  ),
+                ),
+              ],
             ),
             const Spacer(),
             rightArrowIcon,

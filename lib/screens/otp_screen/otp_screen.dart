@@ -197,6 +197,10 @@ class _OtpScreenState extends State<OtpScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 30),
                   title: AppLocalizations.of(context)!.verify,
                   onTap: () async {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
                     if (!countdownTimer!.isActive) {
                       showSnackbar(
                         context: context,
@@ -225,10 +229,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         if (authorizationValue != '' && context.mounted) {
                           print("bottom bar");
                           Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (_) => BottomBar(
-                                      isGetProfile: true,
-                                    )),
+                            MaterialPageRoute(builder: (_) => BottomBar()),
                             (route) => false,
                           );
                         }

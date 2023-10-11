@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ai_chatbot_flutter/screens/walkthrough_screens/screens/walkthrough_screen1.dart';
+import 'package:ai_chatbot_flutter/services/headers_map.dart';
 import 'package:ai_chatbot_flutter/utils/colors.dart';
 import 'package:ai_chatbot_flutter/utils/image_assets.dart';
 import 'package:ai_chatbot_flutter/utils/text_styles.dart';
@@ -100,9 +101,9 @@ class AuthWrapper extends StatelessWidget {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return const HomeScreen();
-          // const BottomBar();
+        if (snapshot.hasData && authorizationValue != '') {
+          print('splash screen');
+          return const BottomBar();
         } else {
           return const WalkthroughScreenOne();
         }

@@ -36,6 +36,7 @@ class SendMessageWidget extends StatelessWidget {
               ),
               child: TextField(
                 controller: textController,
+                readOnly: isListning ?? false,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
@@ -50,7 +51,7 @@ class SendMessageWidget extends StatelessWidget {
                         animate: isListning!,
                         glowColor: kPearColor,
                         repeat: true,
-                        repeatPauseDuration: Duration(milliseconds: 300),
+                        repeatPauseDuration: const Duration(milliseconds: 300),
                         showTwoGlows: true,
                         duration: Duration(milliseconds: 2000),
                         endRadius: 35,

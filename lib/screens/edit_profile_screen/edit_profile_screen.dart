@@ -116,12 +116,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           image: images);
       print('updateProfile-- $response');
       if (response['message'] == "Success") {
+        setState(() {
+          profileController.isUploading = false;
+        });
         showSnackbar(
           context: context,
           title: AppLocalizations.of(context)!.successfullyUpdated,
-        );
+        )..closed.then((SnackBarClosedReason reason) {
+            Navigator.pop(context, true);
+          });
 
-        Navigator.pop(context, true);
+        // Navigator.pop(context, true);
       }
       print(response['message']);
     } catch (e) {

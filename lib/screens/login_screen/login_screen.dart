@@ -169,7 +169,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 //   onChanged: (value) => phoneNo = value,
                 // ),
                 TextWhiteBtnWidget(
-                  onTap: checkAndGetOtp,
+                  onTap: () {
+                    checkAndGetOtp();
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                  },
                   title: AppLocalizations.of(context)!.sendOtp,
                   margin: const EdgeInsets.symmetric(vertical: 30),
                 ),

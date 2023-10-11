@@ -123,6 +123,8 @@ class _ChatScreenState extends State<ChatScreen> {
               Obx(
                 () => Expanded(
                   child: ListView.builder(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     controller: _listScrollController,
                     shrinkWrap: true,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -183,6 +185,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   // });
                 },
                 onTap: () async {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
                   await sendMessageFCT(controller: chatController);
                 },
               ),
