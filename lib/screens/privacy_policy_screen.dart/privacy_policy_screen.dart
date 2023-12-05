@@ -7,6 +7,7 @@ import '../../utils/static_data.dart';
 import '../../utils/ui_parameters.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/grad_horizontal_divider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
@@ -18,6 +19,44 @@ class PrivacyPolicyScreen extends StatefulWidget {
 class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   @override
   Widget build(BuildContext context) {
+    List policyIndex = [
+      AppLocalizations.of(context)!.i,
+      AppLocalizations.of(context)!.j,
+      AppLocalizations.of(context)!.k,
+      AppLocalizations.of(context)!.l,
+      AppLocalizations.of(context)!.m,
+      AppLocalizations.of(context)!.n,
+      AppLocalizations.of(context)!.o,
+      AppLocalizations.of(context)!.p
+    ];
+    List policyHeading = [
+      AppLocalizations.of(context)!.q,
+      AppLocalizations.of(context)!.r,
+      AppLocalizations.of(context)!.s,
+      AppLocalizations.of(context)!.t,
+      AppLocalizations.of(context)!.u,
+      AppLocalizations.of(context)!.v,
+      AppLocalizations.of(context)!.w,
+      AppLocalizations.of(context)!.x,
+    ];
+    List index0 = [
+      AppLocalizations.of(context)!.a1,
+      AppLocalizations.of(context)!.b1,
+      AppLocalizations.of(context)!.c1,
+    ];
+    List index1 = [
+      AppLocalizations.of(context)!.d1,
+      AppLocalizations.of(context)!.e1,
+      AppLocalizations.of(context)!.f1,
+      AppLocalizations.of(context)!.g1,
+    ];
+
+    List index3 = [
+      AppLocalizations.of(context)!.h1,
+      AppLocalizations.of(context)!.i1,
+      AppLocalizations.of(context)!.j1,
+    ];
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
@@ -45,7 +84,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      'Your privacy is important to us. This Privacy Policy outlines how we collect, use, and protect your personal information when you use the AI Chat Bot Application ("the Application").',
+                      AppLocalizations.of(context)!.pPolicy,
                       style: poppinsRegTextStyle.copyWith(
                         fontSize: 13,
                         color: kgrayColor,

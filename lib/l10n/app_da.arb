@@ -103,7 +103,54 @@
     "notifiatiion":"Meddelelse",
     "payMent":"Betaling",
     "ok":"Okay",
-    "youCompleted": "Du har gennemført din betaling"
- 
+    "youCompleted": "Du har gennemført din betaling",
+    "impPrivacy": "Dit privatliv er vigtigt for os. Denne privatlivspolitik beskriver, hvordan vi indsamler, bruger og beskytter dine personlige oplysninger, når du bruger AI Chat Bot-applikationen ('applikationen').",
 
+    "a": "Kvalificering: Du skal være mindst 18 år gammel for at bruge applikationen.",
+     "b":"Personlig brug: Applikationen er kun til personlig, ikke-kommerciel brug.",
+     "c":"Immateriell ejendom: Applikationen og dens indhold ejes af OpenAI. Du må ikke kopiere eller distribuere applikationen uden tilladelse.",
+     "d":"Privatliv: Vi indsamler og bruger dine oplysninger som beskrevet i vores privatlivspolitik.",
+    "e":" Ansvarsfraskrivelse: Applikationen leveres 'som den er' uden garantier.",
+     "f":"Ansvarsbegrænsning: Vi er ikke ansvarlige for skader, der opstår som følge af brugen af applikationen.",
+     "g":"Ændringer og opsigelse: Vi kan til enhver tid ændre eller afslutte applikationen.",
+    "h": "Gældende lov: Disse vilkår er underlagt lovene i [Jurisdiktion].",
+        
+    "i":"Oplysninger vi indsamler",
+   "j": "Brug af oplysninger",
+    "k":"Datasikkerhed",
+   "l": "Datadeling",
+  "m": "Tredjeparts links",
+    "n":"Børns privatliv",
+    "o":"Ændringer af fortrolighedspolitikken",
+   "p": "Kontakt os",
+   "q": "Vi kan indsamle visse oplysninger fra dig, når du bruger applikationen, herunder:",
+  "r": "Vi bruger de indsamlede oplysninger til følgende formål:",
+  "s": "Vi træffer rimelige foranstaltninger for at beskytte dine oplysninger mod uautoriseret adgang, brug eller videregivelse. Bemærk dog, at ingen metode til transmission over internettet eller elektronisk lagring er 100 % sikker",
+   "t":"Vi sælger eller deler ikke dine personlige oplysninger med tredjeparter, undtagen under følgende omstændigheder:",
+   "u":"Applikationen kan indeholde links til tredjeparters websteder eller tjenester. Vi er ikke ansvarlige for fortrolighedspraksis eller indholdet på disse websteder. Vi opfordrer dig til at gennemgå privatlivspolitikkerne for tredjepartswebsteder, du besøger." ,
+   "v":"Applikationen er ikke beregnet til børn under 18 år. Vi indsamler ikke bevidst personlige oplysninger fra børn. Hvis du mener, at vi utilsigtet har indsamlet oplysninger fra et barn, bedes du kontakte os for at få dem fjernet.",
+   "w":"Vi kan opdatere denne privatlivspolitik fra tid til anden. Den reviderede politik træder i kraft ved udsendelse. Vi opfordrer dig til at gennemgå fortrolighedspolitikken med jævne mellemrum for eventuelle ændringer.",
+   "x":"Hvis du har spørgsmål eller bekymringer vedrørende denne fortrolighedspolitik eller vores datapraksis, bedes du kontakte os på [e-mailadresse]. Ved at bruge AI Chat Bot-applikationen accepterer du vilkårene i denne privatlivspolitik.",
+
+   "a1": "Personlige oplysninger: Dit navn, e-mailadresse og andre kontaktoplysninger, du angiver.",
+   "b1": "Brugsoplysninger: Oplysninger om dine interaktioner med applikationen, såsom chatlogs og brugsmønstre.",
+   "c1":"Enhedsoplysninger: Oplysninger om den enhed, du bruger til at få adgang til applikationen, såsom enhedstype og operativsystem",
+ 
+  
+      "d1":"For at levere og forbedre applikationens funktionalitet og brugeroplevelse.",
+      "e1":"For at personliggøre og tilpasse dine interaktioner med applikationen.",
+      "f1":"For at kommunikere med dig og svare på dine forespørgsler.",
+      "g1":"At analysere og forstå, hvordan brugere interagerer med applikationen.",
+ 
+   
+   
+     "h1": "Med dit samtykke: Vi kan dele dine oplysninger, når du udtrykkeligt giver os tilladelse til det.",
+     "i1": "Tjenesteudbydere: Vi kan engagere tredjepartstjenesteudbydere til at hjælpe med at drive og vedligeholde applikationen. Disse udbydere kan have adgang til dine oplysninger for at udføre deres tjenester.",
+     "j1":"Juridiske krav: Vi kan videregive dine oplysninger, hvis det kræves af lov, retskendelse eller statslig myndighed.",
+     "decAccount":"Sådan deaktiveres konto",
+    
+      "help1": "Lorem Ipsum er simpelthen dummy-tekst fra trykkeri- og sætningsindustrien. Lorem Ipsum har været branchens standard dummy-tekst lige siden 1500-tallet,",
+      "term":"Læs venligst disse vilkår og betingelser ('Betingelser') omhyggeligt, før du bruger AI Chat Bot-applikationen ('applikationen'). Ved at tilgå eller bruge applikationen accepterer du at være bundet af disse vilkår.",
+      "applicationUse":" Ved at bruge applikationen anerkender og accepterer du disse vilkår og betingelser.",
+      "pPolicy":"Dit privatliv er vigtigt for os. Denne privatlivspolitik beskriver, hvordan vi indsamler, bruger og beskytter dine personlige oplysninger, når du bruger AI Chat Bot-applikationen ('applikationen')."
  }

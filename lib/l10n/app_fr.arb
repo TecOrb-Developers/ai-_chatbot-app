@@ -103,7 +103,53 @@
     "notifiatiion":"Notification",
     "payMent":"Payment",
     "ok":"OK",
-    "youCompleted": "Vous avez finalisé votre paiement"
+    "youCompleted": "Vous avez finalisé votre paiement",
+    "impPrivacy" :"Votre vie privée est importante pour nous. Cette politique de confidentialité décrit la manière dont nous collectons, utilisons et protégeons vos informations personnelles lorsque vous utilisez l'application AI Chat Bot ('l'Application').",
+     
+    "a": "Éligibilité : Vous devez avoir au moins 18 ans pour utiliser l'Application.",
+     "b": "Utilisation personnelle : L'Application est destinée à un usage personnel et non commercial uniquement.",
+     "c": "Propriété intellectuelle : L'Application et son contenu sont la propriété d'OpenAI. Vous ne pouvez pas copier ou distribuer l'Application sans autorisation.",
+     "d": "Confidentialité : nous collectons et utilisons vos informations comme décrit dans notre politique de confidentialité.",
+    "e": "Avertissement : l'application est fournie 'telle quelle'sans garantie.",
+     "f": "Limitation de responsabilité : Nous ne sommes pas responsables des dommages résultant de l'utilisation de l'Application.",
+     "g": "Modifications et résiliation : Nous pouvons modifier ou résilier l'Application à tout moment.",
+    "h": "Loi applicable : ces conditions sont régies par les lois de [Juridiction].",
+    "i": "Informations que nous collectons",
+   "j": "Utilisation des informations",
+    "k": "Sécurité des données",
+   "l": "Partage de données",
+  "m": "Liens tiers",
+    "n": "Confidentialité des enfants",
+    "o": "Modifications de la politique de confidentialité",
+   "p": "Contactez-nous",
+   "q": "Nous pouvons collecter certaines informations vous concernant lorsque vous utilisez l'Application, notamment :",
+  "r": "Nous utilisons les informations collectées aux fins suivantes :",
+  "s": "Nous prenons des mesures raisonnables pour protéger vos informations contre tout accès, utilisation ou divulgation non autorisés. Cependant, veuillez noter qu'aucune méthode de transmission sur Internet ou de stockage électronique n'est sécurisée à 100 %",
+   "t": "Nous ne vendons ni ne partageons vos informations personnelles avec des tiers, sauf dans les circonstances suivantes :",
+   "u": "L'Application peut contenir des liens vers des sites Web ou des services tiers. Nous ne sommes pas responsables des pratiques de confidentialité ou du contenu de ces sites Web. Nous vous encourageons à consulter les politiques de confidentialité de tout site tiers que vous visitez." ,
+   "v": "L'Application n'est pas destinée aux enfants de moins de 18 ans. Nous ne collectons pas sciemment d'informations personnelles auprès d'enfants. Si vous pensez que nous avons collecté par inadvertance des informations auprès d'un enfant, veuillez nous contacter pour les faire supprimer.",
+   "w": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. La politique révisée entrera en vigueur dès sa publication. Nous vous encourageons à consulter périodiquement la politique de confidentialité pour tout changement.",
+   "x": "Si vous avez des questions ou des préoccupations concernant cette politique de confidentialité ou nos pratiques en matière de données, veuillez nous contacter à [adresse e-mail]. En utilisant l'application AI Chat Bot, vous acceptez les termes de cette politique de confidentialité.",
+     
+   "a1": "Informations personnelles : votre nom, votre adresse e-mail et les autres coordonnées que vous fournissez.",
+     "b1": "Informations d'utilisation : informations sur vos interactions avec l'application, telles que les journaux de discussion et les modèles d'utilisation.",
+      "c1": "Informations sur l'appareil : informations sur l'appareil que vous utilisez pour accéder à l'application, telles que le type d'appareil et le système d'exploitation",
  
-
+  
+      "d1": "Fournir et améliorer les fonctionnalités et l'expérience utilisateur de l'Application.",
+      "e1": "Pour personnaliser et personnaliser vos interactions avec l'Application.",
+      "f1": "Pour communiquer avec vous et répondre à vos demandes.",
+      "g1": "Pour analyser et comprendre comment les utilisateurs interagissent avec l'Application.",
+ 
+   
+   
+     "h1": "Avec votre consentement : nous pouvons partager vos informations lorsque vous nous autorisez explicitement à le faire.",
+     "i1": "Prestataires de services : nous pouvons engager des prestataires de services tiers pour nous aider à exploiter et à maintenir l'Application. Ces fournisseurs peuvent avoir accès à vos informations pour exécuter leurs services.",
+      "j1": "Exigences légales : nous pouvons divulguer vos informations si la loi, une ordonnance d'un tribunal ou une autorité gouvernementale l'exige.",
+      "decAccount": "Comment désactiver le compte",
+    
+      "help1": "Le Lorem Ipsum est simplement un texte factice de l'industrie de l'imprimerie et de la composition. Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500,",
+      "term": "Veuillez lire attentivement ces conditions générales ('Conditions') avant d'utiliser l'application AI Chat Bot ('l'application'). En accédant ou en utilisant l'application, vous acceptez d'être lié par ces conditions.",
+      "applicationUse": "En utilisant l'Application, vous reconnaissez et acceptez les présentes Conditions générales.",
+      "pPolicy": "Votre vie privée est importante pour nous. Cette politique de confidentialité décrit la manière dont nous collectons, utilisons et protégeons vos informations personnelles lorsque vous utilisez l'application AI Chat Bot ('l'Application')."
 }

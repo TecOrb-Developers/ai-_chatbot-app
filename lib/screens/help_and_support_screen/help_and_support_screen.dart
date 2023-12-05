@@ -74,9 +74,8 @@ class _HelpAndSupportScreenState extends State<HelpAndSupportScreen> {
                 children: List.generate(
                   4,
                   (index) => HelpDexExpandedContainer(
-                    title: "How to deactivate account",
-                    text:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                    title: AppLocalizations.of(context)!.decAccount,
+                    text: AppLocalizations.of(context)!.help1,
                     icon: isExpandedList[index] ? Icons.minimize : Icons.add,
                     onExpansionChanged: (bool expanded) {
                       setState(() {

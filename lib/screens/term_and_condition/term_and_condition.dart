@@ -18,6 +18,16 @@ class TermAndConditionScreen extends StatefulWidget {
 class _TermAndConditionScreenState extends State<TermAndConditionScreen> {
   @override
   Widget build(BuildContext context) {
+    List term = [
+      AppLocalizations.of(context)!.a,
+      AppLocalizations.of(context)!.b,
+      AppLocalizations.of(context)!.c,
+      AppLocalizations.of(context)!.d,
+      AppLocalizations.of(context)!.e,
+      AppLocalizations.of(context)!.f,
+      AppLocalizations.of(context)!.g,
+      AppLocalizations.of(context)!.h,
+    ];
     return Scaffold(
       backgroundColor: kBlackColor,
       body: Padding(
@@ -45,7 +55,7 @@ class _TermAndConditionScreenState extends State<TermAndConditionScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      'Please read these Terms and Conditions ("Terms") carefully before using the AI Chat Bot Application ("the Application"). By accessing or using the Application, you agree to be bound by these Terms.',
+                      AppLocalizations.of(context)!.term,
                       style: poppinsRegTextStyle.copyWith(
                         fontSize: 13,
                         color: kgrayColor,
@@ -86,7 +96,7 @@ class _TermAndConditionScreenState extends State<TermAndConditionScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      " By using the Application, you acknowledge and agree to these Terms and Conditions.",
+                      AppLocalizations.of(context)!.applicationUse,
                       style: poppinsRegTextStyle.copyWith(
                         fontSize: 13,
                         color: kgrayColor,
